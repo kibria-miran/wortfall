@@ -1,20 +1,20 @@
-"""Dracula colour theme, per-language text styles and Urdu display helpers."""
+"""Neon Night colour theme, per-language text styles and Urdu display helpers."""
 import curses
 
 from textnorm import display_width as _display_width
 
-# Dracula palette -> nearest xterm-256 colour index (exact hex in comments).
-DRACULA = {
-    "bg": 236,       # #282a36
-    "fg": 255,       # #f8f8f2
-    "comment": 61,   # #6272a4
-    "cyan": 117,     # #8be9fd
-    "green": 84,     # #50fa7b
-    "orange": 215,   # #ffb86c
-    "pink": 212,     # #ff79c6
-    "purple": 141,   # #bd93f9
-    "red": 203,      # #ff5555
-    "yellow": 228,   # #f1fa8c
+# Neon Night palette -> nearest xterm-256 colour index (exact hex in comments).
+PALETTE = {
+    "bg": 234,       # #0b0e14 near-black
+    "fg": 254,       # #e2e8f0 off-white
+    "comment": 240,  # #4b5563 slate grey
+    "cyan": 45,      # #00d7ff electric cyan
+    "green": 48,     # #00ff87 neon green
+    "orange": 208,   # #ff8700 hot amber
+    "pink": 200,     # #ff5faf neon magenta
+    "purple": 141,   # #af87ff violet
+    "red": 203,      # #ff5f5f hot red
+    "yellow": 220,   # #ffd700 amber gold
 }
 # 8-colour fallback for terminals without 256 colours.
 FALLBACK = {"bg": curses.COLOR_BLACK, "fg": curses.COLOR_WHITE, "comment": curses.COLOR_BLUE,
@@ -22,17 +22,17 @@ FALLBACK = {"bg": curses.COLOR_BLACK, "fg": curses.COLOR_WHITE, "comment": curse
             "pink": curses.COLOR_MAGENTA, "purple": curses.COLOR_MAGENTA, "red": curses.COLOR_RED,
             "yellow": curses.COLOR_YELLOW}
 from config import ACCENTS, random_word_colors  # noqa: F401  (random word colours)
-PAIRS = {}   # colour name -> curses attribute (foreground on Dracula background)
+PAIRS = {}   # colour name -> curses attribute (foreground on Neon Night background)
 BG_ATTR = 0
 
 def init_theme(stdscr):
-    """Create colour pairs and paint the whole screen with the Dracula background."""
+    """Create colour pairs and paint the whole screen with the Neon Night background."""
     global BG_ATTR
     PAIRS.clear()
     if not curses.has_colors(): return
     try:
         curses.start_color()
-        table = DRACULA if curses.COLORS >= 256 else FALLBACK
+        table = PALETTE if curses.COLORS >= 256 else FALLBACK
         for n, name in enumerate(table, 1):
             curses.init_pair(n, table[name], table["bg"])
             PAIRS[name] = curses.color_pair(n)

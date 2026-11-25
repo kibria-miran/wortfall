@@ -11,9 +11,9 @@ terminal at least 80 columns × 24 rows. Progress autosaves every 30 s and on ev
 (including Ctrl+C) to `~/.wortfall/progress.json`.
 
 ## How it teaches
-- **Recall mode (default):** words fall as `[ _ == house == گھر ]` — you see the meaning
-  and must produce the German from memory, not copy it. Toggle with `R` in the menu
-  (OFF shows `[ das Haus == house == گھر ]` for transcription-style practice).
+- **Recall mode (default OFF):** words fall as `[ das Haus == house == گھر ]` so you can
+  see the German. Press `R` in the menu to switch it ON for real practice —
+  `[ _ == house == گھر ]`, meaning only, and you produce the German from memory.
 - **Pronunciation at spawn:** every word is spoken (F2 to enable backends) the moment it
   appears, so ear + eye + hand are linked. Correct typing stays silent — no chime.
 - **Weak-word review (default ON, `W` toggles):** unseen and often-missed words fall more
@@ -46,7 +46,8 @@ high score is only recorded from clean sessions (learn-mode sessions too). The s
 saved whenever you quit, not only at game over.
 
 ## Look and sound
-- Clean Dracula-theme UI (256-colour terminals recommended; falls back to 8 colours):
+- Clean **Neon Night** theme (near-black + electric cyan/amber/magenta; 256-colour
+  terminals recommended, falls back to 8 colours):
   one-line header `WORTFALL · SCORE · ♥♥♥ · LV · ×streak`, minimal hint and typing lines.
 - Living background: twinkling stars, birds flying across the sky, and weather that
   slowly cycles clear → cloudy → rain → snow.

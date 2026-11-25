@@ -103,7 +103,7 @@ def init_colors(stdscr=None):
     import theme
     theme.init_theme(stdscr)
     if curses.has_colors() and theme.PAIRS:
-        table = theme.DRACULA if curses.COLORS >= 256 else theme.FALLBACK
+        table = theme.PALETTE if curses.COLORS >= 256 else theme.FALLBACK
         try:
             curses.init_pair(20, table["red"], table["bg"])
         except curses.error:
@@ -141,8 +141,9 @@ def _blink_on(word, now):
 
 def draw_word(stdscr, word, y, is_target, urgent, height, width, hide_de=False):
     """[ German == English == Urdu ] — German holds steady while the English and
-    Urdu blink on/off like a switching light. With hide_de (recall mode) the
-    German is not shown: the player types it from the meaning."""
+    Urdu flip-flop out of phase: when English is lit Urdu is dark, and vice versa.
+    With hide_de (recall mode) the German is not shown: the player types it from
+    the meaning."""
     import theme
     parts = list(word.parts) if word.parts else [word.prompt]
     cols = list(word.colors) if word.colors else ["yellow", "cyan", "pink"]
@@ -165,9 +166,12 @@ def draw_word(stdscr, word, y, is_target, urgent, height, width, hide_de=False):
 
     put("[ ", frame)
     for i, text in enumerate(parts):
-        on = (i != 0 or not hide_de)
-        if on and i > 0:
-            on = _blink_on(word, time.monotonic())
+        on = True
+        if hide_de and i == 0:
+            on = False
+        elif i > 0:
+            blink = _blink_on(word, time.monotonic())
+            on = blink if i == 1 else not blink
         shown = shape(i, text)
         attr = color(cols[i % 3]) | styles[i % 3]
         if i == 0 and urgent:
@@ -261,7 +265,7 @@ def draw(stdscr, state, mode="playing", high_score=0, category_label="All"):
             safe_add(stdscr, 9, sx, " " * disp if blink_off and i else text, attr)
             sx += disp
         safe_add(stdscr, 9, sx, " ]", color("comment"))
-        centered(stdscr, 10, "English/Urdu blink · type the German word", color("comment"))
+        centered(stdscr, 10, "English/Urdu flip-flop · type the German word", color("comment"))
         centered(stdscr, 12, f"High score: {high_score}", color("yellow"))
         centered(stdscr, 14, "[ ENTER ]  START          [ L ] LEARN MODE", color("green") | curses.A_BOLD)
         centered(stdscr, 15, f"[ C ] Category: {category_label}    [ A ] Articles: {state.articles_mode}    [ P ] Plurals: {'ON' if state.plural_mode else 'OFF'}", color("fg"))

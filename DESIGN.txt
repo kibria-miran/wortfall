@@ -2,9 +2,10 @@ WORTFALL — implementation notes
 
 Review-fix update (v2.4) — learning + robustness changes driven by a full code/design
 review:
-- Recall mode (default ON, `R` toggles): the German text of a falling word is hidden;
-  the prompt shows only `[ English == Urdu ]` while the German stays constant in learn
-  mode. The player must produce German from meaning — retrieval, not transcription.
+- Recall mode (default OFF per user preference — the German is visible again; `R` in
+  the menu toggles it ON): when ON the German text of a falling word is hidden;
+  the prompt shows only `[ _ == English == Urdu ]`. The player must produce German
+  from meaning — retrieval, not transcription.
 - Pronunciation now plays when a word SPAWNS (SPAWN_HOOK in game.py), linking ear + eye
   before typing; typing a word correctly is silent by design. The old solve hook was
   removed.
@@ -56,7 +57,8 @@ UI/behaviour update (v2.2):
 - No sound on a correctly typed word: the solve chime was removed (v2.4 went further —
   pronunciation moved to word spawn).
 - `[ German == English == Urdu ]`: German stays constant while English and Urdu
-  blink on/off (light-switch effect, per-word phase).
+  blink on/off; since v2.5 they FLIP-FLOP out of phase — when English is lit Urdu
+  is dark and vice versa, while the German stays constant (per-word phase).
 - Falling order: uniform random Picker (now superseded in v2.4 by the default
   progress-weighted picker, toggleable with `W`; recent/on-screen words still excluded).
 - Living background: twinkling stars, flying birds, cycling weather
@@ -88,7 +90,10 @@ Controls/UI update:
 - Hallo and Tschüss include English and Urdu translations.
 
 Benefits/UI update (v2.1 merge):
-- Dracula theme kept; field separators, a danger-zone band above the floor, and
+- Theme: Dracula (v2.1) replaced in v2.5 by **Neon Night** — near-black background
+  (#0b0e14) with electric cyan (German), amber gold (English) and neon magenta
+  (Urdu/target frame); 8-colour fallback unchanged. Field separators, a danger-zone
+  band above the floor, and
   red blinking urgent words in the last stretch of the fall.
 - Solved words burst green; missed words linger for a moment in red showing the
   answer (reinforcement), then vanish.

@@ -39,7 +39,7 @@ def main():
     assert progress.data["version"] == 1
     state = GameState(entries, progress)
     assert state.field_height == 20
-    assert state.recall_mode and state.weighted
+    assert not state.recall_mode and state.weighted
 
     events = []
     set_event_hook(events.append)

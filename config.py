@@ -23,7 +23,7 @@ CONFIG = {
     "sfx_volume": 0.45,              # 0.0–1.0 for synthesized effect wave files
     "en_ur_blink": 0.5,              # seconds per on/off phase of the blinking English/Urdu text
     "weather_cycle": 40.0,           # seconds per weather phase: clear → cloudy → rain → snow
-    "recall_mode": True,             # hide the German; type it from the English/Urdu meaning
+    "recall_mode": False,            # True = hide the German; type it from the English/Urdu meaning
     "weak_word_review": True,        # weight the picker towards often-missed words
     "time_per_char": 0.3,            # extra fall seconds per character (long words get more time)
     "article_bonus": 1.5,            # optional-article mode: mult for typing "das haus" vs "haus"
