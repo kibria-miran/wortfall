@@ -1,280 +1,227 @@
-"""Curses rendering: layout, colors, falling words, HUD, screens."""
-
+"""Curses renderer: Dracula theme, per-language styled falling words,
+danger-zone band, solved/missed animations, article-coloured hints,
+boxed overlays. Merges the v2 language features with the v1 game UI.
+"""
 import curses
 import time
 
-from config import CONFIG
+import audio
+import sfx
+import theme
+from textnorm import article_of
+from theme import color, display_width
+from word import WordState
 
-# color pair ids
-P_HEADER = 1        # black on cyan
-P_WORD = 2          # yellow on black
-P_DANGER = 3        # red on black (word in danger zone)
-P_INPUT = 4         # white on blue
-P_GOOD = 5          # green on black
-P_BAD = 6           # red on black
-P_ART_DER = 7       # cyan on black
-P_ART_DIE = 8       # magenta on black
-P_ART_DAS = 9       # green on black
-P_NEUTRAL = 10      # white on black
-P_DANGER_ZONE = 11  # danger zone background band
+URDU_SHAPED = False   # toggled with the U key in the menu; see theme.urdu_text
 
+PAIR_DANGER = 20      # red on dark-red, the danger-zone band
 
-def init_colors(stdscr):
-    curses.start_color()
-    try:
-        curses.use_default_colors()
-        bg = -1
-    except curses.error:
-        bg = curses.COLOR_BLACK
+# classic German-learning convention: der=blue, die=red, das=green
+ARTICLE_COLORS = {"der": "cyan", "die": "red", "das": "green"}
 
-    curses.init_pair(P_HEADER, curses.COLOR_BLACK, curses.COLOR_CYAN)
-    curses.init_pair(P_WORD, curses.COLOR_YELLOW, bg)
-    curses.init_pair(P_DANGER, curses.COLOR_RED, bg)
-    curses.init_pair(P_INPUT, curses.COLOR_WHITE, curses.COLOR_BLUE)
-    curses.init_pair(P_GOOD, curses.COLOR_GREEN, bg)
-    curses.init_pair(P_BAD, curses.COLOR_RED, bg)
-    curses.init_pair(P_ART_DER, curses.COLOR_CYAN, bg)
-    curses.init_pair(P_ART_DIE, curses.COLOR_MAGENTA, bg)
-    curses.init_pair(P_ART_DAS, curses.COLOR_GREEN, bg)
-    curses.init_pair(P_NEUTRAL, curses.COLOR_WHITE, bg)
-    curses.init_pair(P_DANGER_ZONE, curses.COLOR_RED, bg)
+SOLVED_FRAMES = ("✶", "✷", "❋", "·")
+MISSED_FRAMES = ("✗", "✗", "✗", "·")
 
 
-def article_attr(article):
-    if not CONFIG["article_color_coding"]:
-        return curses.color_pair(P_NEUTRAL)
-    a = article.lower()
-    if a == "der":
-        return curses.color_pair(P_ART_DER) | curses.A_BOLD
-    if a == "die":
-        return curses.color_pair(P_ART_DIE) | curses.A_BOLD
-    if a == "das":
-        return curses.color_pair(P_ART_DAS) | curses.A_BOLD
-    return curses.color_pair(P_NEUTRAL)
+def init_colors(stdscr=None):
+    if stdscr is None:
+        stdscr = curses.initscr()
+    theme.init_theme(stdscr)
+    if curses.has_colors() and theme.PAIRS:
+        table = theme.DRACULA if curses.COLORS >= 256 else theme.FALLBACK
+        try:
+            curses.init_pair(PAIR_DANGER, table["red"], table["bg"])
+        except curses.error:
+            pass
 
 
-def compute_layout(stdscr):
-    height, width = stdscr.getmaxyx()
-    pf_top = 1
-    pf_bottom = max(pf_top + 3, height - 5)
-    return {
-        "height": height,
-        "width": width,
-        "pf_top": pf_top,
-        "pf_bottom": pf_bottom,
-        "play_height": pf_bottom - pf_top + 1,
-    }
+def safe_add(stdscr, y, x, s, attr=0):
+    h, w = stdscr.getmaxyx()
+    if 0 <= y < h and 0 <= x < w:
+        s = str(s)
+        while s and display_width(s) > max(0, w - x - 1):
+            s = s[:-1]
+        if not s:
+            return
+        try:
+            stdscr.addstr(y, x, s, attr)
+        except (curses.error, UnicodeEncodeError):
+            pass
 
 
-def _addstr(stdscr, y, x, text, attr=0):
-    height, width = stdscr.getmaxyx()
-    if y < 0 or y >= height or x >= width:
+def centered(stdscr, y, text, attr=0):
+    h, w = stdscr.getmaxyx()
+    safe_add(stdscr, y, max(0, (w - display_width(text)) // 2), text, attr)
+
+
+def hline(stdscr, y, w, attr):
+    safe_add(stdscr, y, 0, "─" * (w - 1), attr)
+
+
+def draw_word(stdscr, word, y, is_target, urgent, height, width):
+    """[ German == English == Urdu ] - each language has its own colour and style."""
+    parts = list(word.parts) if word.parts else [word.prompt]
+    cols = list(word.colors) if word.colors else ["yellow", "cyan", "pink"]
+    styles = [theme.STYLE_DE, theme.STYLE_EN, theme.STYLE_UR]
+    frame = color("pink") | curses.A_BOLD if is_target else color("comment")
+    sep = color("comment")
+    x = word.x
+
+    def put(text, attr):
+        nonlocal x
+        if x + display_width(text) > width - 1:
+            return
+        safe_add(stdscr, y, x, text, attr)
+        x += display_width(text)
+
+    put("[ ", frame)
+    for i, text in enumerate(parts):
+        if i == 2:
+            text = theme.urdu_text(text, URDU_SHAPED)
+        elif urgent:
+            text = text.upper()
+        attr = color(cols[i % 3]) | styles[i % 3]
+        if i == 0 and urgent:
+            attr = color("red") | curses.A_BOLD | curses.A_BLINK
+        if is_target and i == 0:
+            attr |= curses.A_UNDERLINE
+        put(text, attr)
+        if i < len(parts) - 1:
+            put(" == ", sep)
+    put(" ]", frame)
+
+
+def draw_effect(stdscr, word, height, width):
+    """Solved = green burst; missed = the correct answer lingers in red."""
+    if word.resolve_time is None:
         return
-    if x + len(text) > width:
-        text = text[: max(0, width - x)]
-    if not text:
-        return
-    try:
-        stdscr.addstr(y, x, text, attr)
-    except curses.error:
-        pass
-
-
-def draw_centered(stdscr, y, text, attr=0):
-    _, width = stdscr.getmaxyx()
-    x = max(0, (width - len(text)) // 2)
-    _addstr(stdscr, y, x, text, attr)
-
-
-def draw_game(stdscr, state, layout):
-    height, width = layout["height"], layout["width"]
-    pf_top, pf_bottom = layout["pf_top"], layout["pf_bottom"]
-    play_height = layout["play_height"]
-
-    stdscr.erase()
-
-    # header bar
-    hearts = "♥" * state.lives + "·" * max(0, CONFIG["max_lives"] - state.lives)
-    header = " SCORE: %d   LIVES: %s   LEVEL: %d   STREAK: x%d " % (
-        state.score, hearts, state.level, state.streak,
-    )
-    if state.streak >= 5:
-        header += "  >>"
-    header += " " * max(0, width - len(header) - 1)
-    _addstr(stdscr, 0, 0, header[:width], curses.color_pair(P_HEADER) | curses.A_BOLD)
-
-    # danger zone: bottom rows of the play field
-    for row in range(max(pf_top, pf_bottom - CONFIG["danger_rows"] + 1), pf_bottom + 1):
-        _addstr(stdscr, row, 0, " " * width, curses.color_pair(P_DANGER_ZONE))
-
-    # falling words + explosion animation
-    target = state.target_word()
-    now = time.time()
-    for word in state.words:
-        row = pf_top + int(word.y)
-        text = "[ %s ]" % word.en
-        x = min(word.x, max(1, width - len(text) - 1))
-
-        if word.exploding:
-            frame = word.explosion_frame(now) or "*"
-            _addstr(stdscr, row, x, frame, curses.color_pair(P_GOOD) | curses.A_BOLD)
-            continue
-
-        if word is target:
-            attr = curses.color_pair(P_WORD) | curses.A_BOLD
-        else:
-            attr = curses.color_pair(P_WORD)
-        if int(word.y) >= play_height - CONFIG["danger_rows"]:
-            attr = curses.color_pair(P_DANGER) | curses.A_BLINK | curses.A_BOLD
-        _addstr(stdscr, row, x, text, attr)
-
-    # separator
-    sep_row = pf_bottom + 1
-    if sep_row < height:
-        _addstr(stdscr, sep_row, 0, "─" * width, curses.A_DIM)
-
-    # hint / message line
-    msg_row = pf_bottom + 2
-    if msg_row < height:
-        if state.message and time.time() < state.message_until:
-            good = state.message.startswith(("✔", "★", "♥"))
-            attr = curses.color_pair(P_GOOD if good else P_BAD) | curses.A_BOLD
-            _addstr(stdscr, msg_row, 0, " " + state.message, attr)
-        else:
-            _draw_hint(stdscr, msg_row, state)
-
-    # input line
-    in_row = min(msg_row + 1, height - 1)
-    label = " TYPE: %s_ " % state.input_buffer
-    if CONFIG["articles_required"]:
-        label += "(with article) "
-    _addstr(stdscr, in_row, 0, label, curses.color_pair(P_INPUT) | curses.A_BOLD)
-
-    if state.paused:
-        _draw_pause_overlay(stdscr, layout)
-
-
-def _draw_hint(stdscr, row, state):
-    target = state.target_word()
-    if target is None:
-        _addstr(stdscr, row, 0, " HINT: wait for a word...", curses.color_pair(P_NEUTRAL))
-        return
-    if CONFIG["articles_required"] and target.article:
-        text = ' HINT: full answer with article: '
-        _addstr(stdscr, row, 0, text, curses.color_pair(P_NEUTRAL))
-        _addstr(stdscr, row, len(text), target.article.lower(),
-                article_attr(target.article))
-        _addstr(stdscr, row, len(text) + len(target.article),
-                " " + target.noun.lower(), curses.color_pair(P_NEUTRAL))
-        return
-    if target.article:
-        prefix = ' HINT: "%s" → ' % target.en
-        _addstr(stdscr, row, 0, prefix, curses.color_pair(P_NEUTRAL))
-        _addstr(stdscr, row, len(prefix), target.article, article_attr(target.article))
-        _addstr(stdscr, row, len(prefix) + len(target.article) + 1,
-                "___   (article: %s)" % target.gender, curses.color_pair(P_NEUTRAL))
-        return
-    _addstr(stdscr, row, 0, ' HINT: German for "%s" starts with "%s"' % (
-        target.en, target.noun[0].lower()), curses.color_pair(P_NEUTRAL))
-
-
-def _draw_pause_overlay(stdscr, layout):
-    height, _ = layout["height"], layout["width"]
-    top = max(1, height // 2 - 2)
-    lines = [
-        "┌" + "─" * 38 + "┐",
-        "│            P A U S E D              │",
-        "│  ESC / P resume   Q quit to menu    │",
-        "└" + "─" * 38 + "┘",
-    ]
-    for i, line in enumerate(lines):
-        draw_centered(stdscr, top + i, line, curses.A_REVERSE)
-
-
-def draw_menu(stdscr, articles_required, category, high_score):
-    stdscr.erase()
-    height, _ = stdscr.getmaxyx()
-
-    title = [
-        "██     ██  ██████  ██████  ███████ ████████ ███████",
-        "██     ██ ██    ██ ██   ██ ██         ██    ██     ",
-        "██  █  ██ ██    ██ ██████  █████      ██    ███████",
-        "██ ███ ██ ██    ██ ██   ██ ██         ██    ██     ",
-        " ███ ███   ██████  ██   ██ ███████    ██    ███████",
-    ]
-    y = max(1, height // 2 - 8)
-    for i, line in enumerate(title):
-        draw_centered(stdscr, y + i, line, curses.color_pair(P_WORD) | curses.A_BOLD)
-
-    y += len(title) + 1
-    draw_centered(stdscr, y, "German A1 — type the German word before it falls!", curses.A_DIM)
-    y += 2
-    draw_centered(stdscr, y, "► ENTER: start        [category: %s]" % category)
-    y += 1
-    draw_centered(stdscr, y, "► C: choose category   A: articles %s" % (
-        "ON " if articles_required else "OFF",
-    ))
-    y += 1
-    draw_centered(stdscr, y, "► High score: %d" % high_score)
-    y += 1
-    draw_centered(stdscr, y, "► Q: quit")
-    y += 2
-    draw_centered(stdscr, y,
-                  "In game: ESC pause · ENTER submit · backspace edit · type ae/oe/ue/ss",
-                  curses.A_DIM)
-    stdscr.refresh()
-
-
-def draw_category_select(stdscr, cats, current, all_count):
-    stdscr.erase()
-    height, _ = stdscr.getmaxyx()
-    draw_centered(stdscr, 1, "── SELECT CATEGORY ──",
-                  curses.color_pair(P_HEADER) | curses.A_BOLD)
-    draw_centered(stdscr, 2, "0. all words (%d)" % all_count, curses.A_DIM)
-    for i, cat in enumerate(cats):
-        if 4 + i >= height - 2:
-            draw_centered(stdscr, height - 2, "...", curses.A_DIM)
-            break
-        attr = curses.A_BOLD if cat == current else curses.A_NORMAL
-        draw_centered(stdscr, 4 + i, "%2d. %s" % (i + 1, cat), attr)
-    draw_centered(stdscr, height - 1,
-                  "Number to choose · ESC all words · Q back", curses.A_DIM)
-    stdscr.refresh()
-
-
-def draw_game_over(stdscr, summary, high_score, new_high):
-    stdscr.erase()
-    height, _ = stdscr.getmaxyx()
-
-    y = max(1, height // 2 - 9)
-    draw_centered(stdscr, y, "═══════  G A M E   O V E R  ═══════",
-                  curses.color_pair(P_BAD) | curses.A_BOLD)
-    y += 2
-    draw_centered(stdscr, y, "Score: %d        Level reached: %d" % (
-        summary["score"], summary["level"]))
-    y += 1
-    draw_centered(stdscr, y, "Correct: %d    Mistakes: %d    Escaped: %d" % (
-        summary["correct"], summary["mistakes"], summary["escaped"]))
-    y += 1
-    draw_centered(stdscr, y, "Unique words seen: %d    Best streak: x%d" % (
-        summary["unique_words"], summary["best_streak"]))
-    y += 1
-    if new_high:
-        draw_centered(stdscr, y, "★ NEW HIGH SCORE: %d ★" % high_score,
-                      curses.color_pair(P_GOOD) | curses.A_BOLD)
+    frame = word.explosion_frame() or 0
+    y = min(int(word.y) + 2, height - 5)
+    if word.state == WordState.SOLVED:
+        safe_add(stdscr, y, word.x, SOLVED_FRAMES[frame],
+                 color("green") | curses.A_BOLD)
     else:
-        draw_centered(stdscr, y, "High score: %d" % high_score, curses.A_DIM)
-    y += 2
-    draw_centered(stdscr, y, "Words needing review:",
-                  curses.color_pair(P_WORD) | curses.A_BOLD)
-    y += 1
-    for de, info in summary["review"]:
-        if y >= height - 3:
-            break
-        draw_centered(stdscr, y, "  • %s (%s) — missed %d×" % (
-            de, info["en"], info["count"]))
-        y += 1
-    if not summary["review"]:
-        draw_centered(stdscr, y, "  (none — perfect!)", curses.A_DIM)
-    draw_centered(stdscr, height - 2, "► ENTER: play again   Q: menu", curses.A_BOLD)
+        text = f"✗  {word.answer} = {word.entry.get('en', '?')}"
+        attr = color("red") | curses.A_BOLD
+        if frame >= 2:
+            attr = color("red") | curses.A_DIM
+        safe_add(stdscr, y, word.x, text, attr)
+
+
+def _danger_band(stdscr, h, w, danger_rows):
+    for row in range(max(2, h - 4 - danger_rows), h - 4):
+        safe_add(stdscr, row, 0, "·" * (w - 1), color("red") | curses.A_DIM)
+
+
+def _article_hint(target):
+    if target.entry.get("pos") != "noun" or target.answer.count(" ") < 1:
+        return None
+    art = article_of(target.answer)
+    if art and art in ARTICLE_COLORS:
+        return art
+    return None
+
+
+def draw(stdscr, state, mode="playing", high_score=0, category_label="All"):
+    stdscr.erase()
+    h, w = stdscr.getmaxyx()
+    title = color("purple") | curses.A_BOLD
+    if h < 24 or w < 80:
+        safe_add(stdscr, max(0, h // 2), 1, "Please enlarge terminal to at least 80x24", color("orange"))
+        safe_add(stdscr, max(0, h // 2 + 1), 1, "The game is paused until the terminal is large enough.", color("comment"))
+        stdscr.refresh()
+        return
+    if mode == "menu":
+        banner = [
+            "██     ██  ██████  ██████  ███████ ████████ ███████",
+            "██     ██ ██    ██ ██   ██ ██         ██    ██     ",
+            "██  █  ██ ██    ██ ██████  █████      ██    ███████",
+            "██ ███ ██ ██    ██ ██   ██ ██         ██    ██     ",
+            " ███ ███   ██████  ██   ██ ███████    ██    ███████",
+        ]
+        for i, line in enumerate(banner):
+            centered(stdscr, 1 + i, line, title)
+        centered(stdscr, 7, "German A1 falling-word typing game", color("cyan"))
+        centered(stdscr, 8, "[ Hallo == Hello == ہیلو ]", color("green") | curses.A_BOLD)
+        centered(stdscr, 10, f"High score: {high_score}", color("yellow"))
+        centered(stdscr, 12, "[ ENTER ]  START GAME", color("green") | curses.A_BOLD)
+        centered(stdscr, 14, f"[ C ] Category: {category_label}", color("fg"))
+        centered(stdscr, 15, f"[ A ] Articles: {state.articles_mode}    [ P ] Plurals: {'ON' if state.plural_mode else 'OFF'}", color("fg"))
+        centered(stdscr, 16, f"[ L ] Learn mode    [ U ] Urdu display: {'shaped' if URDU_SHAPED else 'raw'}", color("fg"))
+        centered(stdscr, 17, f"[ F2 ] {audio.get_speaker().label()}    [ F3 ] {sfx.get_sfx().label()}", color("orange"))
+        centered(stdscr, 18, "[ ESC ] [ ESC ] Exit", color("comment"))
+        centered(stdscr, 21, "Type the German word. Correct answers are accepted instantly and spoken aloud.", color("comment"))
+    elif mode == "paused":
+        box_w = 46
+        top = max(2, h // 2 - 3)
+        left = max(0, (w - box_w) // 2)
+        safe_add(stdscr, top, left, "┌" + "─" * box_w + "┐", title)
+        centered(stdscr, top + 1, "P A U S E D", title)
+        centered(stdscr, top + 2, "[ESC] Resume    [ESC][ESC] Save & exit", color("fg"))
+        centered(stdscr, top + 3, "[Q] Save and quit", color("fg"))
+        safe_add(stdscr, top + 5, left, "└" + "─" * box_w + "┘", title)
+    elif mode == "summary":
+        s = state.summary()
+        centered(stdscr, 2, "═══════  SESSION SUMMARY  ═══════", title)
+        rows = [f"Score: {s['score']}   High score: {high_score}", f"Level reached: {s['level']}",
+                f"Correct: {s['correct']}   Mistakes: {s['mistakes']}",
+                f"Accuracy: {s['accuracy']:.0f}%   Words seen: {s['words_seen']}"]
+        for i, line in enumerate(rows):
+            safe_add(stdscr, 5 + i, 20, line, color("cyan"))
+        safe_add(stdscr, 11, 20, "Words to review:", color("pink") | curses.A_BOLD)
+        for i, (de, count) in enumerate(s["missed"][:7]):
+            entry = next((v for v in state.all_vocab if v["de"] == de), {})
+            safe_add(stdscr, 12 + i, 22, f"{de} ({entry.get('en','?')}) x{count}", color("orange"))
+        safe_add(stdscr, 21, 20, "[Enter] Play again   [M] Menu   [Q] Quit", color("green"))
+    else:
+        lives_text = "∞" if state.infinite_lives else "♥" * state.lives
+        sep = color("comment")
+        level_note = f" ({state.correct_count % 10}/10)"
+        streak_note = " ▲▲" if state.streak >= 5 else ""
+        header = [(" WORTFALL ", title), ("│ ", sep),
+                  (f"SCORE {state.score} ", color("green") | curses.A_BOLD), ("│ ", sep),
+                  (f"LIVES {lives_text} ", color("red") | curses.A_BOLD), ("│ ", sep),
+                  (f"LEVEL {state.level}{level_note} ", color("cyan") | curses.A_BOLD), ("│ ", sep),
+                  (f"STREAK {state.streak}{streak_note}", color("orange") | curses.A_BOLD)]
+        x = 0
+        for text, attr in header:
+            safe_add(stdscr, 0, x, text, attr)
+            x += display_width(text)
+        hline(stdscr, 1, w, sep)
+        hline(stdscr, h - 4, w, sep)
+        _danger_band(stdscr, h, w, 2)
+        active = sorted([x for x in state.words if x.state == WordState.FALLING], key=lambda x: x.y, reverse=True)
+        for word in state.words:
+            if word.state == WordState.FALLING:
+                target = bool(active) and word is active[0]
+                urgent = word.elapsed_fraction() >= .9
+                draw_word(stdscr, word, int(word.y) + 2, target, urgent, h, w)
+            elif word.state in (WordState.SOLVED, WordState.MISSED):
+                draw_effect(stdscr, word, h, w)
+        hint = ""
+        if active:
+            target = active[0]
+            frac = target.elapsed_fraction()
+            if frac >= .75 and target.entry["pos"] == "noun":
+                art = _article_hint(target)
+                if art:
+                    hint = f"Hint: {art} ___"
+                else:
+                    hint = f"Hint: {target.answer.split()[0]} ___"
+            elif frac >= .5:
+                hint = f"Hint: {target.answer[0]}..."
+        mode_text = "LEARN MODE" if state.learn_mode else f"LIVES {lives_text}"
+        sp = audio.get_speaker()
+        safe_add(stdscr, h - 3, 1,
+                 f" SPEED [ - ] {state.speed_scale:.2f}x [ + ]   [ TAB ] INFINITE LIVES: {'ON' if state.infinite_lives else 'OFF'}   [ F2 ] {sp.label()}   [ F3 ] {sfx.get_sfx().label()}",
+                 color("purple") | curses.A_BOLD)
+        if state.feedback and time.monotonic() < state.feedback_until:
+            good = state.feedback.startswith(("+", "LEVEL"))
+            safe_add(stdscr, h - 2, 1, state.feedback,
+                     color("green" if good else "red") | curses.A_BOLD)
+        else:
+            safe_add(stdscr, h - 2, 1, "[ ESC ] pause    Type German; auto-correct on final letter", color("comment"))
+        safe_add(stdscr, h - 1, 1, "TYPE: ", color("pink") | curses.A_BOLD)
+        safe_add(stdscr, h - 1, 7, f"{state.input_buffer}_", color("fg") | curses.A_BOLD)
+        safe_add(stdscr, h - 1, 9 + len(state.input_buffer), f" {hint}  [{mode_text}]", color("yellow"))
     stdscr.refresh()

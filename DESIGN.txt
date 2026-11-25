@@ -1,0 +1,41 @@
+WORTFALL — implementation notes
+
+Implements the supplied Design Document v2: curses-only terminal game; 30 FPS
+monotonic timing; required noun articles by default; optional/off article modes;
+plural practice; all-active-word matching; recent-word and duplicate-gloss avoidance;
+falling speed with per-word jitter; difficulty progression; scoring/streak/lives;
+near-miss and missing-article feedback; category selection; 200+ A1 vocabulary
+items; progress persistence and weighted review; learn mode; summary screen;
+terminal resize and small-terminal handling; Unicode get_wch input and ASCII-safe
+renderer fallbacks.
+
+Known scope note: the vocabulary is a curated starter A1 set, not a certified
+Goethe/CEFR frequency list. Review translations and plural forms before classroom use.
+
+
+Gameplay display update: falling prompts show the German word followed by its English translation. Players type the German form; exact answers auto-resolve as soon as the final character is entered, without pressing Enter.
+
+Controls/UI update:
+- A clearer title/menu and in-game control strip.
+- `+` and `-` change the falling speed in 0.25x increments (0.25x to 3.00x).
+- `I` toggles infinite lives.
+- Double-press ESC within 1.5 seconds to save and exit; another key cancels the exit request.
+- Hallo and Tschüss include English and Urdu translations.
+
+Benefits/UI update (v2.1 merge):
+- Dracula theme kept; field separators, a danger-zone band above the floor, and
+  red blinking urgent words in the last stretch of the fall.
+- Solved words burst green; missed words linger for a moment in red showing the
+  answer (reinforcement), then vanish.
+- Header shows hearts, level progress (k/10) and a streak flame at 5+.
+- Hint bar colour-codes articles for the lowest word: der=cyan, die=red, das=green.
+
+Native audio update:
+- New sfx.py: synthesized-in-Python WAV effects (solve chime, wrong buzz, miss
+  descent, level-up fanfare, life sparkle, streak riff, game-over dirge), cached
+  in ~/.wortfall/sfx, played natively via paplay (PipeWire) -> aplay (ALSA) ->
+  ffplay; terminal bell as last resort. Non-blocking; toggle with F3.
+- Event hook added in game.py (set_event_hook) so game logic stays curses-free;
+  main.py wires it to the SFX engine; pronunciation TTS (F2) unchanged.
+- selftest.py: headless verification of vocab validation, matching modes,
+  teaching/near-miss feedback, scoring and SFX synthesis.

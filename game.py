@@ -1,203 +1,190 @@
-"""Game state and rules: spawning, falling, matching, scoring, lives, levels."""
+"""Pure game rules and session state; no curses dependency."""
+import random, time
+from collections import defaultdict, deque
+from config import CONFIG, random_word_colors
+from textnorm import normalize, strip_article, edit_distance
+from vocab import Picker, filter_by_category, eligible_words
+from word import FallingWord, WordState
 
-import random
-import time
+# Optional callback(text) fired when a German word is typed correctly (set by main.py for audio).
+SOLVE_HOOK = None
+def set_solve_hook(fn):
+    global SOLVE_HOOK; SOLVE_HOOK = fn
 
-from config import (
-    CONFIG,
-    fall_speed,
-    max_words,
-    spawn_interval,
-    streak_multiplier,
-)
-from vocab import WordPool
-from word import FallingWord, common_prefix_len, normalize
+# Optional callback(name) fired on game events for sound effects.
+# Names: "solve", "wrong", "miss", "level_up", "life", "streak", "game_over"
+EVENT_HOOK = None
+def set_event_hook(fn):
+    global EVENT_HOOK; EVENT_HOOK = fn
 
+def _event(name):
+    if EVENT_HOOK:
+        try: EVENT_HOOK(name)
+        except Exception: pass
+
+def make_parts(answer, entry):
+    """German == English == Urdu pieces for one falling word."""
+    return tuple(x for x in (answer, entry["en"], entry.get("ur")) if x)
+
+def spawn_interval(level,cfg=CONFIG): return max(cfg["min_spawn_interval"],cfg["base_spawn_interval"]-cfg["spawn_decay"]*(level-1))
+def max_words(level,cfg=CONFIG): return min(cfg["max_words_cap"],2+(level-1)//2)
+def speed_for(level,cfg=CONFIG): return cfg["base_fall_speed"]*min(cfg["speed_cap"],cfg["speed_growth"]**(level-1))
 
 class GameState:
-    def __init__(self, entries, cfg=None):
-        self.cfg = cfg or CONFIG
-        self.pool = WordPool(entries)
-
-        self.score = 0
-        self.lives = self.cfg["start_lives"]
-        self.level = 1
-        self.streak = 0
-        self.best_streak = 0
-
-        self.words = []
-        self.input_buffer = ""
-        self.spawn_timer = 0.5
-        self.elapsed = 0.0
-
-        self.correct_count = 0
-        self.mistake_count = 0
-        self.escaped_count = 0
-        self.review = {}
-
-        self.paused = False
-        self.game_over = False
-        self.quit_to_menu = False
-        self.message = ""
-        self.message_until = 0.0
-
-    # ------------------------------------------------------------- helpers
-
-    def active_words(self):
-        return [w for w in self.words if not w.exploding]
-
-    def target_word(self):
-        """Lowest active falling word (the highlighted one)."""
-        if not self.words:
-            return None
-        return max(self.active_words(), key=lambda w: w.y, default=None)
-
-    def flash(self, text, seconds=1.5):
-        self.message = text
-        self.message_until = time.time() + seconds
-
-    def add_review(self, word):
-        info = self.review.setdefault(word.de, {"en": word.en, "count": 0})
-        info["count"] += 1
-
-    # -------------------------------------------------------------- update
-
-    def update(self, dt, play_height, play_width):
-        if self.paused or self.game_over:
-            return
-
-        self.elapsed += dt
-        self.spawn_timer -= dt
-        if self.spawn_timer <= 0 and len(self.active_words()) < max_words(self.level):
-            self.spawn_word(play_width)
-            self.spawn_timer = spawn_interval(self.level)
-
-        speed = fall_speed(self.level)
+    def __init__(self,vocab,progress,categories=None,articles_mode=None,plural_mode=None,learn_mode=False):
+        self.all_vocab=list(vocab); self.categories=set(categories or [])
+        filtered=filter_by_category(self.all_vocab,self.categories or None)
+        self.vocab=eligible_words(filtered, CONFIG["plural_mode"] if plural_mode is None else plural_mode)
+        self.progress=progress; self.articles_mode=articles_mode or CONFIG["articles_mode"]
+        self.plural_mode=CONFIG["plural_mode"] if plural_mode is None else plural_mode
+        if self.plural_mode: self.vocab=eligible_words(self.vocab,True)
+        self.learn_mode=learn_mode
+        self.picker=Picker(self.vocab,progress.data["words"],CONFIG["recent_words_memory"])
+        self.score=0; self.lives=CONFIG["start_lives"]; self.infinite_lives=False
+        self.speed_scale=1.0; self.level=1; self.streak=0
+        self.correct_count=0; self.mistakes=0; self.words=[]; self.input_buffer=""
+        self.spawn_timer=0.5; self.feedback=""; self.feedback_until=0
+        self.missed_log=defaultdict(int); self.words_seen=set(); self.learn_turn=0
+        self.learn_current=None; self.learn_due=deque(); self.started_at=time.monotonic()
+        self.game_over=False; self.paused=False; self.field_height=20
+        self.level_message_until=0; self.last_level=self.level
+    def spawn_interval(self): return spawn_interval(self.level)
+    def max_words(self): return 1 if self.learn_mode else max_words(self.level)
+    def speed(self): return 0 if self.learn_mode else speed_for(self.level) * self.speed_scale
+    def change_speed(self, amount):
+        self.speed_scale = max(0.25, min(3.0, round(self.speed_scale + amount, 2)))
         for word in self.words:
-            word.update(dt * speed)
-
-        for word in self.active_words():
-            if word.y >= play_height:
-                self.escape_word(word)
-
-        now = time.time()
-        self.words = [
-            w for w in self.words
-            if not w.exploding or (now - w.explode_start) < self.cfg["explosion_time"]
-        ]
-
-    def spawn_word(self, play_width):
-        entry = self.pool.next()
-        label = "[ %s ]" % entry["en"]
-        max_x = max(1, play_width - len(label) - 2)
-        x = 1
-        for _ in range(12):
-            candidate = random.randint(1, max_x)
-            if not self._overlaps_at_top(candidate, len(label)):
-                x = candidate
-                break
-        self.words.append(FallingWord(entry, x, time.time()))
-
-    def _overlaps_at_top(self, x, length):
-        for w in self.active_words():
-            if w.y > 3:
-                continue
-            w_len = len(w.en) + 4
-            if not (x + length < w.x or w.x + w_len < x):
-                return True
-        return False
-
-    # ------------------------------------------------------------- results
-
-    def escape_word(self, word):
-        word.matched = True
-        word.explode_start = time.time()
-        self.add_review(word)
-        self.escaped_count += 1
-        self.streak = 0
-        self.lives -= 1
-        self.flash(
-            '✗ "%s" (%s) escaped!  -1 life' % (word.de, word.en), 2.0
-        )
-        if self.lives <= 0:
-            self.lives = 0
-            self.game_over = True
-
-    def submit_input(self):
-        text = self.input_buffer.strip()
-        self.input_buffer = ""
-        if not text:
+            if word.state == WordState.FALLING:
+                word.speed = max(0.05, word.speed + speed_for(self.level) * amount)
+                word.fall_time = self.field_height / max(word.speed, 0.01)
+        self._feedback(f"Fall speed: {self.speed_scale:.2f}x", 1.2)
+    def toggle_infinite_lives(self):
+        self.infinite_lives = not self.infinite_lives
+        if self.infinite_lives:
+            self.lives = max(self.lives, CONFIG["start_lives"])
+        self._feedback("Infinite lives: ON" if self.infinite_lives else "Infinite lives: OFF", 1.5)
+    def _feedback(self,msg,seconds=2): self.feedback=msg; self.feedback_until=time.monotonic()+seconds
+    def spawn_word(self,field_width=80):
+        active=[w.entry["en"] for w in self.words if w.state==WordState.FALLING]
+        entry=self.picker.pick(active)
+        if not entry: return None
+        plural=self.plural_mode and entry.get("pl")
+        answer=entry["pl"] if plural else entry["de"]
+        # German == English == Urdu, e.g. [ Hallo == Hello == ہیلو ]
+        parts=make_parts(answer,entry); prompt=" == ".join(parts)
+        label=f"[ {prompt} ]"; max_x=max(0,field_width-len(label)-2)
+        x=random.randint(0,max_x) if max_x else 0
+        w=FallingWord(entry,prompt,answer,x,self.speed(),time.monotonic(),self.field_height,
+                      parts=parts,colors=random_word_colors())
+        self.words.append(w); self.words_seen.add(entry["de"]); self.progress.record_seen(entry["de"])
+        return w
+    def _forms(self,w):
+        answer=normalize(w.answer); forms=[(answer,1.0)]
+        if not self.plural_mode and w.entry["pos"]=="noun":
+            if self.articles_mode=="optional": forms.append((normalize(strip_article(w.answer)),0.5))
+            elif self.articles_mode=="off": forms=[(normalize(strip_article(w.answer)),1.0)]
+        return forms
+    def try_match(self,value):
+        norm=normalize(value)
+        if not norm: return False
+        matches=[]
+        for w in self.words:
+            if w.state==WordState.FALLING:
+                for form,mult in self._forms(w):
+                    if norm==form: matches.append((w,mult))
+        if not matches: return False
+        w,mult=max(matches,key=lambda pair:pair[0].y)
+        self.solve(w,mult); return True
+    def submit(self):
+        value=self.input_buffer.strip()
+        if not value: return
+        if self.try_match(value):
+            self.input_buffer=""; return
+        # Missing article gets a teaching prompt, not a penalty.
+        for w in self.words:
+            if w.state==WordState.FALLING and w.entry["pos"]=="noun" and self.articles_mode=="required":
+                if normalize(strip_article(w.answer))==normalize(value):
+                    self._feedback(f"Need the article: {w.answer}",2); self.streak=0; self.input_buffer=""; return
+        near=None
+        for w in self.words:
+            if w.state==WordState.FALLING:
+                for form,_ in self._forms(w):
+                    d=edit_distance(value,form)
+                    if d==1: near=w; break
+            if near: break
+        if near:
+            self._feedback(f"Almost! {value} → {near.answer}",2); self.streak=0; self.input_buffer=""; return
+        self.score=max(0,self.score-CONFIG["wrong_penalty"]); self.streak=0; self.mistakes+=1
+        self._feedback(f"Wrong: {value} — no matching word",1.5); self.input_buffer=""
+        _event("wrong")
+    def solve(self,w,multiplier=1.0):
+        if w.state!=WordState.FALLING: return
+        elapsed=time.monotonic()-w.spawn_time
+        bonus=CONFIG["speed_bonus_points"] if elapsed<=w.fall_time*CONFIG["speed_bonus_fraction"] else 0
+        self.streak+=1; raw=10*self.level+bonus
+        factor=2 if self.streak>=5 else 1.5 if self.streak>=3 else 1
+        points=round(raw*factor*multiplier); self.score+=points
+        self.correct_count+=1; self.progress.record_correct(w.entry["de"])
+        w.state=WordState.SOLVED; w.resolve_time=time.monotonic()
+        if SOLVE_HOOK: SOLVE_HOOK(w.answer)   # play the German pronunciation
+        _event("solve")
+        if self.streak>=5: _event("streak")
+        if self.streak%5==0:
+            self.lives=min(CONFIG["max_lives"],self.lives+1); _event("life")
+        old=self.level; self.level=1+self.correct_count//CONFIG["level_up_every"]
+        if self.level>old:
+            self._feedback(f"LEVEL UP! Level {self.level} — speed increased",2); _event("level_up")
+        else: self._feedback(f"+{points}  {w.answer}",1.2)
+        if self.learn_mode: self.learn_current=None
+    def lose_life(self,w):
+        if w.state!=WordState.FALLING: return
+        w.state=WordState.MISSED; w.resolve_time=time.monotonic()
+        if not self.learn_mode and not self.infinite_lives:
+            self.lives-=1; _event("miss")
+            if self.lives<=0: _event("game_over")
+        if self.infinite_lives: _event("miss")
+        self.streak=0; self.mistakes+=1; self.missed_log[w.entry["de"]]+=1
+        self.progress.record_missed(w.entry["de"])
+        self._feedback(f"Missed: {w.answer} = {w.entry['en']}",2)
+        if self.learn_mode:
+            self.learn_due.append((self.learn_turn+3,w.entry))
+    def update(self,dt,field_width=80):
+        if self.paused or self.game_over: return
+        now=time.monotonic()
+        if self.feedback and now>self.feedback_until: self.feedback=""
+        if self.learn_mode:
+            self.learn_turn+=1
+            self.words=[w for w in self.words if w.state==WordState.FALLING]
+            if not self.words:
+                if self.learn_due and self.learn_due[0][0]<=self.learn_turn:
+                    _,entry=self.learn_due.popleft()
+                    self._spawn_specific(entry,field_width)
+                elif self.learn_current is None:
+                    self.spawn_word(field_width)
             return
-
-        target = None
-        for word in sorted(self.active_words(), key=lambda w: w.y, reverse=True):
-            if word.matches(text):
-                target = word
-                break
-
-        if target is not None:
-            self.handle_correct(target)
-        else:
-            self.handle_wrong(text)
-
-    def handle_correct(self, word):
-        word.matched = True
-        word.explode_start = time.time()
-
-        self.streak += 1
-        self.best_streak = max(self.best_streak, self.streak)
-        self.correct_count += 1
-
-        points = self.cfg["base_points"] * self.level
-        mult = streak_multiplier(self.streak)
-        if time.time() - word.spawn_time < self.cfg["speed_bonus_window"]:
-            points += self.cfg["speed_bonus"]
-        self.score += int(round(points * mult))
-
-        if self.streak > 0 and self.streak % self.cfg["streak_life_every"] == 0 \
-                and self.lives < self.cfg["max_lives"]:
-            self.lives += 1
-            self.flash("♥ EXTRA LIFE! (%s in a row)" % self.streak, 2.0)
-        elif mult > 1.0:
-            self.flash("✔ %s  + %s  (x%s streak)" % (word.de, points, mult), 1.0)
-        else:
-            self.flash("✔ %s  + %s" % (word.de, points), 1.0)
-
-        if self.correct_count % self.cfg["level_up_every"] == 0:
-            self.level += 1
-            self.flash("★ LEVEL UP! Speed increased (level %s)" % self.level, 2.0)
-
-    def handle_wrong(self, text):
-        self.mistake_count += 1
-        self.streak = 0
-        self.score = max(0, self.score - self.cfg["wrong_penalty"])
-
-        best = None
-        best_len = -1
-        norm_input = normalize(text)
-        for word in self.active_words():
-            n = common_prefix_len(norm_input, normalize(word.target_text()))
-            if n > best_len:
-                best, best_len = word, n
-
-        if best is not None and best_len >= 2:
-            self.add_review(best)
-            gender = " (%s)" % best.gender if best.gender else ""
-            self.flash('✗ "%s" → correct was "%s"%s' % (text, best.de, gender), 2.5)
-        else:
-            self.flash('✗ "%s" — no match!  -%s' % (text, self.cfg["wrong_penalty"]), 2.0)
-
-    # ------------------------------------------------------------ summary
-
+        self.spawn_timer-=dt
+        if self.spawn_timer<=0 and sum(w.state==WordState.FALLING for w in self.words)<self.max_words():
+            self.spawn_word(field_width); self.spawn_timer=self.spawn_interval()
+        for w in self.words:
+            if w.state==WordState.FALLING:
+                w.update(dt)
+                if w.y>=self.field_height: self.lose_life(w)
+        now=time.monotonic()
+        self.words=[w for w in self.words if w.state==WordState.FALLING
+                    or w.resolve_time is None
+                    or now-w.resolve_time<CONFIG["explosion_time"]]
+        if self.lives<=0 and not self.infinite_lives: self.game_over=True
+    def _spawn_specific(self,entry,field_width):
+        parts=make_parts(entry["de"],entry); prompt=" == ".join(parts)
+        label=f"[ {prompt} ]"
+        x=max(0,min(field_width-len(label)-2,2))
+        w=FallingWord(entry,prompt,entry["de"],x,0,time.monotonic(),self.field_height,
+                      parts=parts,colors=random_word_colors())
+        self.words.append(w); self.learn_current=w; self.words_seen.add(entry["de"])
+        self.progress.record_seen(entry["de"])
     def summary(self):
-        weakest = sorted(self.review.items(), key=lambda kv: kv[1]["count"], reverse=True)
-        return {
-            "score": self.score,
-            "level": self.level,
-            "correct": self.correct_count,
-            "mistakes": self.mistake_count,
-            "escaped": self.escaped_count,
-            "best_streak": self.best_streak,
-            "unique_words": len(self.pool.seen_de),
-            "review": weakest[:6],
-        }
+        total=self.correct_count+self.mistakes
+        accuracy=100*self.correct_count/total if total else 0
+        return {"score":self.score,"level":self.level,"correct":self.correct_count,
+                "mistakes":self.mistakes,"accuracy":accuracy,"words_seen":len(self.words_seen),
+                "missed":sorted(self.missed_log.items(),key=lambda x:-x[1])}

@@ -1,50 +1,29 @@
-"""Keyboard input: typing, backspace, submit, pause, quit, UTF-8 umlauts."""
-
+"""get_wch-based input, preserving Unicode characters such as ä and ß."""
 import curses
-
-BACKSPACE_KEYS = (curses.KEY_BACKSPACE, 127, 8, curses.KEY_DC)
-ENTER_KEYS = (curses.KEY_ENTER, 10, 13)
-ESC_KEY = 27
-
-_MULTIBYTE_MAP = {0xA4: "ae", 0xB6: "oe", 0xBC: "ue", 0x9F: "ss"}
-
-
-class InputHandler:
-    def __init__(self, state):
-        self.state = state
-        self._pending_c3 = False
-
-    def handle(self, key):
-        state = self.state
-
-        if self._pending_c3:
-            self._pending_c3 = False
-            if isinstance(key, int) and (key & 0xFF) in _MULTIBYTE_MAP:
-                self._append(_MULTIBYTE_MAP[key & 0xFF])
-            return
-
-        if state.paused:
-            if key in (ESC_KEY, ord("p"), ord("P")):
-                state.paused = False
-                state.flash("", 0)
-            elif key in (ord("q"), ord("Q")):
-                state.quit_to_menu = True
-            return
-
-        if key == ESC_KEY:
-            state.paused = True
-            state.flash("", 0)
-        elif key in BACKSPACE_KEYS:
-            state.input_buffer = state.input_buffer[:-1]
-        elif key in ENTER_KEYS:
-            state.submit_input()
-        elif key == curses.KEY_RESIZE:
-            pass
-        elif key == 195:
-            self._pending_c3 = True
-        elif 32 <= key <= 126:
-            self._append(chr(key))
-
-    def _append(self, ch):
-        if len(self.state.input_buffer) < 40:
-            self.state.input_buffer += ch
+import audio
+import sfx
+BACKSPACE_KEYS={8,127,curses.KEY_BACKSPACE,"\x08","\x7f"}
+def read_keys(stdscr):
+    keys=[]
+    while True:
+        try: key=stdscr.get_wch()
+        except curses.error: break
+        keys.append(key)
+    return keys
+def handle_key(key,state):
+    if key==curses.KEY_RESIZE: return "resize"
+    if key==(curses.KEY_F0+2):                      # F2: pronunciation on/off
+        on=audio.get_speaker().toggle(); state._feedback("Sound: ON" if on else "Sound: OFF",1.2); return None
+    if key==(curses.KEY_F0+3):                      # F3: native sound effects on/off
+        on=sfx.get_sfx().toggle(); state._feedback(f"SFX: {'ON' if on else 'OFF'} ({sfx.get_sfx().backend})",1.2); return None
+    if key=="\t": state.toggle_infinite_lives(); return None   # Tab: infinite lives
+    if key in ("+","="): state.change_speed(0.25); return None
+    if key in ("-","_"): state.change_speed(-0.25); return None
+    if key in ("\x03",): return "quit"
+    if key in BACKSPACE_KEYS: state.input_buffer=state.input_buffer[:-1]; return None
+    if key in ("\n","\r",curses.KEY_ENTER): state.submit(); return None
+    if key=="\x1b": return "pause"
+    if isinstance(key,str) and key.isprintable() and len(state.input_buffer)<40:
+        state.input_buffer+=key
+        if state.try_match(state.input_buffer): state.input_buffer=""
+    return None
