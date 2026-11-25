@@ -1235,7 +1235,7 @@
  },
  {
   "de": "wohnen",
-  "en": "to live",
+  "en": "to live (reside)",
   "pos": "verb",
   "pl": null,
   "category": "verbs",
@@ -1285,7 +1285,7 @@
  },
  {
   "de": "können",
-  "en": "can/be able to",
+  "en": "to be able to",
   "pos": "verb",
   "pl": null,
   "category": "verbs",
@@ -1294,7 +1294,7 @@
  },
  {
   "de": "müssen",
-  "en": "must/have to",
+  "en": "to have to",
   "pos": "verb",
   "pl": null,
   "category": "verbs",
@@ -1518,7 +1518,7 @@
  },
  {
   "de": "leben",
-  "en": "to live",
+  "en": "to live (be alive)",
   "pos": "verb",
   "pl": null,
   "category": "verbs",
@@ -3012,7 +3012,8 @@
   "en": "to arrive",
   "pos": "verb",
   "pl": null,
-  "category": "verbs"
+  "category": "verbs",
+  "ur": "پہنچنا"
  },
  {
   "de": "anrufen",
@@ -3187,7 +3188,8 @@
   "en": "warm",
   "pos": "adj",
   "pl": null,
-  "category": "adjectives"
+  "category": "adjectives",
+  "ur": "ہلکا گرم"
  },
  {
   "de": "rosa",

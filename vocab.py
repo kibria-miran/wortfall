@@ -1,7 +1,12 @@
 """Vocabulary loading, validation, category filtering and the word picker."""
-import json, random
+import json
+import random
 from collections import deque
 from pathlib import Path
+
+from config import CONFIG
+from textnorm import normalize
+
 ALLOWED_POS = {"noun","verb","adj","num","phrase","pron","prep","adv","q"}
 REQUIRED = {"de","en","pos","pl","category"}
 
@@ -41,19 +46,59 @@ def filter_by_category(words, categories=None):
 def eligible_words(words, plural_mode=False):
     return [w for w in words if w.get("pl")] if plural_mode else list(words)
 
+def count_words(words, categories=None, plural_mode=False):
+    """How many words a session would get with these menu settings (2.15 guard)."""
+    return len(eligible_words(filter_by_category(words, categories), plural_mode))
+
+def word_key(word):
+    """Typed-form key of an entry: normalized, spaces removed (2.1/2.2 guard)."""
+    return normalize(word["de"]).replace(" ", "")
+
 class Picker:
-    """Purely random word order: uniform choice, never repeating the last N words.
-    (Progress data is still recorded for the session summary; it no longer biases picks.)"""
-    def __init__(self, words, progress=None, recent_max=8):
-        self.words = list(words); self.progress = progress or {}
+    """Chooses the next falling word.
+
+    - Collision guard: never return a word whose typed key is equal to, a prefix
+      of, or a superstring of a currently falling word's key (es/essen, a/an, sie/Sie).
+    - Random order with optional weak-word weighting: unseen and often-missed
+      words come back more often; perfectly-known words get no boost. Toggleable
+      for pure random order.
+    """
+    def __init__(self, words, progress=None, recent_max=8, weighted=True):
+        self.words = list(words)
+        self.progress = progress or {}
         self.recent = deque(maxlen=recent_max)
-    def pick(self, active_glosses=()):
-        active = set(active_glosses)
-        pool = [w for w in self.words if w["de"] not in self.recent and w["en"] not in active]
-        if not pool: pool = [w for w in self.words if w["en"] not in active]
-        if not pool: pool = [w for w in self.words if w["de"] not in self.recent]
-        if not pool: pool = list(self.words)
+        self.weighted = weighted
+
+    def weight(self, word):
+        stats = self.progress.get(word["de"], {})
+        seen, missed = stats.get("seen", 0), stats.get("missed", 0)
+        if not seen:
+            return CONFIG["unseen_weight"]
+        ratio = missed / max(1, seen)
+        return 1.0 + CONFIG["missed_weight"] * min(ratio, 1.0)
+
+    def pick(self, active_keys=()):
+        active = set(active_keys)
+
+        def collides(word):
+            key = word_key(word)
+            return any(k == key or k.startswith(key) or key.startswith(k) for k in active)
+
+        # Fallback order keeps the collision guard strongest: a stuck pool relaxes
+        # the recent-words rule first, exact-duplicate exclusion last.
+        pool = [w for w in self.words
+                if word_key(w) not in self.recent and not collides(w)]
+        if not pool:
+            pool = [w for w in self.words if not collides(w)]
+        if not pool:
+            pool = [w for w in self.words
+                    if word_key(w) not in self.recent]
+        if not pool:
+            pool = list(self.words)
         if not pool: return None
-        word = random.choice(pool)
-        self.recent.append(word["de"])
+        if self.weighted:
+            word = random.choices(pool, weights=[self.weight(w) for w in pool], k=1)[0]
+        else:
+            word = random.choice(pool)
+        self.recent.append(word_key(word))
         return word

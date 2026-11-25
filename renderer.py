@@ -139,9 +139,10 @@ def _blink_on(word, now):
     return phase < 1
 
 
-def draw_word(stdscr, word, y, is_target, urgent, height, width):
+def draw_word(stdscr, word, y, is_target, urgent, height, width, hide_de=False):
     """[ German == English == Urdu ] — German holds steady while the English and
-    Urdu blink on/off like a switching light."""
+    Urdu blink on/off like a switching light. With hide_de (recall mode) the
+    German is not shown: the player types it from the meaning."""
     import theme
     parts = list(word.parts) if word.parts else [word.prompt]
     cols = list(word.colors) if word.colors else ["yellow", "cyan", "pink"]
@@ -164,8 +165,8 @@ def draw_word(stdscr, word, y, is_target, urgent, height, width):
 
     put("[ ", frame)
     for i, text in enumerate(parts):
-        on = True
-        if i > 0:
+        on = (i != 0 or not hide_de)
+        if on and i > 0:
             on = _blink_on(word, time.monotonic())
         shown = shape(i, text)
         attr = color(cols[i % 3]) | styles[i % 3]
@@ -262,20 +263,23 @@ def draw(stdscr, state, mode="playing", high_score=0, category_label="All"):
         safe_add(stdscr, 9, sx, " ]", color("comment"))
         centered(stdscr, 10, "English/Urdu blink · type the German word", color("comment"))
         centered(stdscr, 12, f"High score: {high_score}", color("yellow"))
-        centered(stdscr, 14, "[ ENTER ]  START GAME", color("green") | curses.A_BOLD)
-        centered(stdscr, 15, f"[ C ] Category: {category_label}    [ L ] Learn mode", color("fg"))
-        centered(stdscr, 16, f"[ A ] Articles: {state.articles_mode}    [ P ] Plurals: {'ON' if state.plural_mode else 'OFF'}", color("fg"))
-        centered(stdscr, 17, f"[ U ] Urdu: {'shaped' if URDU_SHAPED else 'raw'}    [ F2 ] {audio.get_speaker().label()}    [ F3 ] {sfx.get_sfx().label()}", color("orange"))
-        centered(stdscr, 18, "In game:  SPACE clears typing · +/- speed · TAB infinite lives", color("comment"))
-        centered(stdscr, 19, "German letters: ä=ae  ö=oe  ü=ue  ß=ss", color("comment"))
+        centered(stdscr, 14, "[ ENTER ]  START          [ L ] LEARN MODE", color("green") | curses.A_BOLD)
+        centered(stdscr, 15, f"[ C ] Category: {category_label}    [ A ] Articles: {state.articles_mode}    [ P ] Plurals: {'ON' if state.plural_mode else 'OFF'}", color("fg"))
+        centered(stdscr, 16, f"[ R ] Recall: {'ON (type German from meaning)' if state.recall_mode else 'OFF'}", color("cyan"))
+        centered(stdscr, 17, f"[ W ] Weak-word review: {'ON' if state.weighted else 'OFF (pure random)'}", color("fg"))
+        centered(stdscr, 18, f"[ U ] Urdu: {'shaped' if URDU_SHAPED else 'raw'}    [ F2 ] {audio.get_speaker().label()}    [ F3 ] {sfx.get_sfx().label()}", color("orange"))
+        centered(stdscr, 19, "In game:  SPACE clears typing · +/- speed · TAB infinite lives", color("comment"))
+        centered(stdscr, 20, "German letters: ä=ae  ö=oe  ü=ue  ß=ss · '?' skips in learn mode", color("comment"))
         centered(stdscr, 21, "ESC ESC — exit", color("comment"))
+        if state.feedback and time.monotonic() < state.feedback_until:
+            centered(stdscr, 22, state.feedback, color("orange") | curses.A_BOLD)
     elif mode == "paused":
         box_w = 42
         top = max(2, h // 2 - 3)
         left = max(0, (w - box_w) // 2)
         safe_add(stdscr, top, left, "┌" + "─" * box_w + "┐", title)
         centered(stdscr, top + 1, "P A U S E D", title)
-        centered(stdscr, top + 3, "ESC resume  ·  ESC ESC save & exit  ·  Q quit", color("fg"))
+        centered(stdscr, top + 3, "any key resume  ·  Q save & quit", color("fg"))
         safe_add(stdscr, top + 5, left, "└" + "─" * box_w + "┘", title)
     elif mode == "summary":
         s = state.summary()
@@ -302,18 +306,29 @@ def draw(stdscr, state, mode="playing", high_score=0, category_label="All"):
             if word.state == WordState.FALLING:
                 target = bool(active) and word is active[0]
                 urgent = word.elapsed_fraction() >= .9
-                draw_word(stdscr, word, int(word.y) + 2, target, urgent, h, w)
+                draw_word(stdscr, word, int(word.y) + 2, target, urgent, h, w,
+                          hide_de=state.recall_mode and not state.learn_mode)
+                note = word.entry.get("note")
+                if state.learn_mode and note:
+                    safe_add(stdscr, int(word.y) + 3, word.x, f"ℹ {note}",
+                             color("comment") | curses.A_DIM)
             elif word.state in (WordState.SOLVED, WordState.MISSED):
                 draw_effect(stdscr, word, h, w)
         hint = ""
         if active:
             target = active[0]
-            if target.elapsed_fraction() >= .5:
-                if target.entry["pos"] == "noun":
+            frac = target.elapsed_fraction()
+            note = target.entry.get("note")
+            if frac >= .75:
+                if note:
+                    hint = f"ℹ {note}"
+                elif target.entry["pos"] == "noun":
                     art = _article_hint(target)
                     hint = f"hint: {art} ___" if art else f"hint: {target.answer.split()[0]} ___"
                 else:
                     hint = f"hint: {target.answer[0]}…"
+            elif frac >= .5:
+                hint = f"hint: {target.answer[0]}…"
         safe_add(stdscr, h - 3, 1, hint, color("yellow"))
         right = f"F2 {audio.get_speaker().label()} · F3 {sfx.get_sfx().label()}"
         safe_add(stdscr, h - 3, max(1, w - display_width(right) - 2), right, color("comment") | curses.A_DIM)

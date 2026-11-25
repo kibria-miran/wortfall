@@ -17,10 +17,18 @@ CONFIG = {
     "min_terminal_width": 80, "min_terminal_height": 24,
     "explosion_time": 0.55,          # seconds solved/missed word animation stays
     "danger_rows": 2,                # bottom field rows tinted as the danger zone
+    "learn_requeue_turns": 3,        # learn mode: resolve N words before a skipped one returns
+    "autosave_seconds": 30,          # progress autosave interval during play
     "sfx_enabled": True,
     "sfx_volume": 0.45,              # 0.0–1.0 for synthesized effect wave files
     "en_ur_blink": 0.5,              # seconds per on/off phase of the blinking English/Urdu text
     "weather_cycle": 40.0,           # seconds per weather phase: clear → cloudy → rain → snow
+    "recall_mode": True,             # hide the German; type it from the English/Urdu meaning
+    "weak_word_review": True,        # weight the picker towards often-missed words
+    "time_per_char": 0.3,            # extra fall seconds per character (long words get more time)
+    "article_bonus": 1.5,            # optional-article mode: mult for typing "das haus" vs "haus"
+    "unseen_weight": 1.5,            # picker weight for words never seen
+    "missed_weight": 2.0,            # picker weight factor for missed/seen ratio
 }
 
 # Dracula accent colour names used for random word colours (see theme.py for the palette).

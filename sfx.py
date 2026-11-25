@@ -28,7 +28,7 @@ RATE = 22050  # 22.05 kHz mono 16-bit — tiny files, plenty for UI blips
 
 # note sequences: (frequency Hz, duration s) — None = silence
 EFFECTS = {
-    "solve":     ((1047, .07), (1319, .07), (1568, .12)),          # C6 E6 G6 chime
+    # no "solve" effect: correctly typed words stay silent (removed by design)
     "wrong":     ((150, .10), (110, .14)),                          # low double-buzz
     "miss":      ((392, .10), (294, .10), (220, .16)),              # falling C-G-C
     "level_up":  ((523, .08), (659, .08), (784, .08), (1047, .18)), # C5 E5 G5 C6 fanfare

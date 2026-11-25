@@ -5,12 +5,13 @@ from pathlib import Path
 class Progress:
     def __init__(self, path):
         self.path = Path(path).expanduser()
-        self.data = {"words": {}, "high_score": 0}
+        self.data = {"version": 1, "words": {}, "high_score": 0}
         self.load()
     def load(self):
         try:
             obj = json.loads(self.path.read_text(encoding="utf-8"))
             if isinstance(obj, dict):
+                if isinstance(obj.get("version"), int): self.data["version"] = obj["version"]
                 if isinstance(obj.get("words"), dict): self.data["words"] = obj["words"]
                 if isinstance(obj.get("high_score"), int): self.data["high_score"] = obj["high_score"]
         except (OSError, ValueError, TypeError):

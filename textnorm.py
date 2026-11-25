@@ -1,6 +1,11 @@
-"""Unicode-friendly normalization, article handling and edit distance."""
+"""Unicode-friendly normalization, article handling, width and edit distance."""
+import re
+import unicodedata
+
 ARTICLES = ("der", "die", "das")
 MAP = {"ä":"ae", "ö":"oe", "ü":"ue", "ß":"ss"}
+# punctuation/quotes/dots are never part of a typed answer ("Wie geht's?" == "wie gehts")
+PUNCT = re.compile(r"[^\w\s]", re.UNICODE)
 
 def normalize(value):
     if value is None:
@@ -8,7 +13,8 @@ def normalize(value):
     value = " ".join(str(value).lower().strip().split())
     for src, dst in MAP.items():
         value = value.replace(src, dst)
-    return value
+    value = PUNCT.sub("", value)
+    return " ".join(value.split())
 
 def strip_article(value):
     value = normalize(value)
@@ -36,3 +42,8 @@ def edit_distance(a, b):
 
 def edit_distance_one(a, b):
     return normalize(a) != normalize(b) and edit_distance(a, b) == 1
+
+def display_width(text):
+    """Terminal cell width (combining marks take no cell)."""
+    return sum(0 if unicodedata.combining(ch) or unicodedata.category(ch) == "Mn" else
+               2 if unicodedata.east_asian_width(ch) in "WF" else 1 for ch in str(text))

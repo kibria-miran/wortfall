@@ -1,5 +1,7 @@
 """Dracula colour theme, per-language text styles and Urdu display helpers."""
-import curses, unicodedata
+import curses
+
+from textnorm import display_width as _display_width
 
 # Dracula palette -> nearest xterm-256 colour index (exact hex in comments).
 DRACULA = {
@@ -48,9 +50,8 @@ STYLE_EN = ITALIC                   # English: italic
 STYLE_UR = curses.A_NORMAL          # Urdu: regular weight
 
 def display_width(text):
-    """Terminal cell width (combining marks take no cell)."""
-    return sum(0 if unicodedata.combining(ch) or unicodedata.category(ch) == "Mn" else
-               2 if unicodedata.east_asian_width(ch) in "WF" else 1 for ch in text)
+    """Terminal cell width (implemented in textnorm so game logic can use it too)."""
+    return _display_width(text)
 
 _shaping_ok = None
 def shaping_available():
