@@ -1,4 +1,4 @@
-"""Vocabulary loading, validation, category filtering and spaced-repetition picker."""
+"""Vocabulary loading, validation, category filtering and the word picker."""
 import json, random
 from collections import deque
 from pathlib import Path
@@ -42,20 +42,18 @@ def eligible_words(words, plural_mode=False):
     return [w for w in words if w.get("pl")] if plural_mode else list(words)
 
 class Picker:
+    """Purely random word order: uniform choice, never repeating the last N words.
+    (Progress data is still recorded for the session summary; it no longer biases picks.)"""
     def __init__(self, words, progress=None, recent_max=8):
         self.words = list(words); self.progress = progress or {}
         self.recent = deque(maxlen=recent_max)
-    def weight(self, word):
-        stats = self.progress.get(word["de"], {})
-        seen, missed = stats.get("seen",0), stats.get("missed",0)
-        if not seen: return 2.0
-        ratio = missed / max(1, seen)
-        return 1.0 + 3.0 * ratio
     def pick(self, active_glosses=()):
         active = set(active_glosses)
         pool = [w for w in self.words if w["de"] not in self.recent and w["en"] not in active]
         if not pool: pool = [w for w in self.words if w["en"] not in active]
+        if not pool: pool = [w for w in self.words if w["de"] not in self.recent]
+        if not pool: pool = list(self.words)
         if not pool: return None
-        word = random.choices(pool, weights=[self.weight(w) for w in pool], k=1)[0]
+        word = random.choice(pool)
         self.recent.append(word["de"])
         return word

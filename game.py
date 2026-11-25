@@ -12,7 +12,8 @@ def set_solve_hook(fn):
     global SOLVE_HOOK; SOLVE_HOOK = fn
 
 # Optional callback(name) fired on game events for sound effects.
-# Names: "solve", "wrong", "miss", "level_up", "life", "streak", "game_over"
+# Names: "wrong", "miss", "level_up", "life", "streak", "game_over"
+# (No chime plays for a correctly typed word; the solve sound was removed.)
 EVENT_HOOK = None
 def set_event_hook(fn):
     global EVENT_HOOK; EVENT_HOOK = fn
@@ -81,36 +82,42 @@ class GameState:
     def _forms(self,w):
         answer=normalize(w.answer); forms=[(answer,1.0)]
         if not self.plural_mode and w.entry["pos"]=="noun":
-            if self.articles_mode=="optional": forms.append((normalize(strip_article(w.answer)),0.5))
+            # SPACE clears the buffer, so the article-free form earns full points too.
+            if self.articles_mode=="optional": forms.append((normalize(strip_article(w.answer)),1.0))
             elif self.articles_mode=="off": forms=[(normalize(strip_article(w.answer)),1.0)]
         return forms
+    def _keys(self,w):
+        """Accepted typed forms; spaces are ignored so multi-word answers also match
+        spaceless (SPACE resets typing, it is never part of a German answer)."""
+        keys=set()
+        for form,_ in self._forms(w):
+            keys.add(form); keys.add(form.replace(" ",""))
+        return keys
     def try_match(self,value):
-        norm=normalize(value)
-        if not norm: return False
+        norm=normalize(value); flat=norm.replace(" ","")
+        if not flat: return False
         matches=[]
         for w in self.words:
-            if w.state==WordState.FALLING:
-                for form,mult in self._forms(w):
-                    if norm==form: matches.append((w,mult))
+            if w.state==WordState.FALLING and flat in self._keys(w):
+                matches.append((w,self._forms(w)[0][1]))
         if not matches: return False
-        w,mult=max(matches,key=lambda pair:pair[0].y)
-        self.solve(w,mult); return True
+        w,_=max(matches,key=lambda pair:pair[0].y)
+        self.solve(w); return True
     def submit(self):
-        value=self.input_buffer.strip()
-        if not value: return
+        value=self.input_buffer.strip(); flat=normalize(value).replace(" ","")
+        if not flat: return
         if self.try_match(value):
             self.input_buffer=""; return
         # Missing article gets a teaching prompt, not a penalty.
         for w in self.words:
             if w.state==WordState.FALLING and w.entry["pos"]=="noun" and self.articles_mode=="required":
-                if normalize(strip_article(w.answer))==normalize(value):
+                if flat==normalize(strip_article(w.answer)).replace(" ",""):
                     self._feedback(f"Need the article: {w.answer}",2); self.streak=0; self.input_buffer=""; return
         near=None
         for w in self.words:
             if w.state==WordState.FALLING:
-                for form,_ in self._forms(w):
-                    d=edit_distance(value,form)
-                    if d==1: near=w; break
+                for key in self._keys(w):
+                    if edit_distance(flat,key)==1: near=w; break
             if near: break
         if near:
             self._feedback(f"Almost! {value} → {near.answer}",2); self.streak=0; self.input_buffer=""; return
@@ -126,8 +133,7 @@ class GameState:
         points=round(raw*factor*multiplier); self.score+=points
         self.correct_count+=1; self.progress.record_correct(w.entry["de"])
         w.state=WordState.SOLVED; w.resolve_time=time.monotonic()
-        if SOLVE_HOOK: SOLVE_HOOK(w.answer)   # play the German pronunciation
-        _event("solve")
+        if SOLVE_HOOK: SOLVE_HOOK(w.answer)   # speak the German word only — no chime
         if self.streak>=5: _event("streak")
         if self.streak%5==0:
             self.lives=min(CONFIG["max_lives"],self.lives+1); _event("life")

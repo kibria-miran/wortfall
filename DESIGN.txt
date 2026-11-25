@@ -1,5 +1,20 @@
 WORTFALL — implementation notes
 
+UI/behaviour update (v2.2):
+- Cleaner UI: one-line header (WORTFALL · SCORE · hearts · LV · streak ×n), thin
+  field separators, hint line, minimal typing line; the old control strip is gone
+  (F2/F3 labels moved to the far right of the hint line; +/- and Tab still work).
+- No sound on a correctly typed word: the solve chime was removed. Only the
+  pronunciation hook (F2) responds to a solve.
+- `[ German == English == Urdu ]`: German stays constant while English and Urdu
+  blink on/off (light-switch effect, per-word phase).
+- Purely random falling order: the progress-weighted picker was replaced by a
+  uniform random Picker (recent/on-screen words still excluded).
+- Living background: twinkling stars, flying birds, cycling weather
+  (clear → cloudy → rain → snow), all time-procedural and drawn behind words.
+- SPACE resets the typing buffer; matching ignores spaces, so multi-word answers
+  (e.g. `dashaus`) still work; articles default to optional at full points.
+
 Implements the supplied Design Document v2: curses-only terminal game; 30 FPS
 monotonic timing; required noun articles by default; optional/off article modes;
 plural practice; all-active-word matching; recent-word and duplicate-gloss avoidance;
@@ -31,8 +46,9 @@ Benefits/UI update (v2.1 merge):
 - Hint bar colour-codes articles for the lowest word: der=cyan, die=red, das=green.
 
 Native audio update:
-- New sfx.py: synthesized-in-Python WAV effects (solve chime, wrong buzz, miss
-  descent, level-up fanfare, life sparkle, streak riff, game-over dirge), cached
+- sfx.py: synthesized-in-Python WAV effects (wrong buzz, miss descent, level-up
+  fanfare, life sparkle, streak riff, game-over dirge; the solve chime is unused),
+  cached
   in ~/.wortfall/sfx, played natively via paplay (PipeWire) -> aplay (ALSA) ->
   ffplay; terminal bell as last resort. Non-blocking; toggle with F3.
 - Event hook added in game.py (set_event_hook) so game logic stays curses-free;

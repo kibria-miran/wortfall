@@ -1,2754 +1,3856 @@
 [
-  {
-    "de": "das Haus",
-    "en": "house",
-    "pos": "noun",
-    "pl": "die Häuser",
-    "category": "home",
-    "ur": "گھر"
-  },
-  {
-    "de": "das Wasser",
-    "en": "water",
-    "pos": "noun",
-    "pl": null,
-    "category": "food",
-    "ur": "پانی"
-  },
-  {
-    "de": "der Apfel",
-    "en": "apple",
-    "pos": "noun",
-    "pl": "die Äpfel",
-    "category": "food",
-    "ur": "سیب"
-  },
-  {
-    "de": "das Buch",
-    "en": "book",
-    "pos": "noun",
-    "pl": "die Bücher",
-    "category": "objects",
-    "ur": "کتاب"
-  },
-  {
-    "de": "die Katze",
-    "en": "cat",
-    "pos": "noun",
-    "pl": "die Katzen",
-    "category": "animals",
-    "ur": "بلی"
-  },
-  {
-    "de": "der Hund",
-    "en": "dog",
-    "pos": "noun",
-    "pl": "die Hunde",
-    "category": "animals",
-    "ur": "کتا"
-  },
-  {
-    "de": "die Frau",
-    "en": "woman",
-    "pos": "noun",
-    "pl": "die Frauen",
-    "category": "people",
-    "ur": "عورت"
-  },
-  {
-    "de": "der Mann",
-    "en": "man",
-    "pos": "noun",
-    "pl": "die Männer",
-    "category": "people",
-    "ur": "آدمی"
-  },
-  {
-    "de": "das Kind",
-    "en": "child",
-    "pos": "noun",
-    "pl": "die Kinder",
-    "category": "family",
-    "ur": "بچہ"
-  },
-  {
-    "de": "die Schule",
-    "en": "school",
-    "pos": "noun",
-    "pl": "die Schulen",
-    "category": "places",
-    "ur": "اسکول"
-  },
-  {
-    "de": "der Tisch",
-    "en": "table",
-    "pos": "noun",
-    "pl": "die Tische",
-    "category": "home",
-    "ur": "میز"
-  },
-  {
-    "de": "der Stuhl",
-    "en": "chair",
-    "pos": "noun",
-    "pl": "die Stühle",
-    "category": "home",
-    "ur": "کرسی"
-  },
-  {
-    "de": "die Tür",
-    "en": "door",
-    "pos": "noun",
-    "pl": "die Türen",
-    "category": "home",
-    "ur": "دروازہ"
-  },
-  {
-    "de": "das Fenster",
-    "en": "window",
-    "pos": "noun",
-    "pl": "die Fenster",
-    "category": "home",
-    "ur": "کھڑکی"
-  },
-  {
-    "de": "die Straße",
-    "en": "street",
-    "pos": "noun",
-    "pl": "die Straßen",
-    "category": "places",
-    "ur": "سڑک"
-  },
-  {
-    "de": "der Baum",
-    "en": "tree",
-    "pos": "noun",
-    "pl": "die Bäume",
-    "category": "nature",
-    "ur": "درخت"
-  },
-  {
-    "de": "die Blume",
-    "en": "flower",
-    "pos": "noun",
-    "pl": "die Blumen",
-    "category": "nature",
-    "ur": "پھول"
-  },
-  {
-    "de": "das Auto",
-    "en": "car",
-    "pos": "noun",
-    "pl": "die Autos",
-    "category": "transport",
-    "ur": "گاڑی"
-  },
-  {
-    "de": "der Zug",
-    "en": "train",
-    "pos": "noun",
-    "pl": "die Züge",
-    "category": "transport",
-    "ur": "ریل گاڑی"
-  },
-  {
-    "de": "das Brot",
-    "en": "bread",
-    "pos": "noun",
-    "pl": "die Brote",
-    "category": "food",
-    "ur": "روٹی"
-  },
-  {
-    "de": "die Milch",
-    "en": "milk",
-    "pos": "noun",
-    "pl": null,
-    "category": "food",
-    "ur": "دودھ"
-  },
-  {
-    "de": "der Käse",
-    "en": "cheese",
-    "pos": "noun",
-    "pl": null,
-    "category": "food",
-    "ur": "پنیر"
-  },
-  {
-    "de": "das Ei",
-    "en": "egg",
-    "pos": "noun",
-    "pl": "die Eier",
-    "category": "food",
-    "ur": "انڈا"
-  },
-  {
-    "de": "der Fisch",
-    "en": "fish",
-    "pos": "noun",
-    "pl": "die Fische",
-    "category": "food",
-    "ur": "مچھلی"
-  },
-  {
-    "de": "der Freund",
-    "en": "friend",
-    "pos": "noun",
-    "pl": "die Freunde",
-    "category": "people",
-    "ur": "دوست"
-  },
-  {
-    "de": "die Familie",
-    "en": "family",
-    "pos": "noun",
-    "pl": "die Familien",
-    "category": "family",
-    "ur": "خاندان"
-  },
-  {
-    "de": "der Tag",
-    "en": "day",
-    "pos": "noun",
-    "pl": "die Tage",
-    "category": "time",
-    "ur": "دن"
-  },
-  {
-    "de": "die Nacht",
-    "en": "night",
-    "pos": "noun",
-    "pl": "die Nächte",
-    "category": "time",
-    "ur": "رات"
-  },
-  {
-    "de": "die Zeit",
-    "en": "time",
-    "pos": "noun",
-    "pl": null,
-    "category": "time",
-    "ur": "وقت"
-  },
-  {
-    "de": "das Jahr",
-    "en": "year",
-    "pos": "noun",
-    "pl": "die Jahre",
-    "category": "time",
-    "ur": "سال"
-  },
-  {
-    "de": "der Morgen",
-    "en": "morning",
-    "pos": "noun",
-    "pl": "die Morgen",
-    "category": "time",
-    "ur": "صبح"
-  },
-  {
-    "de": "der Abend",
-    "en": "evening",
-    "pos": "noun",
-    "pl": "die Abende",
-    "category": "time",
-    "ur": "شام"
-  },
-  {
-    "de": "die Stadt",
-    "en": "city",
-    "pos": "noun",
-    "pl": "die Städte",
-    "category": "places",
-    "ur": "شہر"
-  },
-  {
-    "de": "das Land",
-    "en": "country",
-    "pos": "noun",
-    "pl": "die Länder",
-    "category": "places",
-    "ur": "ملک"
-  },
-  {
-    "de": "das Meer",
-    "en": "sea",
-    "pos": "noun",
-    "pl": "die Meere",
-    "category": "nature",
-    "ur": "سمندر"
-  },
-  {
-    "de": "der Berg",
-    "en": "mountain",
-    "pos": "noun",
-    "pl": "die Berge",
-    "category": "nature",
-    "ur": "پہاڑ"
-  },
-  {
-    "de": "der Himmel",
-    "en": "sky",
-    "pos": "noun",
-    "pl": null,
-    "category": "nature",
-    "ur": "آسمان"
-  },
-  {
-    "de": "die Sonne",
-    "en": "sun",
-    "pos": "noun",
-    "pl": "die Sonnen",
-    "category": "nature",
-    "ur": "سورج"
-  },
-  {
-    "de": "der Mond",
-    "en": "moon",
-    "pos": "noun",
-    "pl": "die Monde",
-    "category": "nature",
-    "ur": "چاند"
-  },
-  {
-    "de": "der Regen",
-    "en": "rain",
-    "pos": "noun",
-    "pl": null,
-    "category": "nature",
-    "ur": "بارش"
-  },
-  {
-    "de": "der Schnee",
-    "en": "snow",
-    "pos": "noun",
-    "pl": null,
-    "category": "nature",
-    "ur": "برف"
-  },
-  {
-    "de": "die Farbe",
-    "en": "color",
-    "pos": "noun",
-    "pl": "die Farben",
-    "category": "objects",
-    "ur": "رنگ"
-  },
-  {
-    "de": "die Mutter",
-    "en": "mother",
-    "pos": "noun",
-    "pl": "die Mütter",
-    "category": "family",
-    "ur": "ماں"
-  },
-  {
-    "de": "der Vater",
-    "en": "father",
-    "pos": "noun",
-    "pl": "die Väter",
-    "category": "family",
-    "ur": "باپ"
-  },
-  {
-    "de": "der Bruder",
-    "en": "brother",
-    "pos": "noun",
-    "pl": "die Brüder",
-    "category": "family",
-    "ur": "بھائی"
-  },
-  {
-    "de": "die Schwester",
-    "en": "sister",
-    "pos": "noun",
-    "pl": "die Schwestern",
-    "category": "family",
-    "ur": "بہن"
-  },
-  {
-    "de": "die Eltern",
-    "en": "parents",
-    "pos": "noun",
-    "pl": null,
-    "category": "family",
-    "ur": "والدین"
-  },
-  {
-    "de": "die Oma",
-    "en": "grandma",
-    "pos": "noun",
-    "pl": "die Omas",
-    "category": "family",
-    "ur": "دادی"
-  },
-  {
-    "de": "der Opa",
-    "en": "grandpa",
-    "pos": "noun",
-    "pl": "die Opas",
-    "category": "family",
-    "ur": "دادا"
-  },
-  {
-    "de": "der Sohn",
-    "en": "son",
-    "pos": "noun",
-    "pl": "die Söhne",
-    "category": "family",
-    "ur": "بیٹا"
-  },
-  {
-    "de": "die Tochter",
-    "en": "daughter",
-    "pos": "noun",
-    "pl": "die Töchter",
-    "category": "family",
-    "ur": "بیٹی"
-  },
-  {
-    "de": "der Kopf",
-    "en": "head",
-    "pos": "noun",
-    "pl": "die Köpfe",
-    "category": "body",
-    "ur": "سر"
-  },
-  {
-    "de": "die Hand",
-    "en": "hand",
-    "pos": "noun",
-    "pl": "die Hände",
-    "category": "body",
-    "ur": "ہاتھ"
-  },
-  {
-    "de": "das Auge",
-    "en": "eye",
-    "pos": "noun",
-    "pl": "die Augen",
-    "category": "body",
-    "ur": "آنکھ"
-  },
-  {
-    "de": "das Ohr",
-    "en": "ear",
-    "pos": "noun",
-    "pl": "die Ohren",
-    "category": "body",
-    "ur": "کان"
-  },
-  {
-    "de": "die Nase",
-    "en": "nose",
-    "pos": "noun",
-    "pl": "die Nasen",
-    "category": "body",
-    "ur": "ناک"
-  },
-  {
-    "de": "der Mund",
-    "en": "mouth",
-    "pos": "noun",
-    "pl": "die Münder",
-    "category": "body",
-    "ur": "منہ"
-  },
-  {
-    "de": "der Fuß",
-    "en": "foot",
-    "pos": "noun",
-    "pl": "die Füße",
-    "category": "body",
-    "ur": "پاؤں"
-  },
-  {
-    "de": "der Arm",
-    "en": "arm",
-    "pos": "noun",
-    "pl": "die Arme",
-    "category": "body",
-    "ur": "بازو"
-  },
-  {
-    "de": "das Bein",
-    "en": "leg",
-    "pos": "noun",
-    "pl": "die Beine",
-    "category": "body",
-    "ur": "ٹانگ"
-  },
-  {
-    "de": "der Schuh",
-    "en": "shoe",
-    "pos": "noun",
-    "pl": "die Schuhe",
-    "category": "clothes",
-    "ur": "جوتا"
-  },
-  {
-    "de": "die Hose",
-    "en": "trousers",
-    "pos": "noun",
-    "pl": "die Hosen",
-    "category": "clothes",
-    "ur": "پتلون"
-  },
-  {
-    "de": "das Hemd",
-    "en": "shirt",
-    "pos": "noun",
-    "pl": "die Hemden",
-    "category": "clothes",
-    "ur": "قمیض"
-  },
-  {
-    "de": "die Jacke",
-    "en": "jacket",
-    "pos": "noun",
-    "pl": "die Jacken",
-    "category": "clothes",
-    "ur": "جیکٹ"
-  },
-  {
-    "de": "das Kleid",
-    "en": "dress",
-    "pos": "noun",
-    "pl": "die Kleider",
-    "category": "clothes",
-    "ur": "لباس"
-  },
-  {
-    "de": "der Mantel",
-    "en": "coat",
-    "pos": "noun",
-    "pl": "die Mäntel",
-    "category": "clothes",
-    "ur": "کوٹ"
-  },
-  {
-    "de": "die Tasche",
-    "en": "bag",
-    "pos": "noun",
-    "pl": "die Taschen",
-    "category": "objects",
-    "ur": "بیگ"
-  },
-  {
-    "de": "der Schlüssel",
-    "en": "key",
-    "pos": "noun",
-    "pl": "die Schlüssel",
-    "category": "objects",
-    "ur": "چابی"
-  },
-  {
-    "de": "das Handy",
-    "en": "mobile phone",
-    "pos": "noun",
-    "pl": "die Handys",
-    "category": "technology",
-    "ur": "موبائل فون"
-  },
-  {
-    "de": "der Computer",
-    "en": "computer",
-    "pos": "noun",
-    "pl": "die Computer",
-    "category": "technology",
-    "ur": "کمپیوٹر"
-  },
-  {
-    "de": "der Stift",
-    "en": "pen",
-    "pos": "noun",
-    "pl": "die Stifte",
-    "category": "school",
-    "ur": "قلم"
-  },
-  {
-    "de": "das Papier",
-    "en": "paper",
-    "pos": "noun",
-    "pl": "die Papiere",
-    "category": "school",
-    "ur": "کاغذ"
-  },
-  {
-    "de": "die Zeitung",
-    "en": "newspaper",
-    "pos": "noun",
-    "pl": "die Zeitungen",
-    "category": "objects",
-    "ur": "اخبار"
-  },
-  {
-    "de": "die Uhr",
-    "en": "clock",
-    "pos": "noun",
-    "pl": "die Uhren",
-    "category": "time",
-    "ur": "گھڑی"
-  },
-  {
-    "de": "das Geld",
-    "en": "money",
-    "pos": "noun",
-    "pl": null,
-    "category": "shopping",
-    "ur": "پیسے"
-  },
-  {
-    "de": "der Euro",
-    "en": "euro",
-    "pos": "noun",
-    "pl": "die Euro",
-    "category": "shopping",
-    "ur": "یورو"
-  },
-  {
-    "de": "der Laden",
-    "en": "shop",
-    "pos": "noun",
-    "pl": "die Läden",
-    "category": "shopping",
-    "ur": "دکان"
-  },
-  {
-    "de": "der Markt",
-    "en": "market",
-    "pos": "noun",
-    "pl": "die Märkte",
-    "category": "shopping",
-    "ur": "بازار"
-  },
-  {
-    "de": "das Zimmer",
-    "en": "room",
-    "pos": "noun",
-    "pl": "die Zimmer",
-    "category": "home",
-    "ur": "کمرہ"
-  },
-  {
-    "de": "die Küche",
-    "en": "kitchen",
-    "pos": "noun",
-    "pl": "die Küchen",
-    "category": "home",
-    "ur": "باورچی خانہ"
-  },
-  {
-    "de": "das Bad",
-    "en": "bathroom",
-    "pos": "noun",
-    "pl": "die Bäder",
-    "category": "home",
-    "ur": "غسل خانہ"
-  },
-  {
-    "de": "das Bett",
-    "en": "bed",
-    "pos": "noun",
-    "pl": "die Betten",
-    "category": "home",
-    "ur": "بستر"
-  },
-  {
-    "de": "der Garten",
-    "en": "garden",
-    "pos": "noun",
-    "pl": "die Gärten",
-    "category": "home",
-    "ur": "باغ"
-  },
-  {
-    "de": "die Wohnung",
-    "en": "apartment",
-    "pos": "noun",
-    "pl": "die Wohnungen",
-    "category": "home",
-    "ur": "اپارٹمنٹ"
-  },
-  {
-    "de": "der Bahnhof",
-    "en": "train station",
-    "pos": "noun",
-    "pl": "die Bahnhöfe",
-    "category": "transport",
-    "ur": "ریلوے اسٹیشن"
-  },
-  {
-    "de": "der Flughafen",
-    "en": "airport",
-    "pos": "noun",
-    "pl": "die Flughäfen",
-    "category": "transport",
-    "ur": "ہوائی اڈہ"
-  },
-  {
-    "de": "der Bus",
-    "en": "bus",
-    "pos": "noun",
-    "pl": "die Busse",
-    "category": "transport",
-    "ur": "بس"
-  },
-  {
-    "de": "das Fahrrad",
-    "en": "bicycle",
-    "pos": "noun",
-    "pl": "die Fahrräder",
-    "category": "transport",
-    "ur": "سائیکل"
-  },
-  {
-    "de": "das Taxi",
-    "en": "taxi",
-    "pos": "noun",
-    "pl": "die Taxis",
-    "category": "transport",
-    "ur": "ٹیکسی"
-  },
-  {
-    "de": "die Banane",
-    "en": "banana",
-    "pos": "noun",
-    "pl": "die Bananen",
-    "category": "food",
-    "ur": "کیلا"
-  },
-  {
-    "de": "die Orange",
-    "en": "orange",
-    "pos": "noun",
-    "pl": "die Orangen",
-    "category": "food",
-    "ur": "مالٹا"
-  },
-  {
-    "de": "die Kartoffel",
-    "en": "potato",
-    "pos": "noun",
-    "pl": "die Kartoffeln",
-    "category": "food",
-    "ur": "آلو"
-  },
-  {
-    "de": "die Tomate",
-    "en": "tomato",
-    "pos": "noun",
-    "pl": "die Tomaten",
-    "category": "food",
-    "ur": "ٹماٹر"
-  },
-  {
-    "de": "die Zwiebel",
-    "en": "onion",
-    "pos": "noun",
-    "pl": "die Zwiebeln",
-    "category": "food",
-    "ur": "پیاز"
-  },
-  {
-    "de": "der Kaffee",
-    "en": "coffee",
-    "pos": "noun",
-    "pl": "die Kaffees",
-    "category": "food",
-    "ur": "کافی"
-  },
-  {
-    "de": "der Tee",
-    "en": "tea",
-    "pos": "noun",
-    "pl": "die Tees",
-    "category": "food",
-    "ur": "چائے"
-  },
-  {
-    "de": "der Saft",
-    "en": "juice",
-    "pos": "noun",
-    "pl": "die Säfte",
-    "category": "food",
-    "ur": "جوس"
-  },
-  {
-    "de": "die Suppe",
-    "en": "soup",
-    "pos": "noun",
-    "pl": "die Suppen",
-    "category": "food",
-    "ur": "سوپ"
-  },
-  {
-    "de": "das Fleisch",
-    "en": "meat",
-    "pos": "noun",
-    "pl": null,
-    "category": "food",
-    "ur": "گوشت"
-  },
-  {
-    "de": "der Kuchen",
-    "en": "cake",
-    "pos": "noun",
-    "pl": "die Kuchen",
-    "category": "food",
-    "ur": "کیک"
-  },
-  {
-    "de": "der Salat",
-    "en": "salad",
-    "pos": "noun",
-    "pl": "die Salate",
-    "category": "food",
-    "ur": "سلاد"
-  },
-  {
-    "de": "das Gemüse",
-    "en": "vegetables",
-    "pos": "noun",
-    "pl": null,
-    "category": "food",
-    "ur": "سبزیاں"
-  },
-  {
-    "de": "der Vogel",
-    "en": "bird",
-    "pos": "noun",
-    "pl": "die Vögel",
-    "category": "animals",
-    "ur": "پرندہ"
-  },
-  {
-    "de": "das Pferd",
-    "en": "horse",
-    "pos": "noun",
-    "pl": "die Pferde",
-    "category": "animals",
-    "ur": "گھوڑا"
-  },
-  {
-    "de": "die Maus",
-    "en": "mouse",
-    "pos": "noun",
-    "pl": "die Mäuse",
-    "category": "animals",
-    "ur": "چوہا"
-  },
-  {
-    "de": "die Kuh",
-    "en": "cow",
-    "pos": "noun",
-    "pl": "die Kühe",
-    "category": "animals",
-    "ur": "گائے"
-  },
-  {
-    "de": "das Schwein",
-    "en": "pig",
-    "pos": "noun",
-    "pl": "die Schweine",
-    "category": "animals",
-    "ur": "سور"
-  },
-  {
-    "de": "das Schaf",
-    "en": "sheep",
-    "pos": "noun",
-    "pl": "die Schafe",
-    "category": "animals",
-    "ur": "بھیڑ"
-  },
-  {
-    "de": "der Lehrer",
-    "en": "teacher",
-    "pos": "noun",
-    "pl": "die Lehrer",
-    "category": "people",
-    "ur": "استاد"
-  },
-  {
-    "de": "die Lehrerin",
-    "en": "female teacher",
-    "pos": "noun",
-    "pl": "die Lehrerinnen",
-    "category": "people",
-    "ur": "استانی"
-  },
-  {
-    "de": "der Arzt",
-    "en": "doctor",
-    "pos": "noun",
-    "pl": "die Ärzte",
-    "category": "people",
-    "ur": "ڈاکٹر"
-  },
-  {
-    "de": "die Ärztin",
-    "en": "female doctor",
-    "pos": "noun",
-    "pl": "die Ärztinnen",
-    "category": "people",
-    "ur": "خاتون ڈاکٹر"
-  },
-  {
-    "de": "der Student",
-    "en": "student",
-    "pos": "noun",
-    "pl": "die Studenten",
-    "category": "people",
-    "ur": "طالب علم"
-  },
-  {
-    "de": "die Studentin",
-    "en": "female student",
-    "pos": "noun",
-    "pl": "die Studentinnen",
-    "category": "people",
-    "ur": "طالبہ"
-  },
-  {
-    "de": "der Nachbar",
-    "en": "neighbor",
-    "pos": "noun",
-    "pl": "die Nachbarn",
-    "category": "people",
-    "ur": "پڑوسی"
-  },
-  {
-    "de": "die Nachbarin",
-    "en": "female neighbor",
-    "pos": "noun",
-    "pl": "die Nachbarinnen",
-    "category": "people",
-    "ur": "پڑوسن"
-  },
-  {
-    "de": "der Name",
-    "en": "name",
-    "pos": "noun",
-    "pl": "die Namen",
-    "category": "people",
-    "ur": "نام"
-  },
-  {
-    "de": "die Sprache",
-    "en": "language",
-    "pos": "noun",
-    "pl": "die Sprachen",
-    "category": "school",
-    "ur": "زبان"
-  },
-  {
-    "de": "das Wort",
-    "en": "word",
-    "pos": "noun",
-    "pl": "die Wörter",
-    "category": "school",
-    "ur": "لفظ"
-  },
-  {
-    "de": "die Frage",
-    "en": "question",
-    "pos": "noun",
-    "pl": "die Fragen",
-    "category": "school",
-    "ur": "سوال"
-  },
-  {
-    "de": "die Antwort",
-    "en": "answer",
-    "pos": "noun",
-    "pl": "die Antworten",
-    "category": "school",
-    "ur": "جواب"
-  },
-  {
-    "de": "das Problem",
-    "en": "problem",
-    "pos": "noun",
-    "pl": "die Probleme",
-    "category": "school",
-    "ur": "مسئلہ"
-  },
-  {
-    "de": "die Arbeit",
-    "en": "work",
-    "pos": "noun",
-    "pl": "die Arbeiten",
-    "category": "work",
-    "ur": "کام"
-  },
-  {
-    "de": "der Beruf",
-    "en": "job",
-    "pos": "noun",
-    "pl": "die Berufe",
-    "category": "work",
-    "ur": "پیشہ"
-  },
-  {
-    "de": "das Büro",
-    "en": "office",
-    "pos": "noun",
-    "pl": "die Büros",
-    "category": "work",
-    "ur": "دفتر"
-  },
-  {
-    "de": "der Chef",
-    "en": "boss",
-    "pos": "noun",
-    "pl": "die Chefs",
-    "category": "work",
-    "ur": "باس"
-  },
-  {
-    "de": "die Pause",
-    "en": "break",
-    "pos": "noun",
-    "pl": "die Pausen",
-    "category": "time",
-    "ur": "وقفہ"
-  },
-  {
-    "de": "die Woche",
-    "en": "week",
-    "pos": "noun",
-    "pl": "die Wochen",
-    "category": "time",
-    "ur": "ہفتہ"
-  },
-  {
-    "de": "der Monat",
-    "en": "month",
-    "pos": "noun",
-    "pl": "die Monate",
-    "category": "time",
-    "ur": "مہینہ"
-  },
-  {
-    "de": "der Geburtstag",
-    "en": "birthday",
-    "pos": "noun",
-    "pl": "die Geburtstage",
-    "category": "time",
-    "ur": "سالگرہ"
-  },
-  {
-    "de": "das Wetter",
-    "en": "weather",
-    "pos": "noun",
-    "pl": null,
-    "category": "nature",
-    "ur": "موسم"
-  },
-  {
-    "de": "die Wolke",
-    "en": "cloud",
-    "pos": "noun",
-    "pl": "die Wolken",
-    "category": "nature",
-    "ur": "بادل"
-  },
-  {
-    "de": "der Wind",
-    "en": "wind",
-    "pos": "noun",
-    "pl": "die Winde",
-    "category": "nature",
-    "ur": "ہوا"
-  },
-  {
-    "de": "das Tier",
-    "en": "animal",
-    "pos": "noun",
-    "pl": "die Tiere",
-    "category": "animals",
-    "ur": "جانور"
-  },
-  {
-    "de": "der Park",
-    "en": "park",
-    "pos": "noun",
-    "pl": "die Parks",
-    "category": "places",
-    "ur": "پارک"
-  },
-  {
-    "de": "die Kirche",
-    "en": "church",
-    "pos": "noun",
-    "pl": "die Kirchen",
-    "category": "places",
-    "ur": "گرجا گھر"
-  },
-  {
-    "de": "das Hotel",
-    "en": "hotel",
-    "pos": "noun",
-    "pl": "die Hotels",
-    "category": "places",
-    "ur": "ہوٹل"
-  },
-  {
-    "de": "das Restaurant",
-    "en": "restaurant",
-    "pos": "noun",
-    "pl": "die Restaurants",
-    "category": "places",
-    "ur": "ریستوراں"
-  },
-  {
-    "de": "das Krankenhaus",
-    "en": "hospital",
-    "pos": "noun",
-    "pl": "die Krankenhäuser",
-    "category": "places",
-    "ur": "ہسپتال"
-  },
-  {
-    "de": "die Apotheke",
-    "en": "pharmacy",
-    "pos": "noun",
-    "pl": "die Apotheken",
-    "category": "places",
-    "ur": "دوا خانہ"
-  },
-  {
-    "de": "die Bank",
-    "en": "bank",
-    "pos": "noun",
-    "pl": "die Banken",
-    "category": "places",
-    "ur": "بینک"
-  },
-  {
-    "de": "die Post",
-    "en": "post office",
-    "pos": "noun",
-    "pl": "die Posten",
-    "category": "places",
-    "ur": "ڈاک خانہ"
-  },
-  {
-    "de": "das Dorf",
-    "en": "village",
-    "pos": "noun",
-    "pl": "die Dörfer",
-    "category": "places",
-    "ur": "گاؤں"
-  },
-  {
-    "de": "der Platz",
-    "en": "square/place",
-    "pos": "noun",
-    "pl": "die Plätze",
-    "category": "places",
-    "ur": "چوک"
-  },
-  {
-    "de": "die Musik",
-    "en": "music",
-    "pos": "noun",
-    "pl": null,
-    "category": "leisure",
-    "ur": "موسیقی"
-  },
-  {
-    "de": "der Film",
-    "en": "film",
-    "pos": "noun",
-    "pl": "die Filme",
-    "category": "leisure",
-    "ur": "فلم"
-  },
-  {
-    "de": "das Foto",
-    "en": "photo",
-    "pos": "noun",
-    "pl": "die Fotos",
-    "category": "leisure",
-    "ur": "تصویر"
-  },
-  {
-    "de": "das Spiel",
-    "en": "game",
-    "pos": "noun",
-    "pl": "die Spiele",
-    "category": "leisure",
-    "ur": "کھیل"
-  },
-  {
-    "de": "der Sport",
-    "en": "sport",
-    "pos": "noun",
-    "pl": "die Sportarten",
-    "category": "leisure",
-    "ur": "کھیل کود"
-  },
-  {
-    "de": "der Fußball",
-    "en": "football",
-    "pos": "noun",
-    "pl": "die Fußbälle",
-    "category": "leisure",
-    "ur": "فٹ بال"
-  },
-  {
-    "de": "die Hilfe",
-    "en": "help",
-    "pos": "noun",
-    "pl": null,
-    "category": "daily",
-    "ur": "مدد"
-  },
-  {
-    "de": "sein",
-    "en": "to be",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "ich bin; du bist; er ist",
-    "ur": "ہونا"
-  },
-  {
-    "de": "haben",
-    "en": "to have",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du hast; er hat",
-    "ur": "رکھنا"
-  },
-  {
-    "de": "machen",
-    "en": "to do/make",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "کرنا"
-  },
-  {
-    "de": "wohnen",
-    "en": "to live",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "رہنا"
-  },
-  {
-    "de": "heißen",
-    "en": "to be called",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "نام ہونا"
-  },
-  {
-    "de": "kaufen",
-    "en": "to buy",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "خریدنا"
-  },
-  {
-    "de": "trinken",
-    "en": "to drink",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "پینا"
-  },
-  {
-    "de": "fahren",
-    "en": "to travel/drive",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du fährst; er fährt",
-    "ur": "گاڑی چلانا"
-  },
-  {
-    "de": "wollen",
-    "en": "to want",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "ich will; du willst",
-    "ur": "چاہنا"
-  },
-  {
-    "de": "können",
-    "en": "can/be able to",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "ich kann; du kannst",
-    "ur": "سکنا"
-  },
-  {
-    "de": "müssen",
-    "en": "must/have to",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "ich muss; du musst",
-    "ur": "کرنا پڑنا"
-  },
-  {
-    "de": "essen",
-    "en": "to eat",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du isst; er isst",
-    "ur": "کھانا"
-  },
-  {
-    "de": "gehen",
-    "en": "to go",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "جانا"
-  },
-  {
-    "de": "kommen",
-    "en": "to come",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "آنا"
-  },
-  {
-    "de": "sehen",
-    "en": "to see",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du siehst; er sieht",
-    "ur": "دیکھنا"
-  },
-  {
-    "de": "sprechen",
-    "en": "to speak",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du sprichst; er spricht",
-    "ur": "بولنا"
-  },
-  {
-    "de": "lernen",
-    "en": "to learn",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "سیکھنا"
-  },
-  {
-    "de": "arbeiten",
-    "en": "to work",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "کام کرنا"
-  },
-  {
-    "de": "schlafen",
-    "en": "to sleep",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du schläfst; er schläft",
-    "ur": "سونا"
-  },
-  {
-    "de": "lesen",
-    "en": "to read",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du liest; er liest",
-    "ur": "پڑھنا"
-  },
-  {
-    "de": "schreiben",
-    "en": "to write",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "لکھنا"
-  },
-  {
-    "de": "spielen",
-    "en": "to play",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "کھیلنا"
-  },
-  {
-    "de": "hören",
-    "en": "to hear/listen",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "سننا"
-  },
-  {
-    "de": "fragen",
-    "en": "to ask",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "پوچھنا"
-  },
-  {
-    "de": "antworten",
-    "en": "to answer",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "جواب دینا"
-  },
-  {
-    "de": "suchen",
-    "en": "to search",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "تلاش کرنا"
-  },
-  {
-    "de": "finden",
-    "en": "to find",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "ڈھونڈنا"
-  },
-  {
-    "de": "nehmen",
-    "en": "to take",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du nimmst; er nimmt",
-    "ur": "لینا"
-  },
-  {
-    "de": "geben",
-    "en": "to give",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du gibst; er gibt",
-    "ur": "دینا"
-  },
-  {
-    "de": "bringen",
-    "en": "to bring",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "لانا"
-  },
-  {
-    "de": "bleiben",
-    "en": "to stay",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "ٹھہرنا"
-  },
-  {
-    "de": "öffnen",
-    "en": "to open",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "کھولنا"
-  },
-  {
-    "de": "schließen",
-    "en": "to close",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "بند کرنا"
-  },
-  {
-    "de": "bezahlen",
-    "en": "to pay",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "ادائیگی کرنا"
-  },
-  {
-    "de": "bestellen",
-    "en": "to order",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "آرڈر کرنا"
-  },
-  {
-    "de": "kochen",
-    "en": "to cook",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "پکانا"
-  },
-  {
-    "de": "lieben",
-    "en": "to love",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "محبت کرنا"
-  },
-  {
-    "de": "leben",
-    "en": "to live",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "جینا"
-  },
-  {
-    "de": "reisen",
-    "en": "to travel",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "سفر کرنا"
-  },
-  {
-    "de": "warten",
-    "en": "to wait",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "انتظار کرنا"
-  },
-  {
-    "de": "beginnen",
-    "en": "to begin",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "شروع کرنا"
-  },
-  {
-    "de": "enden",
-    "en": "to end",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "ختم ہونا"
-  },
-  {
-    "de": "tanzen",
-    "en": "to dance",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "ناچنا"
-  },
-  {
-    "de": "schwimmen",
-    "en": "to swim",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "تیرنا"
-  },
-  {
-    "de": "laufen",
-    "en": "to run/walk",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du läufst; er läuft",
-    "ur": "دوڑنا"
-  },
-  {
-    "de": "helfen",
-    "en": "to help",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "du hilfst; er hilft",
-    "ur": "مدد کرنا"
-  },
-  {
-    "de": "kennen",
-    "en": "to know/be familiar",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "واقف ہونا"
-  },
-  {
-    "de": "wissen",
-    "en": "to know a fact",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "note": "ich weiß; du weißt",
-    "ur": "معلوم ہونا"
-  },
-  {
-    "de": "denken",
-    "en": "to think",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "سوچنا"
-  },
-  {
-    "de": "verstehen",
-    "en": "to understand",
-    "pos": "verb",
-    "pl": null,
-    "category": "verbs",
-    "ur": "سمجھنا"
-  },
-  {
-    "de": "rot",
-    "en": "red",
-    "pos": "adj",
-    "pl": null,
-    "category": "colors",
-    "ur": "سرخ"
-  },
-  {
-    "de": "blau",
-    "en": "blue",
-    "pos": "adj",
-    "pl": null,
-    "category": "colors",
-    "ur": "نیلا"
-  },
-  {
-    "de": "grün",
-    "en": "green",
-    "pos": "adj",
-    "pl": null,
-    "category": "colors",
-    "ur": "سبز"
-  },
-  {
-    "de": "gelb",
-    "en": "yellow",
-    "pos": "adj",
-    "pl": null,
-    "category": "colors",
-    "ur": "پیلا"
-  },
-  {
-    "de": "schwarz",
-    "en": "black",
-    "pos": "adj",
-    "pl": null,
-    "category": "colors",
-    "ur": "کالا"
-  },
-  {
-    "de": "weiß",
-    "en": "white",
-    "pos": "adj",
-    "pl": null,
-    "category": "colors",
-    "ur": "سفید"
-  },
-  {
-    "de": "braun",
-    "en": "brown",
-    "pos": "adj",
-    "pl": null,
-    "category": "colors",
-    "ur": "بھورا"
-  },
-  {
-    "de": "groß",
-    "en": "big",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "بڑا"
-  },
-  {
-    "de": "klein",
-    "en": "small",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "چھوٹا"
-  },
-  {
-    "de": "gut",
-    "en": "good",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "اچھا"
-  },
-  {
-    "de": "schlecht",
-    "en": "bad",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "برا"
-  },
-  {
-    "de": "neu",
-    "en": "new",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "نیا"
-  },
-  {
-    "de": "alt",
-    "en": "old",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "پرانا"
-  },
-  {
-    "de": "schön",
-    "en": "beautiful",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "خوبصورت"
-  },
-  {
-    "de": "heiß",
-    "en": "hot",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "گرم"
-  },
-  {
-    "de": "kalt",
-    "en": "cold",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "ٹھنڈا"
-  },
-  {
-    "de": "schnell",
-    "en": "fast",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "تیز"
-  },
-  {
-    "de": "langsam",
-    "en": "slow",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "آہستہ"
-  },
-  {
-    "de": "müde",
-    "en": "tired",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "تھکا ہوا"
-  },
-  {
-    "de": "glücklich",
-    "en": "happy",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "خوش"
-  },
-  {
-    "de": "traurig",
-    "en": "sad",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "اداس"
-  },
-  {
-    "de": "teuer",
-    "en": "expensive",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "مہنگا"
-  },
-  {
-    "de": "billig",
-    "en": "cheap",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "سستا"
-  },
-  {
-    "de": "leicht",
-    "en": "easy/light",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "آسان"
-  },
-  {
-    "de": "schwer",
-    "en": "difficult/heavy",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "مشکل"
-  },
-  {
-    "de": "freundlich",
-    "en": "friendly",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "دوستانہ"
-  },
-  {
-    "de": "wichtig",
-    "en": "important",
-    "pos": "adj",
-    "pl": null,
-    "category": "adjectives",
-    "ur": "اہم"
-  },
-  {
-    "de": "ich",
-    "en": "I",
-    "pos": "pron",
-    "pl": null,
-    "category": "pronouns",
-    "ur": "میں"
-  },
-  {
-    "de": "du",
-    "en": "you informal",
-    "pos": "pron",
-    "pl": null,
-    "category": "pronouns",
-    "ur": "تم"
-  },
-  {
-    "de": "er",
-    "en": "he",
-    "pos": "pron",
-    "pl": null,
-    "category": "pronouns",
-    "ur": "وہ (مرد)"
-  },
-  {
-    "de": "sie",
-    "en": "she/they",
-    "pos": "pron",
-    "pl": null,
-    "category": "pronouns",
-    "ur": "وہ (عورت)"
-  },
-  {
-    "de": "es",
-    "en": "it",
-    "pos": "pron",
-    "pl": null,
-    "category": "pronouns",
-    "ur": "یہ"
-  },
-  {
-    "de": "wir",
-    "en": "we",
-    "pos": "pron",
-    "pl": null,
-    "category": "pronouns",
-    "ur": "ہم"
-  },
-  {
-    "de": "ihr",
-    "en": "you plural",
-    "pos": "pron",
-    "pl": null,
-    "category": "pronouns",
-    "ur": "تم لوگ"
-  },
-  {
-    "de": "Sie",
-    "en": "you formal",
-    "pos": "pron",
-    "pl": null,
-    "category": "pronouns",
-    "ur": "آپ"
-  },
-  {
-    "de": "wer",
-    "en": "who",
-    "pos": "q",
-    "pl": null,
-    "category": "questions",
-    "ur": "کون"
-  },
-  {
-    "de": "was",
-    "en": "what",
-    "pos": "q",
-    "pl": null,
-    "category": "questions",
-    "ur": "کیا"
-  },
-  {
-    "de": "wo",
-    "en": "where",
-    "pos": "q",
-    "pl": null,
-    "category": "questions",
-    "ur": "کہاں"
-  },
-  {
-    "de": "wann",
-    "en": "when",
-    "pos": "q",
-    "pl": null,
-    "category": "questions",
-    "ur": "کب"
-  },
-  {
-    "de": "warum",
-    "en": "why",
-    "pos": "q",
-    "pl": null,
-    "category": "questions",
-    "ur": "کیوں"
-  },
-  {
-    "de": "wie",
-    "en": "how",
-    "pos": "q",
-    "pl": null,
-    "category": "questions",
-    "ur": "کیسے"
-  },
-  {
-    "de": "woher",
-    "en": "where from",
-    "pos": "q",
-    "pl": null,
-    "category": "questions",
-    "ur": "کہاں سے"
-  },
-  {
-    "de": "wohin",
-    "en": "where to",
-    "pos": "q",
-    "pl": null,
-    "category": "questions",
-    "ur": "کدھر"
-  },
-  {
-    "de": "welche",
-    "en": "which",
-    "pos": "q",
-    "pl": null,
-    "category": "questions",
-    "ur": "کون سا"
-  },
-  {
-    "de": "in",
-    "en": "in",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "میں (اندر)"
-  },
-  {
-    "de": "auf",
-    "en": "on",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "پر"
-  },
-  {
-    "de": "mit",
-    "en": "with",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "کے ساتھ"
-  },
-  {
-    "de": "von",
-    "en": "from/of",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "سے"
-  },
-  {
-    "de": "zu",
-    "en": "to",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "کی طرف"
-  },
-  {
-    "de": "nach",
-    "en": "to/after",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "کے بعد"
-  },
-  {
-    "de": "bei",
-    "en": "at/with",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "کے پاس"
-  },
-  {
-    "de": "für",
-    "en": "for",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "کے لیے"
-  },
-  {
-    "de": "aus",
-    "en": "out of/from",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "سے (باہر)"
-  },
-  {
-    "de": "an",
-    "en": "at/on",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "پر (پاس)"
-  },
-  {
-    "de": "unter",
-    "en": "under",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "نیچے"
-  },
-  {
-    "de": "über",
-    "en": "over/about",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "اوپر"
-  },
-  {
-    "de": "vor",
-    "en": "in front of/before",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "سامنے"
-  },
-  {
-    "de": "hinter",
-    "en": "behind",
-    "pos": "prep",
-    "pl": null,
-    "category": "prepositions",
-    "ur": "پیچھے"
-  },
-  {
-    "de": "heute",
-    "en": "today",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "آج"
-  },
-  {
-    "de": "morgen",
-    "en": "tomorrow",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "آنے والا کل"
-  },
-  {
-    "de": "gestern",
-    "en": "yesterday",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "گزشتہ کل"
-  },
-  {
-    "de": "hier",
-    "en": "here",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "یہاں"
-  },
-  {
-    "de": "dort",
-    "en": "there",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "وہاں"
-  },
-  {
-    "de": "sehr",
-    "en": "very",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "بہت"
-  },
-  {
-    "de": "auch",
-    "en": "also",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "بھی"
-  },
-  {
-    "de": "nicht",
-    "en": "not",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "نہیں"
-  },
-  {
-    "de": "immer",
-    "en": "always",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "ہمیشہ"
-  },
-  {
-    "de": "oft",
-    "en": "often",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "اکثر"
-  },
-  {
-    "de": "manchmal",
-    "en": "sometimes",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "کبھی کبھی"
-  },
-  {
-    "de": "zusammen",
-    "en": "together",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "اکٹھے"
-  },
-  {
-    "de": "gern",
-    "en": "gladly",
-    "pos": "adv",
-    "pl": null,
-    "category": "daily",
-    "ur": "خوشی سے"
-  },
-  {
-    "de": "null",
-    "en": "zero",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "صفر"
-  },
-  {
-    "de": "eins",
-    "en": "one",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "ایک"
-  },
-  {
-    "de": "zwei",
-    "en": "two",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "دو"
-  },
-  {
-    "de": "drei",
-    "en": "three",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "تین"
-  },
-  {
-    "de": "vier",
-    "en": "four",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "چار"
-  },
-  {
-    "de": "fünf",
-    "en": "five",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "پانچ"
-  },
-  {
-    "de": "sechs",
-    "en": "six",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "چھ"
-  },
-  {
-    "de": "sieben",
-    "en": "seven",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "سات"
-  },
-  {
-    "de": "acht",
-    "en": "eight",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "آٹھ"
-  },
-  {
-    "de": "neun",
-    "en": "nine",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "نو"
-  },
-  {
-    "de": "zehn",
-    "en": "ten",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "دس"
-  },
-  {
-    "de": "elf",
-    "en": "eleven",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "گیارہ"
-  },
-  {
-    "de": "zwölf",
-    "en": "twelve",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "بارہ"
-  },
-  {
-    "de": "dreizehn",
-    "en": "thirteen",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "تیرہ"
-  },
-  {
-    "de": "vierzehn",
-    "en": "fourteen",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "چودہ"
-  },
-  {
-    "de": "fünfzehn",
-    "en": "fifteen",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "پندرہ"
-  },
-  {
-    "de": "sechzehn",
-    "en": "sixteen",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "سولہ"
-  },
-  {
-    "de": "siebzehn",
-    "en": "seventeen",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "سترہ"
-  },
-  {
-    "de": "achtzehn",
-    "en": "eighteen",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "اٹھارہ"
-  },
-  {
-    "de": "neunzehn",
-    "en": "nineteen",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "انیس"
-  },
-  {
-    "de": "zwanzig",
-    "en": "twenty",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "بیس"
-  },
-  {
-    "de": "dreißig",
-    "en": "thirty",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "تیس"
-  },
-  {
-    "de": "vierzig",
-    "en": "forty",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "چالیس"
-  },
-  {
-    "de": "fünfzig",
-    "en": "fifty",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "پچاس"
-  },
-  {
-    "de": "hundert",
-    "en": "one hundred",
-    "pos": "num",
-    "pl": null,
-    "category": "numbers",
-    "ur": "سو"
-  },
-  {
-    "de": "Montag",
-    "en": "Monday",
-    "pos": "noun",
-    "pl": "die Montags",
-    "category": "weekdays",
-    "ur": "پیر"
-  },
-  {
-    "de": "Dienstag",
-    "en": "Tuesday",
-    "pos": "noun",
-    "pl": "die Dienstags",
-    "category": "weekdays",
-    "ur": "منگل"
-  },
-  {
-    "de": "Mittwoch",
-    "en": "Wednesday",
-    "pos": "noun",
-    "pl": "die Mittwochs",
-    "category": "weekdays",
-    "ur": "بدھ"
-  },
-  {
-    "de": "Donnerstag",
-    "en": "Thursday",
-    "pos": "noun",
-    "pl": "die Donnerstags",
-    "category": "weekdays",
-    "ur": "جمعرات"
-  },
-  {
-    "de": "Freitag",
-    "en": "Friday",
-    "pos": "noun",
-    "pl": "die Freitags",
-    "category": "weekdays",
-    "ur": "جمعہ"
-  },
-  {
-    "de": "Samstag",
-    "en": "Saturday",
-    "pos": "noun",
-    "pl": "die Samstags",
-    "category": "weekdays",
-    "ur": "ہفتہ"
-  },
-  {
-    "de": "Sonntag",
-    "en": "Sunday",
-    "pos": "noun",
-    "pl": "die Sonntags",
-    "category": "weekdays",
-    "ur": "اتوار"
-  },
-  {
-    "de": "Januar",
-    "en": "January",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "جنوری"
-  },
-  {
-    "de": "Februar",
-    "en": "February",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "فروری"
-  },
-  {
-    "de": "März",
-    "en": "March",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "مارچ"
-  },
-  {
-    "de": "April",
-    "en": "April",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "اپریل"
-  },
-  {
-    "de": "Mai",
-    "en": "May",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "مئی"
-  },
-  {
-    "de": "Juni",
-    "en": "June",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "جون"
-  },
-  {
-    "de": "Juli",
-    "en": "July",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "جولائی"
-  },
-  {
-    "de": "August",
-    "en": "August",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "اگست"
-  },
-  {
-    "de": "September",
-    "en": "September",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "ستمبر"
-  },
-  {
-    "de": "Oktober",
-    "en": "October",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "اکتوبر"
-  },
-  {
-    "de": "November",
-    "en": "November",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "نومبر"
-  },
-  {
-    "de": "Dezember",
-    "en": "December",
-    "pos": "noun",
-    "pl": null,
-    "category": "months",
-    "ur": "دسمبر"
-  },
-  {
-    "de": "Hallo",
-    "en": "Hello",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "ہیلو"
-  },
-  {
-    "de": "Guten Morgen",
-    "en": "good morning",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "صبح بخیر"
-  },
-  {
-    "de": "Guten Tag",
-    "en": "good day",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "اچھا دن"
-  },
-  {
-    "de": "Guten Abend",
-    "en": "good evening",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "شام بخیر"
-  },
-  {
-    "de": "Gute Nacht",
-    "en": "good night",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "شب بخیر"
-  },
-  {
-    "de": "Tschüss",
-    "en": "Bye",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "الوداع"
-  },
-  {
-    "de": "Auf Wiedersehen",
-    "en": "goodbye",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "خدا حافظ"
-  },
-  {
-    "de": "Bitte",
-    "en": "please/you're welcome",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "براہ مہربانی"
-  },
-  {
-    "de": "Danke",
-    "en": "thank you",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "شکریہ"
-  },
-  {
-    "de": "Entschuldigung",
-    "en": "excuse me/sorry",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "معاف کیجیے"
-  },
-  {
-    "de": "Ja",
-    "en": "yes",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "جی ہاں"
-  },
-  {
-    "de": "Nein",
-    "en": "no",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "نہیں"
-  },
-  {
-    "de": "Wie geht's?",
-    "en": "how are you?",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "آپ کیسے ہیں؟"
-  },
-  {
-    "de": "Ich heiße ...",
-    "en": "my name is ...",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "میرا نام ... ہے"
-  },
-  {
-    "de": "Ich komme aus ...",
-    "en": "I come from ...",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "میں ... سے آیا ہوں"
-  },
-  {
-    "de": "Wie heißt du?",
-    "en": "what is your name?",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "آپ کا نام کیا ہے؟"
-  },
-  {
-    "de": "Wie viel kostet das?",
-    "en": "how much is that?",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "یہ کتنے کا ہے؟"
-  },
-  {
-    "de": "Ich verstehe",
-    "en": "I understand",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "میں سمجھتا ہوں"
-  },
-  {
-    "de": "Ich verstehe nicht",
-    "en": "I do not understand",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "میں نہیں سمجھتا"
-  },
-  {
-    "de": "Sprechen Sie Englisch?",
-    "en": "do you speak English?",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "کیا آپ انگریزی بولتے ہیں؟"
-  },
-  {
-    "de": "Keine Ahnung",
-    "en": "no idea",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "کوئی اندازہ نہیں"
-  },
-  {
-    "de": "Bis später",
-    "en": "see you later",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "بعد میں ملتے ہیں"
-  },
-  {
-    "de": "Bis morgen",
-    "en": "see you tomorrow",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "کل ملتے ہیں"
-  },
-  {
-    "de": "Gute Reise",
-    "en": "have a good trip",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "سفر بخیر"
-  },
-  {
-    "de": "Herzlich willkommen",
-    "en": "welcome",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "خوش آمدید"
-  },
-  {
-    "de": "Es tut mir leid",
-    "en": "I am sorry",
-    "pos": "phrase",
-    "pl": null,
-    "category": "greetings",
-    "ur": "مجھے افسوس ہے"
-  }
+ {
+  "de": "das Haus",
+  "en": "house",
+  "pos": "noun",
+  "pl": "die Häuser",
+  "category": "home",
+  "ur": "گھر"
+ },
+ {
+  "de": "das Wasser",
+  "en": "water",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "پانی"
+ },
+ {
+  "de": "der Apfel",
+  "en": "apple",
+  "pos": "noun",
+  "pl": "die Äpfel",
+  "category": "food",
+  "ur": "سیب"
+ },
+ {
+  "de": "das Buch",
+  "en": "book",
+  "pos": "noun",
+  "pl": "die Bücher",
+  "category": "objects",
+  "ur": "کتاب"
+ },
+ {
+  "de": "die Katze",
+  "en": "cat",
+  "pos": "noun",
+  "pl": "die Katzen",
+  "category": "animals",
+  "ur": "بلی"
+ },
+ {
+  "de": "der Hund",
+  "en": "dog",
+  "pos": "noun",
+  "pl": "die Hunde",
+  "category": "animals",
+  "ur": "کتا"
+ },
+ {
+  "de": "die Frau",
+  "en": "woman",
+  "pos": "noun",
+  "pl": "die Frauen",
+  "category": "people",
+  "ur": "عورت"
+ },
+ {
+  "de": "der Mann",
+  "en": "man",
+  "pos": "noun",
+  "pl": "die Männer",
+  "category": "people",
+  "ur": "آدمی"
+ },
+ {
+  "de": "das Kind",
+  "en": "child",
+  "pos": "noun",
+  "pl": "die Kinder",
+  "category": "family",
+  "ur": "بچہ"
+ },
+ {
+  "de": "die Schule",
+  "en": "school",
+  "pos": "noun",
+  "pl": "die Schulen",
+  "category": "places",
+  "ur": "اسکول"
+ },
+ {
+  "de": "der Tisch",
+  "en": "table",
+  "pos": "noun",
+  "pl": "die Tische",
+  "category": "home",
+  "ur": "میز"
+ },
+ {
+  "de": "der Stuhl",
+  "en": "chair",
+  "pos": "noun",
+  "pl": "die Stühle",
+  "category": "home",
+  "ur": "کرسی"
+ },
+ {
+  "de": "die Tür",
+  "en": "door",
+  "pos": "noun",
+  "pl": "die Türen",
+  "category": "home",
+  "ur": "دروازہ"
+ },
+ {
+  "de": "das Fenster",
+  "en": "window",
+  "pos": "noun",
+  "pl": "die Fenster",
+  "category": "home",
+  "ur": "کھڑکی"
+ },
+ {
+  "de": "die Straße",
+  "en": "street",
+  "pos": "noun",
+  "pl": "die Straßen",
+  "category": "places",
+  "ur": "سڑک"
+ },
+ {
+  "de": "der Baum",
+  "en": "tree",
+  "pos": "noun",
+  "pl": "die Bäume",
+  "category": "nature",
+  "ur": "درخت"
+ },
+ {
+  "de": "die Blume",
+  "en": "flower",
+  "pos": "noun",
+  "pl": "die Blumen",
+  "category": "nature",
+  "ur": "پھول"
+ },
+ {
+  "de": "das Auto",
+  "en": "car",
+  "pos": "noun",
+  "pl": "die Autos",
+  "category": "transport",
+  "ur": "گاڑی"
+ },
+ {
+  "de": "der Zug",
+  "en": "train",
+  "pos": "noun",
+  "pl": "die Züge",
+  "category": "transport",
+  "ur": "ریل گاڑی"
+ },
+ {
+  "de": "das Brot",
+  "en": "bread",
+  "pos": "noun",
+  "pl": "die Brote",
+  "category": "food",
+  "ur": "روٹی"
+ },
+ {
+  "de": "die Milch",
+  "en": "milk",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "دودھ"
+ },
+ {
+  "de": "der Käse",
+  "en": "cheese",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "پنیر"
+ },
+ {
+  "de": "das Ei",
+  "en": "egg",
+  "pos": "noun",
+  "pl": "die Eier",
+  "category": "food",
+  "ur": "انڈا"
+ },
+ {
+  "de": "der Fisch",
+  "en": "fish",
+  "pos": "noun",
+  "pl": "die Fische",
+  "category": "food",
+  "ur": "مچھلی"
+ },
+ {
+  "de": "der Freund",
+  "en": "friend",
+  "pos": "noun",
+  "pl": "die Freunde",
+  "category": "people",
+  "ur": "دوست"
+ },
+ {
+  "de": "die Familie",
+  "en": "family",
+  "pos": "noun",
+  "pl": "die Familien",
+  "category": "family",
+  "ur": "خاندان"
+ },
+ {
+  "de": "der Tag",
+  "en": "day",
+  "pos": "noun",
+  "pl": "die Tage",
+  "category": "time",
+  "ur": "دن"
+ },
+ {
+  "de": "die Nacht",
+  "en": "night",
+  "pos": "noun",
+  "pl": "die Nächte",
+  "category": "time",
+  "ur": "رات"
+ },
+ {
+  "de": "die Zeit",
+  "en": "time",
+  "pos": "noun",
+  "pl": null,
+  "category": "time",
+  "ur": "وقت"
+ },
+ {
+  "de": "das Jahr",
+  "en": "year",
+  "pos": "noun",
+  "pl": "die Jahre",
+  "category": "time",
+  "ur": "سال"
+ },
+ {
+  "de": "der Morgen",
+  "en": "morning",
+  "pos": "noun",
+  "pl": "die Morgen",
+  "category": "time",
+  "ur": "صبح"
+ },
+ {
+  "de": "der Abend",
+  "en": "evening",
+  "pos": "noun",
+  "pl": "die Abende",
+  "category": "time",
+  "ur": "شام"
+ },
+ {
+  "de": "die Stadt",
+  "en": "city",
+  "pos": "noun",
+  "pl": "die Städte",
+  "category": "places",
+  "ur": "شہر"
+ },
+ {
+  "de": "das Land",
+  "en": "country",
+  "pos": "noun",
+  "pl": "die Länder",
+  "category": "places",
+  "ur": "ملک"
+ },
+ {
+  "de": "das Meer",
+  "en": "sea",
+  "pos": "noun",
+  "pl": "die Meere",
+  "category": "nature",
+  "ur": "سمندر"
+ },
+ {
+  "de": "der Berg",
+  "en": "mountain",
+  "pos": "noun",
+  "pl": "die Berge",
+  "category": "nature",
+  "ur": "پہاڑ"
+ },
+ {
+  "de": "der Himmel",
+  "en": "sky",
+  "pos": "noun",
+  "pl": null,
+  "category": "nature",
+  "ur": "آسمان"
+ },
+ {
+  "de": "die Sonne",
+  "en": "sun",
+  "pos": "noun",
+  "pl": "die Sonnen",
+  "category": "nature",
+  "ur": "سورج"
+ },
+ {
+  "de": "der Mond",
+  "en": "moon",
+  "pos": "noun",
+  "pl": "die Monde",
+  "category": "nature",
+  "ur": "چاند"
+ },
+ {
+  "de": "der Regen",
+  "en": "rain",
+  "pos": "noun",
+  "pl": null,
+  "category": "nature",
+  "ur": "بارش"
+ },
+ {
+  "de": "der Schnee",
+  "en": "snow",
+  "pos": "noun",
+  "pl": null,
+  "category": "nature",
+  "ur": "برف"
+ },
+ {
+  "de": "die Farbe",
+  "en": "color",
+  "pos": "noun",
+  "pl": "die Farben",
+  "category": "objects",
+  "ur": "رنگ"
+ },
+ {
+  "de": "die Mutter",
+  "en": "mother",
+  "pos": "noun",
+  "pl": "die Mütter",
+  "category": "family",
+  "ur": "ماں"
+ },
+ {
+  "de": "der Vater",
+  "en": "father",
+  "pos": "noun",
+  "pl": "die Väter",
+  "category": "family",
+  "ur": "باپ"
+ },
+ {
+  "de": "der Bruder",
+  "en": "brother",
+  "pos": "noun",
+  "pl": "die Brüder",
+  "category": "family",
+  "ur": "بھائی"
+ },
+ {
+  "de": "die Schwester",
+  "en": "sister",
+  "pos": "noun",
+  "pl": "die Schwestern",
+  "category": "family",
+  "ur": "بہن"
+ },
+ {
+  "de": "die Eltern",
+  "en": "parents",
+  "pos": "noun",
+  "pl": null,
+  "category": "family",
+  "ur": "والدین"
+ },
+ {
+  "de": "die Oma",
+  "en": "grandma",
+  "pos": "noun",
+  "pl": "die Omas",
+  "category": "family",
+  "ur": "دادی"
+ },
+ {
+  "de": "der Opa",
+  "en": "grandpa",
+  "pos": "noun",
+  "pl": "die Opas",
+  "category": "family",
+  "ur": "دادا"
+ },
+ {
+  "de": "der Sohn",
+  "en": "son",
+  "pos": "noun",
+  "pl": "die Söhne",
+  "category": "family",
+  "ur": "بیٹا"
+ },
+ {
+  "de": "die Tochter",
+  "en": "daughter",
+  "pos": "noun",
+  "pl": "die Töchter",
+  "category": "family",
+  "ur": "بیٹی"
+ },
+ {
+  "de": "der Kopf",
+  "en": "head",
+  "pos": "noun",
+  "pl": "die Köpfe",
+  "category": "body",
+  "ur": "سر"
+ },
+ {
+  "de": "die Hand",
+  "en": "hand",
+  "pos": "noun",
+  "pl": "die Hände",
+  "category": "body",
+  "ur": "ہاتھ"
+ },
+ {
+  "de": "das Auge",
+  "en": "eye",
+  "pos": "noun",
+  "pl": "die Augen",
+  "category": "body",
+  "ur": "آنکھ"
+ },
+ {
+  "de": "das Ohr",
+  "en": "ear",
+  "pos": "noun",
+  "pl": "die Ohren",
+  "category": "body",
+  "ur": "کان"
+ },
+ {
+  "de": "die Nase",
+  "en": "nose",
+  "pos": "noun",
+  "pl": "die Nasen",
+  "category": "body",
+  "ur": "ناک"
+ },
+ {
+  "de": "der Mund",
+  "en": "mouth",
+  "pos": "noun",
+  "pl": "die Münder",
+  "category": "body",
+  "ur": "منہ"
+ },
+ {
+  "de": "der Fuß",
+  "en": "foot",
+  "pos": "noun",
+  "pl": "die Füße",
+  "category": "body",
+  "ur": "پاؤں"
+ },
+ {
+  "de": "der Arm",
+  "en": "arm",
+  "pos": "noun",
+  "pl": "die Arme",
+  "category": "body",
+  "ur": "بازو"
+ },
+ {
+  "de": "das Bein",
+  "en": "leg",
+  "pos": "noun",
+  "pl": "die Beine",
+  "category": "body",
+  "ur": "ٹانگ"
+ },
+ {
+  "de": "der Schuh",
+  "en": "shoe",
+  "pos": "noun",
+  "pl": "die Schuhe",
+  "category": "clothes",
+  "ur": "جوتا"
+ },
+ {
+  "de": "die Hose",
+  "en": "trousers",
+  "pos": "noun",
+  "pl": "die Hosen",
+  "category": "clothes",
+  "ur": "پتلون"
+ },
+ {
+  "de": "das Hemd",
+  "en": "shirt",
+  "pos": "noun",
+  "pl": "die Hemden",
+  "category": "clothes",
+  "ur": "قمیض"
+ },
+ {
+  "de": "die Jacke",
+  "en": "jacket",
+  "pos": "noun",
+  "pl": "die Jacken",
+  "category": "clothes",
+  "ur": "جیکٹ"
+ },
+ {
+  "de": "das Kleid",
+  "en": "dress",
+  "pos": "noun",
+  "pl": "die Kleider",
+  "category": "clothes",
+  "ur": "لباس"
+ },
+ {
+  "de": "der Mantel",
+  "en": "coat",
+  "pos": "noun",
+  "pl": "die Mäntel",
+  "category": "clothes",
+  "ur": "کوٹ"
+ },
+ {
+  "de": "die Tasche",
+  "en": "bag",
+  "pos": "noun",
+  "pl": "die Taschen",
+  "category": "objects",
+  "ur": "بیگ"
+ },
+ {
+  "de": "der Schlüssel",
+  "en": "key",
+  "pos": "noun",
+  "pl": "die Schlüssel",
+  "category": "objects",
+  "ur": "چابی"
+ },
+ {
+  "de": "das Handy",
+  "en": "mobile phone",
+  "pos": "noun",
+  "pl": "die Handys",
+  "category": "technology",
+  "ur": "موبائل فون"
+ },
+ {
+  "de": "der Computer",
+  "en": "computer",
+  "pos": "noun",
+  "pl": "die Computer",
+  "category": "technology",
+  "ur": "کمپیوٹر"
+ },
+ {
+  "de": "der Stift",
+  "en": "pen",
+  "pos": "noun",
+  "pl": "die Stifte",
+  "category": "school",
+  "ur": "قلم"
+ },
+ {
+  "de": "das Papier",
+  "en": "paper",
+  "pos": "noun",
+  "pl": "die Papiere",
+  "category": "school",
+  "ur": "کاغذ"
+ },
+ {
+  "de": "die Zeitung",
+  "en": "newspaper",
+  "pos": "noun",
+  "pl": "die Zeitungen",
+  "category": "objects",
+  "ur": "اخبار"
+ },
+ {
+  "de": "die Uhr",
+  "en": "clock",
+  "pos": "noun",
+  "pl": "die Uhren",
+  "category": "time",
+  "ur": "گھڑی"
+ },
+ {
+  "de": "das Geld",
+  "en": "money",
+  "pos": "noun",
+  "pl": null,
+  "category": "shopping",
+  "ur": "پیسے"
+ },
+ {
+  "de": "der Euro",
+  "en": "euro",
+  "pos": "noun",
+  "pl": "die Euro",
+  "category": "shopping",
+  "ur": "یورو"
+ },
+ {
+  "de": "der Laden",
+  "en": "shop",
+  "pos": "noun",
+  "pl": "die Läden",
+  "category": "shopping",
+  "ur": "دکان"
+ },
+ {
+  "de": "der Markt",
+  "en": "market",
+  "pos": "noun",
+  "pl": "die Märkte",
+  "category": "shopping",
+  "ur": "بازار"
+ },
+ {
+  "de": "das Zimmer",
+  "en": "room",
+  "pos": "noun",
+  "pl": "die Zimmer",
+  "category": "home",
+  "ur": "کمرہ"
+ },
+ {
+  "de": "die Küche",
+  "en": "kitchen",
+  "pos": "noun",
+  "pl": "die Küchen",
+  "category": "home",
+  "ur": "باورچی خانہ"
+ },
+ {
+  "de": "das Bad",
+  "en": "bathroom",
+  "pos": "noun",
+  "pl": "die Bäder",
+  "category": "home",
+  "ur": "غسل خانہ"
+ },
+ {
+  "de": "das Bett",
+  "en": "bed",
+  "pos": "noun",
+  "pl": "die Betten",
+  "category": "home",
+  "ur": "بستر"
+ },
+ {
+  "de": "der Garten",
+  "en": "garden",
+  "pos": "noun",
+  "pl": "die Gärten",
+  "category": "home",
+  "ur": "باغ"
+ },
+ {
+  "de": "die Wohnung",
+  "en": "apartment",
+  "pos": "noun",
+  "pl": "die Wohnungen",
+  "category": "home",
+  "ur": "اپارٹمنٹ"
+ },
+ {
+  "de": "der Bahnhof",
+  "en": "train station",
+  "pos": "noun",
+  "pl": "die Bahnhöfe",
+  "category": "transport",
+  "ur": "ریلوے اسٹیشن"
+ },
+ {
+  "de": "der Flughafen",
+  "en": "airport",
+  "pos": "noun",
+  "pl": "die Flughäfen",
+  "category": "transport",
+  "ur": "ہوائی اڈہ"
+ },
+ {
+  "de": "der Bus",
+  "en": "bus",
+  "pos": "noun",
+  "pl": "die Busse",
+  "category": "transport",
+  "ur": "بس"
+ },
+ {
+  "de": "das Fahrrad",
+  "en": "bicycle",
+  "pos": "noun",
+  "pl": "die Fahrräder",
+  "category": "transport",
+  "ur": "سائیکل"
+ },
+ {
+  "de": "das Taxi",
+  "en": "taxi",
+  "pos": "noun",
+  "pl": "die Taxis",
+  "category": "transport",
+  "ur": "ٹیکسی"
+ },
+ {
+  "de": "die Banane",
+  "en": "banana",
+  "pos": "noun",
+  "pl": "die Bananen",
+  "category": "food",
+  "ur": "کیلا"
+ },
+ {
+  "de": "die Orange",
+  "en": "orange",
+  "pos": "noun",
+  "pl": "die Orangen",
+  "category": "food",
+  "ur": "مالٹا"
+ },
+ {
+  "de": "die Kartoffel",
+  "en": "potato",
+  "pos": "noun",
+  "pl": "die Kartoffeln",
+  "category": "food",
+  "ur": "آلو"
+ },
+ {
+  "de": "die Tomate",
+  "en": "tomato",
+  "pos": "noun",
+  "pl": "die Tomaten",
+  "category": "food",
+  "ur": "ٹماٹر"
+ },
+ {
+  "de": "die Zwiebel",
+  "en": "onion",
+  "pos": "noun",
+  "pl": "die Zwiebeln",
+  "category": "food",
+  "ur": "پیاز"
+ },
+ {
+  "de": "der Kaffee",
+  "en": "coffee",
+  "pos": "noun",
+  "pl": "die Kaffees",
+  "category": "food",
+  "ur": "کافی"
+ },
+ {
+  "de": "der Tee",
+  "en": "tea",
+  "pos": "noun",
+  "pl": "die Tees",
+  "category": "food",
+  "ur": "چائے"
+ },
+ {
+  "de": "der Saft",
+  "en": "juice",
+  "pos": "noun",
+  "pl": "die Säfte",
+  "category": "food",
+  "ur": "جوس"
+ },
+ {
+  "de": "die Suppe",
+  "en": "soup",
+  "pos": "noun",
+  "pl": "die Suppen",
+  "category": "food",
+  "ur": "سوپ"
+ },
+ {
+  "de": "das Fleisch",
+  "en": "meat",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "گوشت"
+ },
+ {
+  "de": "der Kuchen",
+  "en": "cake",
+  "pos": "noun",
+  "pl": "die Kuchen",
+  "category": "food",
+  "ur": "کیک"
+ },
+ {
+  "de": "der Salat",
+  "en": "salad",
+  "pos": "noun",
+  "pl": "die Salate",
+  "category": "food",
+  "ur": "سلاد"
+ },
+ {
+  "de": "das Gemüse",
+  "en": "vegetables",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "سبزیاں"
+ },
+ {
+  "de": "der Vogel",
+  "en": "bird",
+  "pos": "noun",
+  "pl": "die Vögel",
+  "category": "animals",
+  "ur": "پرندہ"
+ },
+ {
+  "de": "das Pferd",
+  "en": "horse",
+  "pos": "noun",
+  "pl": "die Pferde",
+  "category": "animals",
+  "ur": "گھوڑا"
+ },
+ {
+  "de": "die Maus",
+  "en": "mouse",
+  "pos": "noun",
+  "pl": "die Mäuse",
+  "category": "animals",
+  "ur": "چوہا"
+ },
+ {
+  "de": "die Kuh",
+  "en": "cow",
+  "pos": "noun",
+  "pl": "die Kühe",
+  "category": "animals",
+  "ur": "گائے"
+ },
+ {
+  "de": "das Schwein",
+  "en": "pig",
+  "pos": "noun",
+  "pl": "die Schweine",
+  "category": "animals",
+  "ur": "سور"
+ },
+ {
+  "de": "das Schaf",
+  "en": "sheep",
+  "pos": "noun",
+  "pl": "die Schafe",
+  "category": "animals",
+  "ur": "بھیڑ"
+ },
+ {
+  "de": "der Lehrer",
+  "en": "teacher",
+  "pos": "noun",
+  "pl": "die Lehrer",
+  "category": "people",
+  "ur": "استاد"
+ },
+ {
+  "de": "die Lehrerin",
+  "en": "female teacher",
+  "pos": "noun",
+  "pl": "die Lehrerinnen",
+  "category": "people",
+  "ur": "استانی"
+ },
+ {
+  "de": "der Arzt",
+  "en": "doctor",
+  "pos": "noun",
+  "pl": "die Ärzte",
+  "category": "people",
+  "ur": "ڈاکٹر"
+ },
+ {
+  "de": "die Ärztin",
+  "en": "female doctor",
+  "pos": "noun",
+  "pl": "die Ärztinnen",
+  "category": "people",
+  "ur": "خاتون ڈاکٹر"
+ },
+ {
+  "de": "der Student",
+  "en": "student",
+  "pos": "noun",
+  "pl": "die Studenten",
+  "category": "people",
+  "ur": "طالب علم"
+ },
+ {
+  "de": "die Studentin",
+  "en": "female student",
+  "pos": "noun",
+  "pl": "die Studentinnen",
+  "category": "people",
+  "ur": "طالبہ"
+ },
+ {
+  "de": "der Nachbar",
+  "en": "neighbor",
+  "pos": "noun",
+  "pl": "die Nachbarn",
+  "category": "people",
+  "ur": "پڑوسی"
+ },
+ {
+  "de": "die Nachbarin",
+  "en": "female neighbor",
+  "pos": "noun",
+  "pl": "die Nachbarinnen",
+  "category": "people",
+  "ur": "پڑوسن"
+ },
+ {
+  "de": "der Name",
+  "en": "name",
+  "pos": "noun",
+  "pl": "die Namen",
+  "category": "people",
+  "ur": "نام"
+ },
+ {
+  "de": "die Sprache",
+  "en": "language",
+  "pos": "noun",
+  "pl": "die Sprachen",
+  "category": "school",
+  "ur": "زبان"
+ },
+ {
+  "de": "das Wort",
+  "en": "word",
+  "pos": "noun",
+  "pl": "die Wörter",
+  "category": "school",
+  "ur": "لفظ"
+ },
+ {
+  "de": "die Frage",
+  "en": "question",
+  "pos": "noun",
+  "pl": "die Fragen",
+  "category": "school",
+  "ur": "سوال"
+ },
+ {
+  "de": "die Antwort",
+  "en": "answer",
+  "pos": "noun",
+  "pl": "die Antworten",
+  "category": "school",
+  "ur": "جواب"
+ },
+ {
+  "de": "das Problem",
+  "en": "problem",
+  "pos": "noun",
+  "pl": "die Probleme",
+  "category": "school",
+  "ur": "مسئلہ"
+ },
+ {
+  "de": "die Arbeit",
+  "en": "work",
+  "pos": "noun",
+  "pl": "die Arbeiten",
+  "category": "work",
+  "ur": "کام"
+ },
+ {
+  "de": "der Beruf",
+  "en": "job",
+  "pos": "noun",
+  "pl": "die Berufe",
+  "category": "work",
+  "ur": "پیشہ"
+ },
+ {
+  "de": "das Büro",
+  "en": "office",
+  "pos": "noun",
+  "pl": "die Büros",
+  "category": "work",
+  "ur": "دفتر"
+ },
+ {
+  "de": "der Chef",
+  "en": "boss",
+  "pos": "noun",
+  "pl": "die Chefs",
+  "category": "work",
+  "ur": "باس"
+ },
+ {
+  "de": "die Pause",
+  "en": "break",
+  "pos": "noun",
+  "pl": "die Pausen",
+  "category": "time",
+  "ur": "وقفہ"
+ },
+ {
+  "de": "die Woche",
+  "en": "week",
+  "pos": "noun",
+  "pl": "die Wochen",
+  "category": "time",
+  "ur": "ہفتہ"
+ },
+ {
+  "de": "der Monat",
+  "en": "month",
+  "pos": "noun",
+  "pl": "die Monate",
+  "category": "time",
+  "ur": "مہینہ"
+ },
+ {
+  "de": "der Geburtstag",
+  "en": "birthday",
+  "pos": "noun",
+  "pl": "die Geburtstage",
+  "category": "time",
+  "ur": "سالگرہ"
+ },
+ {
+  "de": "das Wetter",
+  "en": "weather",
+  "pos": "noun",
+  "pl": null,
+  "category": "nature",
+  "ur": "موسم"
+ },
+ {
+  "de": "die Wolke",
+  "en": "cloud",
+  "pos": "noun",
+  "pl": "die Wolken",
+  "category": "nature",
+  "ur": "بادل"
+ },
+ {
+  "de": "der Wind",
+  "en": "wind",
+  "pos": "noun",
+  "pl": "die Winde",
+  "category": "nature",
+  "ur": "ہوا"
+ },
+ {
+  "de": "das Tier",
+  "en": "animal",
+  "pos": "noun",
+  "pl": "die Tiere",
+  "category": "animals",
+  "ur": "جانور"
+ },
+ {
+  "de": "der Park",
+  "en": "park",
+  "pos": "noun",
+  "pl": "die Parks",
+  "category": "places",
+  "ur": "پارک"
+ },
+ {
+  "de": "die Kirche",
+  "en": "church",
+  "pos": "noun",
+  "pl": "die Kirchen",
+  "category": "places",
+  "ur": "گرجا گھر"
+ },
+ {
+  "de": "das Hotel",
+  "en": "hotel",
+  "pos": "noun",
+  "pl": "die Hotels",
+  "category": "places",
+  "ur": "ہوٹل"
+ },
+ {
+  "de": "das Restaurant",
+  "en": "restaurant",
+  "pos": "noun",
+  "pl": "die Restaurants",
+  "category": "places",
+  "ur": "ریستوراں"
+ },
+ {
+  "de": "das Krankenhaus",
+  "en": "hospital",
+  "pos": "noun",
+  "pl": "die Krankenhäuser",
+  "category": "places",
+  "ur": "ہسپتال"
+ },
+ {
+  "de": "die Apotheke",
+  "en": "pharmacy",
+  "pos": "noun",
+  "pl": "die Apotheken",
+  "category": "places",
+  "ur": "دوا خانہ"
+ },
+ {
+  "de": "die Bank",
+  "en": "bank",
+  "pos": "noun",
+  "pl": "die Banken",
+  "category": "places",
+  "ur": "بینک"
+ },
+ {
+  "de": "die Post",
+  "en": "post office",
+  "pos": "noun",
+  "pl": "die Posten",
+  "category": "places",
+  "ur": "ڈاک خانہ"
+ },
+ {
+  "de": "das Dorf",
+  "en": "village",
+  "pos": "noun",
+  "pl": "die Dörfer",
+  "category": "places",
+  "ur": "گاؤں"
+ },
+ {
+  "de": "der Platz",
+  "en": "square/place",
+  "pos": "noun",
+  "pl": "die Plätze",
+  "category": "places",
+  "ur": "چوک"
+ },
+ {
+  "de": "die Musik",
+  "en": "music",
+  "pos": "noun",
+  "pl": null,
+  "category": "leisure",
+  "ur": "موسیقی"
+ },
+ {
+  "de": "der Film",
+  "en": "film",
+  "pos": "noun",
+  "pl": "die Filme",
+  "category": "leisure",
+  "ur": "فلم"
+ },
+ {
+  "de": "das Foto",
+  "en": "photo",
+  "pos": "noun",
+  "pl": "die Fotos",
+  "category": "leisure",
+  "ur": "تصویر"
+ },
+ {
+  "de": "das Spiel",
+  "en": "game",
+  "pos": "noun",
+  "pl": "die Spiele",
+  "category": "leisure",
+  "ur": "کھیل"
+ },
+ {
+  "de": "der Sport",
+  "en": "sport",
+  "pos": "noun",
+  "pl": "die Sportarten",
+  "category": "leisure",
+  "ur": "کھیل کود"
+ },
+ {
+  "de": "der Fußball",
+  "en": "football",
+  "pos": "noun",
+  "pl": "die Fußbälle",
+  "category": "leisure",
+  "ur": "فٹ بال"
+ },
+ {
+  "de": "die Hilfe",
+  "en": "help",
+  "pos": "noun",
+  "pl": null,
+  "category": "daily",
+  "ur": "مدد"
+ },
+ {
+  "de": "sein",
+  "en": "to be",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "ich bin; du bist; er ist",
+  "ur": "ہونا"
+ },
+ {
+  "de": "haben",
+  "en": "to have",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du hast; er hat",
+  "ur": "رکھنا"
+ },
+ {
+  "de": "machen",
+  "en": "to do/make",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "کرنا"
+ },
+ {
+  "de": "wohnen",
+  "en": "to live",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "رہنا"
+ },
+ {
+  "de": "heißen",
+  "en": "to be called",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "نام ہونا"
+ },
+ {
+  "de": "kaufen",
+  "en": "to buy",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "خریدنا"
+ },
+ {
+  "de": "trinken",
+  "en": "to drink",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "پینا"
+ },
+ {
+  "de": "fahren",
+  "en": "to travel/drive",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du fährst; er fährt",
+  "ur": "گاڑی چلانا"
+ },
+ {
+  "de": "wollen",
+  "en": "to want",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "ich will; du willst",
+  "ur": "چاہنا"
+ },
+ {
+  "de": "können",
+  "en": "can/be able to",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "ich kann; du kannst",
+  "ur": "سکنا"
+ },
+ {
+  "de": "müssen",
+  "en": "must/have to",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "ich muss; du musst",
+  "ur": "کرنا پڑنا"
+ },
+ {
+  "de": "essen",
+  "en": "to eat",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du isst; er isst",
+  "ur": "کھانا"
+ },
+ {
+  "de": "gehen",
+  "en": "to go",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "جانا"
+ },
+ {
+  "de": "kommen",
+  "en": "to come",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "آنا"
+ },
+ {
+  "de": "sehen",
+  "en": "to see",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du siehst; er sieht",
+  "ur": "دیکھنا"
+ },
+ {
+  "de": "sprechen",
+  "en": "to speak",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du sprichst; er spricht",
+  "ur": "بولنا"
+ },
+ {
+  "de": "lernen",
+  "en": "to learn",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "سیکھنا"
+ },
+ {
+  "de": "arbeiten",
+  "en": "to work",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "کام کرنا"
+ },
+ {
+  "de": "schlafen",
+  "en": "to sleep",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du schläfst; er schläft",
+  "ur": "سونا"
+ },
+ {
+  "de": "lesen",
+  "en": "to read",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du liest; er liest",
+  "ur": "پڑھنا"
+ },
+ {
+  "de": "schreiben",
+  "en": "to write",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "لکھنا"
+ },
+ {
+  "de": "spielen",
+  "en": "to play",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "کھیلنا"
+ },
+ {
+  "de": "hören",
+  "en": "to hear/listen",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "سننا"
+ },
+ {
+  "de": "fragen",
+  "en": "to ask",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "پوچھنا"
+ },
+ {
+  "de": "antworten",
+  "en": "to answer",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "جواب دینا"
+ },
+ {
+  "de": "suchen",
+  "en": "to search",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "تلاش کرنا"
+ },
+ {
+  "de": "finden",
+  "en": "to find",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "ڈھونڈنا"
+ },
+ {
+  "de": "nehmen",
+  "en": "to take",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du nimmst; er nimmt",
+  "ur": "لینا"
+ },
+ {
+  "de": "geben",
+  "en": "to give",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du gibst; er gibt",
+  "ur": "دینا"
+ },
+ {
+  "de": "bringen",
+  "en": "to bring",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "لانا"
+ },
+ {
+  "de": "bleiben",
+  "en": "to stay",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "ٹھہرنا"
+ },
+ {
+  "de": "öffnen",
+  "en": "to open",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "کھولنا"
+ },
+ {
+  "de": "schließen",
+  "en": "to close",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "بند کرنا"
+ },
+ {
+  "de": "bezahlen",
+  "en": "to pay",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "ادائیگی کرنا"
+ },
+ {
+  "de": "bestellen",
+  "en": "to order",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "آرڈر کرنا"
+ },
+ {
+  "de": "kochen",
+  "en": "to cook",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "پکانا"
+ },
+ {
+  "de": "lieben",
+  "en": "to love",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "محبت کرنا"
+ },
+ {
+  "de": "leben",
+  "en": "to live",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "جینا"
+ },
+ {
+  "de": "reisen",
+  "en": "to travel",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "سفر کرنا"
+ },
+ {
+  "de": "warten",
+  "en": "to wait",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "انتظار کرنا"
+ },
+ {
+  "de": "beginnen",
+  "en": "to begin",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "شروع کرنا"
+ },
+ {
+  "de": "enden",
+  "en": "to end",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "ختم ہونا"
+ },
+ {
+  "de": "tanzen",
+  "en": "to dance",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "ناچنا"
+ },
+ {
+  "de": "schwimmen",
+  "en": "to swim",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "تیرنا"
+ },
+ {
+  "de": "laufen",
+  "en": "to run/walk",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du läufst; er läuft",
+  "ur": "دوڑنا"
+ },
+ {
+  "de": "helfen",
+  "en": "to help",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "du hilfst; er hilft",
+  "ur": "مدد کرنا"
+ },
+ {
+  "de": "kennen",
+  "en": "to know/be familiar",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "واقف ہونا"
+ },
+ {
+  "de": "wissen",
+  "en": "to know a fact",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "note": "ich weiß; du weißt",
+  "ur": "معلوم ہونا"
+ },
+ {
+  "de": "denken",
+  "en": "to think",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "سوچنا"
+ },
+ {
+  "de": "verstehen",
+  "en": "to understand",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "سمجھنا"
+ },
+ {
+  "de": "rot",
+  "en": "red",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "سرخ"
+ },
+ {
+  "de": "blau",
+  "en": "blue",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "نیلا"
+ },
+ {
+  "de": "grün",
+  "en": "green",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "سبز"
+ },
+ {
+  "de": "gelb",
+  "en": "yellow",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "پیلا"
+ },
+ {
+  "de": "schwarz",
+  "en": "black",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "کالا"
+ },
+ {
+  "de": "weiß",
+  "en": "white",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "سفید"
+ },
+ {
+  "de": "braun",
+  "en": "brown",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "بھورا"
+ },
+ {
+  "de": "groß",
+  "en": "big",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "بڑا"
+ },
+ {
+  "de": "klein",
+  "en": "small",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "چھوٹا"
+ },
+ {
+  "de": "gut",
+  "en": "good",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "اچھا"
+ },
+ {
+  "de": "schlecht",
+  "en": "bad",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "برا"
+ },
+ {
+  "de": "neu",
+  "en": "new",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "نیا"
+ },
+ {
+  "de": "alt",
+  "en": "old",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "پرانا"
+ },
+ {
+  "de": "schön",
+  "en": "beautiful",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "خوبصورت"
+ },
+ {
+  "de": "heiß",
+  "en": "hot",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "گرم"
+ },
+ {
+  "de": "kalt",
+  "en": "cold",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "ٹھنڈا"
+ },
+ {
+  "de": "schnell",
+  "en": "fast",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "تیز"
+ },
+ {
+  "de": "langsam",
+  "en": "slow",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "آہستہ"
+ },
+ {
+  "de": "müde",
+  "en": "tired",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "تھکا ہوا"
+ },
+ {
+  "de": "glücklich",
+  "en": "happy",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "خوش"
+ },
+ {
+  "de": "traurig",
+  "en": "sad",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "اداس"
+ },
+ {
+  "de": "teuer",
+  "en": "expensive",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "مہنگا"
+ },
+ {
+  "de": "billig",
+  "en": "cheap",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "سستا"
+ },
+ {
+  "de": "leicht",
+  "en": "easy/light",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "آسان"
+ },
+ {
+  "de": "schwer",
+  "en": "difficult/heavy",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "مشکل"
+ },
+ {
+  "de": "freundlich",
+  "en": "friendly",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "دوستانہ"
+ },
+ {
+  "de": "wichtig",
+  "en": "important",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "اہم"
+ },
+ {
+  "de": "ich",
+  "en": "I",
+  "pos": "pron",
+  "pl": null,
+  "category": "pronouns",
+  "ur": "میں"
+ },
+ {
+  "de": "du",
+  "en": "you informal",
+  "pos": "pron",
+  "pl": null,
+  "category": "pronouns",
+  "ur": "تم"
+ },
+ {
+  "de": "er",
+  "en": "he",
+  "pos": "pron",
+  "pl": null,
+  "category": "pronouns",
+  "ur": "وہ (مرد)"
+ },
+ {
+  "de": "sie",
+  "en": "she/they",
+  "pos": "pron",
+  "pl": null,
+  "category": "pronouns",
+  "ur": "وہ (عورت)"
+ },
+ {
+  "de": "es",
+  "en": "it",
+  "pos": "pron",
+  "pl": null,
+  "category": "pronouns",
+  "ur": "یہ"
+ },
+ {
+  "de": "wir",
+  "en": "we",
+  "pos": "pron",
+  "pl": null,
+  "category": "pronouns",
+  "ur": "ہم"
+ },
+ {
+  "de": "ihr",
+  "en": "you plural",
+  "pos": "pron",
+  "pl": null,
+  "category": "pronouns",
+  "ur": "تم لوگ"
+ },
+ {
+  "de": "Sie",
+  "en": "you formal",
+  "pos": "pron",
+  "pl": null,
+  "category": "pronouns",
+  "ur": "آپ"
+ },
+ {
+  "de": "wer",
+  "en": "who",
+  "pos": "q",
+  "pl": null,
+  "category": "questions",
+  "ur": "کون"
+ },
+ {
+  "de": "was",
+  "en": "what",
+  "pos": "q",
+  "pl": null,
+  "category": "questions",
+  "ur": "کیا"
+ },
+ {
+  "de": "wo",
+  "en": "where",
+  "pos": "q",
+  "pl": null,
+  "category": "questions",
+  "ur": "کہاں"
+ },
+ {
+  "de": "wann",
+  "en": "when",
+  "pos": "q",
+  "pl": null,
+  "category": "questions",
+  "ur": "کب"
+ },
+ {
+  "de": "warum",
+  "en": "why",
+  "pos": "q",
+  "pl": null,
+  "category": "questions",
+  "ur": "کیوں"
+ },
+ {
+  "de": "wie",
+  "en": "how",
+  "pos": "q",
+  "pl": null,
+  "category": "questions",
+  "ur": "کیسے"
+ },
+ {
+  "de": "woher",
+  "en": "where from",
+  "pos": "q",
+  "pl": null,
+  "category": "questions",
+  "ur": "کہاں سے"
+ },
+ {
+  "de": "wohin",
+  "en": "where to",
+  "pos": "q",
+  "pl": null,
+  "category": "questions",
+  "ur": "کدھر"
+ },
+ {
+  "de": "welche",
+  "en": "which",
+  "pos": "q",
+  "pl": null,
+  "category": "questions",
+  "ur": "کون سا"
+ },
+ {
+  "de": "in",
+  "en": "in",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "میں (اندر)"
+ },
+ {
+  "de": "auf",
+  "en": "on",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "پر"
+ },
+ {
+  "de": "mit",
+  "en": "with",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "کے ساتھ"
+ },
+ {
+  "de": "von",
+  "en": "from/of",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "سے"
+ },
+ {
+  "de": "zu",
+  "en": "to",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "کی طرف"
+ },
+ {
+  "de": "nach",
+  "en": "to/after",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "کے بعد"
+ },
+ {
+  "de": "bei",
+  "en": "at/with",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "کے پاس"
+ },
+ {
+  "de": "für",
+  "en": "for",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "کے لیے"
+ },
+ {
+  "de": "aus",
+  "en": "out of/from",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "سے (باہر)"
+ },
+ {
+  "de": "an",
+  "en": "at/on",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "پر (پاس)"
+ },
+ {
+  "de": "unter",
+  "en": "under",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "نیچے"
+ },
+ {
+  "de": "über",
+  "en": "over/about",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "اوپر"
+ },
+ {
+  "de": "vor",
+  "en": "in front of/before",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "سامنے"
+ },
+ {
+  "de": "hinter",
+  "en": "behind",
+  "pos": "prep",
+  "pl": null,
+  "category": "prepositions",
+  "ur": "پیچھے"
+ },
+ {
+  "de": "heute",
+  "en": "today",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "آج"
+ },
+ {
+  "de": "morgen",
+  "en": "tomorrow",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "آنے والا کل"
+ },
+ {
+  "de": "gestern",
+  "en": "yesterday",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "گزشتہ کل"
+ },
+ {
+  "de": "hier",
+  "en": "here",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "یہاں"
+ },
+ {
+  "de": "dort",
+  "en": "there",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "وہاں"
+ },
+ {
+  "de": "sehr",
+  "en": "very",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "بہت"
+ },
+ {
+  "de": "auch",
+  "en": "also",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "بھی"
+ },
+ {
+  "de": "nicht",
+  "en": "not",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "نہیں"
+ },
+ {
+  "de": "immer",
+  "en": "always",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "ہمیشہ"
+ },
+ {
+  "de": "oft",
+  "en": "often",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "اکثر"
+ },
+ {
+  "de": "manchmal",
+  "en": "sometimes",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "کبھی کبھی"
+ },
+ {
+  "de": "zusammen",
+  "en": "together",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "اکٹھے"
+ },
+ {
+  "de": "gern",
+  "en": "gladly",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "خوشی سے"
+ },
+ {
+  "de": "null",
+  "en": "zero",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "صفر"
+ },
+ {
+  "de": "eins",
+  "en": "one",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "ایک"
+ },
+ {
+  "de": "zwei",
+  "en": "two",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "دو"
+ },
+ {
+  "de": "drei",
+  "en": "three",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "تین"
+ },
+ {
+  "de": "vier",
+  "en": "four",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "چار"
+ },
+ {
+  "de": "fünf",
+  "en": "five",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "پانچ"
+ },
+ {
+  "de": "sechs",
+  "en": "six",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "چھ"
+ },
+ {
+  "de": "sieben",
+  "en": "seven",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "سات"
+ },
+ {
+  "de": "acht",
+  "en": "eight",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "آٹھ"
+ },
+ {
+  "de": "neun",
+  "en": "nine",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "نو"
+ },
+ {
+  "de": "zehn",
+  "en": "ten",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "دس"
+ },
+ {
+  "de": "elf",
+  "en": "eleven",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "گیارہ"
+ },
+ {
+  "de": "zwölf",
+  "en": "twelve",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "بارہ"
+ },
+ {
+  "de": "dreizehn",
+  "en": "thirteen",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "تیرہ"
+ },
+ {
+  "de": "vierzehn",
+  "en": "fourteen",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "چودہ"
+ },
+ {
+  "de": "fünfzehn",
+  "en": "fifteen",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "پندرہ"
+ },
+ {
+  "de": "sechzehn",
+  "en": "sixteen",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "سولہ"
+ },
+ {
+  "de": "siebzehn",
+  "en": "seventeen",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "سترہ"
+ },
+ {
+  "de": "achtzehn",
+  "en": "eighteen",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "اٹھارہ"
+ },
+ {
+  "de": "neunzehn",
+  "en": "nineteen",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "انیس"
+ },
+ {
+  "de": "zwanzig",
+  "en": "twenty",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "بیس"
+ },
+ {
+  "de": "dreißig",
+  "en": "thirty",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "تیس"
+ },
+ {
+  "de": "vierzig",
+  "en": "forty",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "چالیس"
+ },
+ {
+  "de": "fünfzig",
+  "en": "fifty",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "پچاس"
+ },
+ {
+  "de": "hundert",
+  "en": "one hundred",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "سو"
+ },
+ {
+  "de": "Montag",
+  "en": "Monday",
+  "pos": "noun",
+  "pl": "die Montags",
+  "category": "weekdays",
+  "ur": "پیر"
+ },
+ {
+  "de": "Dienstag",
+  "en": "Tuesday",
+  "pos": "noun",
+  "pl": "die Dienstags",
+  "category": "weekdays",
+  "ur": "منگل"
+ },
+ {
+  "de": "Mittwoch",
+  "en": "Wednesday",
+  "pos": "noun",
+  "pl": "die Mittwochs",
+  "category": "weekdays",
+  "ur": "بدھ"
+ },
+ {
+  "de": "Donnerstag",
+  "en": "Thursday",
+  "pos": "noun",
+  "pl": "die Donnerstags",
+  "category": "weekdays",
+  "ur": "جمعرات"
+ },
+ {
+  "de": "Freitag",
+  "en": "Friday",
+  "pos": "noun",
+  "pl": "die Freitags",
+  "category": "weekdays",
+  "ur": "جمعہ"
+ },
+ {
+  "de": "Samstag",
+  "en": "Saturday",
+  "pos": "noun",
+  "pl": "die Samstags",
+  "category": "weekdays",
+  "ur": "ہفتہ"
+ },
+ {
+  "de": "Sonntag",
+  "en": "Sunday",
+  "pos": "noun",
+  "pl": "die Sonntags",
+  "category": "weekdays",
+  "ur": "اتوار"
+ },
+ {
+  "de": "Januar",
+  "en": "January",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "جنوری"
+ },
+ {
+  "de": "Februar",
+  "en": "February",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "فروری"
+ },
+ {
+  "de": "März",
+  "en": "March",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "مارچ"
+ },
+ {
+  "de": "April",
+  "en": "April",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "اپریل"
+ },
+ {
+  "de": "Mai",
+  "en": "May",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "مئی"
+ },
+ {
+  "de": "Juni",
+  "en": "June",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "جون"
+ },
+ {
+  "de": "Juli",
+  "en": "July",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "جولائی"
+ },
+ {
+  "de": "August",
+  "en": "August",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "اگست"
+ },
+ {
+  "de": "September",
+  "en": "September",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "ستمبر"
+ },
+ {
+  "de": "Oktober",
+  "en": "October",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "اکتوبر"
+ },
+ {
+  "de": "November",
+  "en": "November",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "نومبر"
+ },
+ {
+  "de": "Dezember",
+  "en": "December",
+  "pos": "noun",
+  "pl": null,
+  "category": "months",
+  "ur": "دسمبر"
+ },
+ {
+  "de": "Hallo",
+  "en": "Hello",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "ہیلو"
+ },
+ {
+  "de": "Guten Morgen",
+  "en": "good morning",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "صبح بخیر"
+ },
+ {
+  "de": "Guten Tag",
+  "en": "good day",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "اچھا دن"
+ },
+ {
+  "de": "Guten Abend",
+  "en": "good evening",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "شام بخیر"
+ },
+ {
+  "de": "Gute Nacht",
+  "en": "good night",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "شب بخیر"
+ },
+ {
+  "de": "Tschüss",
+  "en": "Bye",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "الوداع"
+ },
+ {
+  "de": "Auf Wiedersehen",
+  "en": "goodbye",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "خدا حافظ"
+ },
+ {
+  "de": "Bitte",
+  "en": "please/you're welcome",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "براہ مہربانی"
+ },
+ {
+  "de": "Danke",
+  "en": "thank you",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "شکریہ"
+ },
+ {
+  "de": "Entschuldigung",
+  "en": "excuse me/sorry",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "معاف کیجیے"
+ },
+ {
+  "de": "Ja",
+  "en": "yes",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "جی ہاں"
+ },
+ {
+  "de": "Nein",
+  "en": "no",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "نہیں"
+ },
+ {
+  "de": "Wie geht's?",
+  "en": "how are you?",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "آپ کیسے ہیں؟"
+ },
+ {
+  "de": "Ich heiße ...",
+  "en": "my name is ...",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "میرا نام ... ہے"
+ },
+ {
+  "de": "Ich komme aus ...",
+  "en": "I come from ...",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "میں ... سے آیا ہوں"
+ },
+ {
+  "de": "Wie heißt du?",
+  "en": "what is your name?",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "آپ کا نام کیا ہے؟"
+ },
+ {
+  "de": "Wie viel kostet das?",
+  "en": "how much is that?",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "یہ کتنے کا ہے؟"
+ },
+ {
+  "de": "Ich verstehe",
+  "en": "I understand",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "میں سمجھتا ہوں"
+ },
+ {
+  "de": "Ich verstehe nicht",
+  "en": "I do not understand",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "میں نہیں سمجھتا"
+ },
+ {
+  "de": "Sprechen Sie Englisch?",
+  "en": "do you speak English?",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "کیا آپ انگریزی بولتے ہیں؟"
+ },
+ {
+  "de": "Keine Ahnung",
+  "en": "no idea",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "کوئی اندازہ نہیں"
+ },
+ {
+  "de": "Bis später",
+  "en": "see you later",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "بعد میں ملتے ہیں"
+ },
+ {
+  "de": "Bis morgen",
+  "en": "see you tomorrow",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "کل ملتے ہیں"
+ },
+ {
+  "de": "Gute Reise",
+  "en": "have a good trip",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "سفر بخیر"
+ },
+ {
+  "de": "Herzlich willkommen",
+  "en": "welcome",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "خوش آمدید"
+ },
+ {
+  "de": "Es tut mir leid",
+  "en": "I am sorry",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "مجھے افسوس ہے"
+ },
+ {
+  "de": "der Onkel",
+  "en": "uncle",
+  "pos": "noun",
+  "pl": "die Onkel",
+  "category": "family",
+  "ur": "آنکل"
+ },
+ {
+  "de": "die Tante",
+  "en": "aunt",
+  "pos": "noun",
+  "pl": "die Tanten",
+  "category": "family",
+  "ur": "آنٹی"
+ },
+ {
+  "de": "der Junge",
+  "en": "boy",
+  "pos": "noun",
+  "pl": "die Jungen",
+  "category": "people",
+  "ur": "لڑکا"
+ },
+ {
+  "de": "das Mädchen",
+  "en": "girl",
+  "pos": "noun",
+  "pl": "die Mädchen",
+  "category": "people",
+  "ur": "لڑکی"
+ },
+ {
+  "de": "der Mensch",
+  "en": "human being",
+  "pos": "noun",
+  "pl": "die Menschen",
+  "category": "people",
+  "ur": "انسان"
+ },
+ {
+  "de": "der Gast",
+  "en": "guest",
+  "pos": "noun",
+  "pl": "die Gäste",
+  "category": "people",
+  "ur": "مہمان"
+ },
+ {
+  "de": "der Kollege",
+  "en": "colleague",
+  "pos": "noun",
+  "pl": "die Kollegen",
+  "category": "work",
+  "ur": "ساتھی"
+ },
+ {
+  "de": "das Hähnchen",
+  "en": "chicken",
+  "pos": "noun",
+  "pl": "die Hähnchen",
+  "category": "food",
+  "ur": "مرغی"
+ },
+ {
+  "de": "der Reis",
+  "en": "rice",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "چاول"
+ },
+ {
+  "de": "die Nudeln",
+  "en": "pasta",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "نوڈلز"
+ },
+ {
+  "de": "die Butter",
+  "en": "butter",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "مکھن"
+ },
+ {
+  "de": "der Zucker",
+  "en": "sugar",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "چینی"
+ },
+ {
+  "de": "das Salz",
+  "en": "salt",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "نمک"
+ },
+ {
+  "de": "das Öl",
+  "en": "oil",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "تیل"
+ },
+ {
+  "de": "der Pfeffer",
+  "en": "pepper",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "کالی مرچ"
+ },
+ {
+  "de": "der Honig",
+  "en": "honey",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "شہد"
+ },
+ {
+  "de": "die Marmelade",
+  "en": "jam",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "جیلی"
+ },
+ {
+  "de": "die Schokolade",
+  "en": "chocolate",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "چاکلیٹ"
+ },
+ {
+  "de": "die Wurst",
+  "en": "sausage",
+  "pos": "noun",
+  "pl": "die Würste",
+  "category": "food",
+  "ur": "ساسیج"
+ },
+ {
+  "de": "das Brötchen",
+  "en": "bread roll",
+  "pos": "noun",
+  "pl": "die Brötchen",
+  "category": "food",
+  "ur": "چھوٹا روٹی"
+ },
+ {
+  "de": "das Eis",
+  "en": "ice cream",
+  "pos": "noun",
+  "pl": null,
+  "category": "food",
+  "ur": "آئس کریم"
+ },
+ {
+  "de": "das Frühstück",
+  "en": "breakfast",
+  "pos": "noun",
+  "pl": "die Frühstücke",
+  "category": "food",
+  "ur": "ناشتہ"
+ },
+ {
+  "de": "das Mittagessen",
+  "en": "lunch",
+  "pos": "noun",
+  "pl": "die Mittagessen",
+  "category": "food",
+  "ur": "دوپہر کا کھانا"
+ },
+ {
+  "de": "das Abendessen",
+  "en": "dinner",
+  "pos": "noun",
+  "pl": "die Abendessen",
+  "category": "food",
+  "ur": "رات کا کھانا"
+ },
+ {
+  "de": "werden",
+  "en": "to become",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "بننا"
+ },
+ {
+  "de": "sagen",
+  "en": "to say",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "کہنا"
+ },
+ {
+  "de": "brauchen",
+  "en": "to need",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "ضرورت ہونا"
+ },
+ {
+  "de": "mögen",
+  "en": "to like",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "پسند کرنا"
+ },
+ {
+  "de": "glauben",
+  "en": "to believe",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "یقین کرنا"
+ },
+ {
+  "de": "vergessen",
+  "en": "to forget",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "بھولنا"
+ },
+ {
+  "de": "treffen",
+  "en": "to meet",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "ملنا"
+ },
+ {
+  "de": "aufstehen",
+  "en": "to get up",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "اٹھنا"
+ },
+ {
+  "de": "ankommen",
+  "en": "to arrive",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs"
+ },
+ {
+  "de": "anrufen",
+  "en": "to call (phone)",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "فون کرنا"
+ },
+ {
+  "de": "einkaufen",
+  "en": "to go shopping",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "خریداری کرنا"
+ },
+ {
+  "de": "verkaufen",
+  "en": "to sell",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "بیچنا"
+ },
+ {
+  "de": "sitzen",
+  "en": "to sit",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "بیٹھنا"
+ },
+ {
+  "de": "stehen",
+  "en": "to stand",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "کھڑا ہونا"
+ },
+ {
+  "de": "putzen",
+  "en": "to clean",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "صفائی کرنا"
+ },
+ {
+  "de": "duschen",
+  "en": "to shower",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "نہانا"
+ },
+ {
+  "de": "frühstücken",
+  "en": "to have breakfast",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "ناشتہ کرنا"
+ },
+ {
+  "de": "schmecken",
+  "en": "to taste (good)",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "ذائقہ ہونا"
+ },
+ {
+  "de": "kosten",
+  "en": "to cost",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "قیمت ہونا"
+ },
+ {
+  "de": "dauern",
+  "en": "to last / take (time)",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "وقت لینا"
+ },
+ {
+  "de": "schauen",
+  "en": "to look / watch",
+  "pos": "verb",
+  "pl": null,
+  "category": "verbs",
+  "ur": "دیکھنا"
+ },
+ {
+  "de": "jung",
+  "en": "young",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "جوان"
+ },
+ {
+  "de": "hässlich",
+  "en": "ugly",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "بدشکل"
+ },
+ {
+  "de": "richtig",
+  "en": "correct",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "درست"
+ },
+ {
+  "de": "falsch",
+  "en": "wrong",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "غلط"
+ },
+ {
+  "de": "langweilig",
+  "en": "boring",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "بورنگ"
+ },
+ {
+  "de": "voll",
+  "en": "full",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "بھرا"
+ },
+ {
+  "de": "leer",
+  "en": "empty",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "خالی"
+ },
+ {
+  "de": "frei",
+  "en": "free",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "آزاد"
+ },
+ {
+  "de": "sauber",
+  "en": "clean",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "صاف"
+ },
+ {
+  "de": "warm",
+  "en": "warm",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives"
+ },
+ {
+  "de": "rosa",
+  "en": "pink",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "گلابی"
+ },
+ {
+  "de": "lila",
+  "en": "purple",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "بنفشی"
+ },
+ {
+  "de": "grau",
+  "en": "grey",
+  "pos": "adj",
+  "pl": null,
+  "category": "colors",
+  "ur": "سرمئی"
+ },
+ {
+  "de": "hungrig",
+  "en": "hungry",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "بھوکا"
+ },
+ {
+  "de": "laut",
+  "en": "loud",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "بلند"
+ },
+ {
+  "de": "leise",
+  "en": "quiet",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "آہستہ"
+ },
+ {
+  "de": "stark",
+  "en": "strong",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "مضبوط"
+ },
+ {
+  "de": "krank",
+  "en": "ill",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "بیمار"
+ },
+ {
+  "de": "gesund",
+  "en": "healthy",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "صحت مند"
+ },
+ {
+  "de": "die Haltestelle",
+  "en": "bus stop",
+  "pos": "noun",
+  "pl": "die Haltestellen",
+  "category": "transport",
+  "ur": "بس اسٹاپ"
+ },
+ {
+  "de": "die Universität",
+  "en": "university",
+  "pos": "noun",
+  "pl": "die Universitäten",
+  "category": "places",
+  "ur": "یونیورسٹی"
+ },
+ {
+  "de": "die Moschee",
+  "en": "mosque",
+  "pos": "noun",
+  "pl": "die Moscheen",
+  "category": "places",
+  "ur": "مسجد"
+ },
+ {
+  "de": "die Toilette",
+  "en": "toilet",
+  "pos": "noun",
+  "pl": "die Toiletten",
+  "category": "places",
+  "ur": "ٹوائلٹ"
+ },
+ {
+  "de": "das Geschäft",
+  "en": "shop / store",
+  "pos": "noun",
+  "pl": "die Geschäfte",
+  "category": "shopping",
+  "ur": "دکان"
+ },
+ {
+  "de": "links",
+  "en": "left",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "بائیں"
+ },
+ {
+  "de": "rechts",
+  "en": "right",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "دائیں"
+ },
+ {
+  "de": "geradeaus",
+  "en": "straight ahead",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "سیدھا"
+ },
+ {
+  "de": "nah",
+  "en": "near",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "قریب"
+ },
+ {
+  "de": "weit",
+  "en": "far",
+  "pos": "adj",
+  "pl": null,
+  "category": "adjectives",
+  "ur": "دور"
+ },
+ {
+  "de": "das Flugzeug",
+  "en": "airplane",
+  "pos": "noun",
+  "pl": "die Flugzeuge",
+  "category": "transport",
+  "ur": "ہوائی جہاز"
+ },
+ {
+  "de": "die Fahrkarte",
+  "en": "ticket",
+  "pos": "noun",
+  "pl": "die Fahrkarten",
+  "category": "travel",
+  "ur": "ٹکٹ"
+ },
+ {
+  "de": "der Reisepass",
+  "en": "passport",
+  "pos": "noun",
+  "pl": "die Reisepässe",
+  "category": "travel",
+  "ur": "پاسپورٹ"
+ },
+ {
+  "de": "das Visum",
+  "en": "visa",
+  "pos": "noun",
+  "pl": "die Visa",
+  "category": "travel",
+  "ur": "ویزہ"
+ },
+ {
+  "de": "die Firma",
+  "en": "company",
+  "pos": "noun",
+  "pl": "die Firmen",
+  "category": "work",
+  "ur": "کمپنی"
+ },
+ {
+  "de": "der Mitarbeiter",
+  "en": "employee",
+  "pos": "noun",
+  "pl": "die Mitarbeiter",
+  "category": "work",
+  "ur": "ملازم"
+ },
+ {
+  "de": "das Gehalt",
+  "en": "salary",
+  "pos": "noun",
+  "pl": "die Gehälter",
+  "category": "work",
+  "ur": "تنخواہ"
+ },
+ {
+  "de": "die Bewerbung",
+  "en": "job application",
+  "pos": "noun",
+  "pl": "die Bewerbungen",
+  "category": "work",
+  "ur": "درخواست"
+ },
+ {
+  "de": "die Erfahrung",
+  "en": "experience",
+  "pos": "noun",
+  "pl": "die Erfahrungen",
+  "category": "work",
+  "ur": "تجربہ"
+ },
+ {
+  "de": "der Laptop",
+  "en": "laptop",
+  "pos": "noun",
+  "pl": "die Laptops",
+  "category": "technology",
+  "ur": "لیپ ٹاپ"
+ },
+ {
+  "de": "die Datei",
+  "en": "file",
+  "pos": "noun",
+  "pl": "die Dateien",
+  "category": "technology",
+  "ur": "فائل"
+ },
+ {
+  "de": "der Satz",
+  "en": "sentence",
+  "pos": "noun",
+  "pl": "die Sätze",
+  "category": "school",
+  "ur": "جملہ"
+ },
+ {
+  "de": "die Prüfung",
+  "en": "exam",
+  "pos": "noun",
+  "pl": "die Prüfungen",
+  "category": "school",
+  "ur": "امتحان"
+ },
+ {
+  "de": "der Kurs",
+  "en": "course",
+  "pos": "noun",
+  "pl": "die Kurse",
+  "category": "school",
+  "ur": "کورس"
+ },
+ {
+  "de": "die Hausaufgabe",
+  "en": "homework",
+  "pos": "noun",
+  "pl": "die Hausaufgaben",
+  "category": "school",
+  "ur": "ہوم ورک"
+ },
+ {
+  "de": "die Aufgabe",
+  "en": "task / exercise",
+  "pos": "noun",
+  "pl": "die Aufgaben",
+  "category": "school",
+  "ur": "مقصد"
+ },
+ {
+  "de": "der Unterricht",
+  "en": "lesson / class",
+  "pos": "noun",
+  "pl": null,
+  "category": "school",
+  "ur": "سبق"
+ },
+ {
+  "de": "der Körper",
+  "en": "body",
+  "pos": "noun",
+  "pl": "die Körper",
+  "category": "body",
+  "ur": "جسم"
+ },
+ {
+  "de": "das Gesicht",
+  "en": "face",
+  "pos": "noun",
+  "pl": "die Gesichter",
+  "category": "body",
+  "ur": "چہرہ"
+ },
+ {
+  "de": "der Zahn",
+  "en": "tooth",
+  "pos": "noun",
+  "pl": "die Zähne",
+  "category": "body",
+  "ur": "دانت"
+ },
+ {
+  "de": "der Hals",
+  "en": "neck / throat",
+  "pos": "noun",
+  "pl": "die Hälse",
+  "category": "body",
+  "ur": "گردن"
+ },
+ {
+  "de": "der Finger",
+  "en": "finger",
+  "pos": "noun",
+  "pl": "die Finger",
+  "category": "body",
+  "ur": "انگلی"
+ },
+ {
+  "de": "der Bauch",
+  "en": "belly",
+  "pos": "noun",
+  "pl": "die Bäuche",
+  "category": "body",
+  "ur": "پیٹ"
+ },
+ {
+  "de": "der Rücken",
+  "en": "back",
+  "pos": "noun",
+  "pl": "die Rücken",
+  "category": "body",
+  "ur": "کمر"
+ },
+ {
+  "de": "das Herz",
+  "en": "heart",
+  "pos": "noun",
+  "pl": "die Herzen",
+  "category": "body",
+  "ur": "دل"
+ },
+ {
+  "de": "das Fieber",
+  "en": "fever",
+  "pos": "noun",
+  "pl": null,
+  "category": "body",
+  "ur": "بخار"
+ },
+ {
+  "de": "die Medizin",
+  "en": "medicine",
+  "pos": "noun",
+  "pl": null,
+  "category": "body",
+  "ur": "دوائی"
+ },
+ {
+  "de": "die Kleidung",
+  "en": "clothes",
+  "pos": "noun",
+  "pl": null,
+  "category": "clothes",
+  "ur": "کپڑے"
+ },
+ {
+  "de": "das Licht",
+  "en": "light",
+  "pos": "noun",
+  "pl": "die Lichter",
+  "category": "home",
+  "ur": "روشنی"
+ },
+ {
+  "de": "die Lampe",
+  "en": "lamp",
+  "pos": "noun",
+  "pl": "die Lampen",
+  "category": "home",
+  "ur": "قندیݪ"
+ },
+ {
+  "de": "die Dusche",
+  "en": "shower",
+  "pos": "noun",
+  "pl": "die Duschen",
+  "category": "home",
+  "ur": "شاور"
+ },
+ {
+  "de": "der Spiegel",
+  "en": "mirror",
+  "pos": "noun",
+  "pl": "die Spiegel",
+  "category": "home",
+  "ur": "آئینہ"
+ },
+ {
+  "de": "sechzig",
+  "en": "sixty",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "ساٹھ"
+ },
+ {
+  "de": "siebzig",
+  "en": "seventy",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "ستر"
+ },
+ {
+  "de": "achtzig",
+  "en": "eighty",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "اسی"
+ },
+ {
+  "de": "neunzig",
+  "en": "ninety",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "نوے"
+ },
+ {
+  "de": "tausend",
+  "en": "thousand",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "ہزار"
+ },
+ {
+  "de": "eine Million",
+  "en": "one million",
+  "pos": "num",
+  "pl": null,
+  "category": "numbers",
+  "ur": "دس لاکھ"
+ },
+ {
+  "de": "die Stunde",
+  "en": "hour",
+  "pos": "noun",
+  "pl": "die Stunden",
+  "category": "time",
+  "ur": "گھنٹہ"
+ },
+ {
+  "de": "die Minute",
+  "en": "minute",
+  "pos": "noun",
+  "pl": "die Minuten",
+  "category": "time",
+  "ur": "منٹ"
+ },
+ {
+  "de": "früh",
+  "en": "early",
+  "pos": "adv",
+  "pl": null,
+  "category": "time",
+  "ur": "جلدی"
+ },
+ {
+  "de": "spät",
+  "en": "late",
+  "pos": "adv",
+  "pl": null,
+  "category": "time",
+  "ur": "دیر"
+ },
+ {
+  "de": "jetzt",
+  "en": "now",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "اب"
+ },
+ {
+  "de": "später",
+  "en": "later",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "بعد میں"
+ },
+ {
+  "de": "dann",
+  "en": "then",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "پھر"
+ },
+ {
+  "de": "schon",
+  "en": "already",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "پہلے ہی"
+ },
+ {
+  "de": "noch",
+  "en": "still / yet",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "ابھی"
+ },
+ {
+  "de": "nur",
+  "en": "only",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "صرف"
+ },
+ {
+  "de": "nie",
+  "en": "never",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "کبھی نہیں"
+ },
+ {
+  "de": "viel",
+  "en": "much / a lot",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "بہت"
+ },
+ {
+  "de": "wenig",
+  "en": "little / few",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "تھوڑا"
+ },
+ {
+  "de": "mehr",
+  "en": "more",
+  "pos": "adv",
+  "pl": null,
+  "category": "daily",
+  "ur": "زیادہ"
+ },
+ {
+  "de": "alle",
+  "en": "all / everyone",
+  "pos": "pron",
+  "pl": null,
+  "category": "pronouns",
+  "ur": "سب"
+ },
+ {
+  "de": "der Frühling",
+  "en": "spring",
+  "pos": "noun",
+  "pl": null,
+  "category": "seasons",
+  "ur": "بہار"
+ },
+ {
+  "de": "der Sommer",
+  "en": "summer",
+  "pos": "noun",
+  "pl": null,
+  "category": "seasons",
+  "ur": "گرمی"
+ },
+ {
+  "de": "der Herbst",
+  "en": "autumn",
+  "pos": "noun",
+  "pl": null,
+  "category": "seasons",
+  "ur": "خزاں"
+ },
+ {
+  "de": "der Winter",
+  "en": "winter",
+  "pos": "noun",
+  "pl": null,
+  "category": "seasons",
+  "ur": "سردی"
+ },
+ {
+  "de": "und",
+  "en": "and",
+  "pos": "adv",
+  "pl": null,
+  "category": "connectors",
+  "ur": "اور"
+ },
+ {
+  "de": "aber",
+  "en": "but",
+  "pos": "adv",
+  "pl": null,
+  "category": "connectors",
+  "ur": "لیکن"
+ },
+ {
+  "de": "oder",
+  "en": "or",
+  "pos": "adv",
+  "pl": null,
+  "category": "connectors",
+  "ur": "یا"
+ },
+ {
+  "de": "weil",
+  "en": "because",
+  "pos": "adv",
+  "pl": null,
+  "category": "connectors",
+  "ur": "کیونکہ"
+ },
+ {
+  "de": "Ich habe Hunger",
+  "en": "I am hungry",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "مجھے بھوک لگی ہے"
+ },
+ {
+  "de": "Ich habe Durst",
+  "en": "I am thirsty",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "مجھے پیاس لگی ہے"
+ },
+ {
+  "de": "Kein Problem",
+  "en": "no problem",
+  "pos": "phrase",
+  "pl": null,
+  "category": "greetings",
+  "ur": "کوئی مسئلہ نہیں"
+ }
 ]

@@ -23,6 +23,7 @@ def handle_key(key,state):
     if key in BACKSPACE_KEYS: state.input_buffer=state.input_buffer[:-1]; return None
     if key in ("\n","\r",curses.KEY_ENTER): state.submit(); return None
     if key=="\x1b": return "pause"
+    if key==" ": state.input_buffer=""; state._feedback("Typing reset",0.8); return None
     if isinstance(key,str) and key.isprintable() and len(state.input_buffer)<40:
         state.input_buffer+=key
         if state.try_match(state.input_buffer): state.input_buffer=""

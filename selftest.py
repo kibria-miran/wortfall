@@ -21,7 +21,7 @@ def main():
     from progress import Progress
 
     entries = vocab.load_vocab()
-    assert len(entries) >= 300, f"expected 300+ vocab entries, got {len(entries)}"
+    assert len(entries) >= 450, f"expected 450+ vocab entries, got {len(entries)}"
 
     # normalization: umlauts, articles, edit distance
     assert textnorm.normalize("Käse") == "kaese"
@@ -60,10 +60,37 @@ def main():
 
     assert state.correct_count > 5, f"should score, only {state.correct_count}"
     assert state.score > 0
-    assert "solve" in events, "solve sfx event missing"
+    assert "solve" not in events, "solve chime should be silent on correct words"
     assert spoken, "TTS hook should fire on correct answers"
     summary = state.summary()
     assert 0 <= summary["accuracy"] <= 100
+
+    # --- SPACE resets the typed buffer
+    from input_handler import handle_key
+    state.input_buffer = "das h"
+    handle_key(" ", state)
+    assert state.input_buffer == "", "SPACE must clear the typing buffer"
+
+    # --- multi-word answers match without spaces (SPACE is never part of the answer)
+    vocab_entries = entries
+    haus = next(e for e in vocab_entries if textnorm.normalize(e["de"]) == "das haus")
+    state3 = GameState(vocab_entries, progress, articles_mode="optional")
+    state3._spawn_specific(haus, 80)
+    assert state3.try_match("das haus"), "spaceless \"das haus\" input must match \"das Haus\""
+    state3 = GameState(vocab_entries, progress, articles_mode="optional")
+    state3._spawn_specific(haus, 80)
+    assert state3.try_match("haus"), "article-free noun must match at full points"
+
+    # --- word order is purely random: progress data must not bias the picker
+    biased = {"das Haus": {"seen": 100, "missed": 100}}   # would weigh ~4x in v2
+    counts = {"das Haus": 0}
+    picker = vocab.Picker(vocab_entries, biased, recent_max=5)
+    for _ in range(2000):
+        if picker.pick()["de"] == "das Haus":
+            counts["das Haus"] += 1
+    mean = 2000 / len(vocab_entries)
+    assert counts["das Haus"] < 3 * mean + 5, \
+        f"picker favours one word: {counts['das Haus']} vs mean {mean:.1f}"
 
     # --- article teaching prompt (required mode, article omitted)
     state2 = GameState(entries, progress, articles_mode="required")

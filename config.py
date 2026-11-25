@@ -5,7 +5,8 @@ APP_DIR = Path.home() / ".wortfall"
 PROGRESS_FILE = APP_DIR / "progress.json"
 WORDS_FILE = Path(__file__).with_name("words.json")
 CONFIG = {
-    "articles_mode": "required", "plural_mode": False,
+    "articles_mode": "optional",     # SPACE resets typing, so 'optional' matches words with or without articles
+    "plural_mode": False,
     "start_lives": 3, "max_lives": 5,
     "base_fall_speed": 0.8, "speed_growth": 1.08, "speed_cap": 3.0,
     "speed_jitter": 0.10, "base_spawn_interval": 3.0, "spawn_decay": 0.15,
@@ -18,6 +19,8 @@ CONFIG = {
     "danger_rows": 2,                # bottom field rows tinted as the danger zone
     "sfx_enabled": True,
     "sfx_volume": 0.45,              # 0.0–1.0 for synthesized effect wave files
+    "en_ur_blink": 0.5,              # seconds per on/off phase of the blinking English/Urdu text
+    "weather_cycle": 40.0,           # seconds per weather phase: clear → cloudy → rain → snow
 }
 
 # Dracula accent colour names used for random word colours (see theme.py for the palette).

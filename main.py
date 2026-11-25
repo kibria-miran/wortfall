@@ -9,8 +9,9 @@ import renderer, audio, game, sfx
 from renderer import draw, init_colors
 
 CATEGORIES=["All","home","food","animals","people","family","places","nature","objects","time",
-            "colors","verbs","numbers","body","clothes","adjectives","pronouns","questions",
-            "greetings","weekdays","months","prepositions","transport","school","technology","shopping","leisure","daily","work"]
+            "seasons","colors","verbs","numbers","body","clothes","adjectives","pronouns","questions",
+            "greetings","weekdays","months","prepositions","connectors","transport","travel","school",
+            "technology","shopping","leisure","daily","work"]
 
 def run(stdscr):
     locale.setlocale(locale.LC_ALL,"")

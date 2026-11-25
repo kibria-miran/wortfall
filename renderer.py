@@ -1,20 +1,19 @@
-"""Curses renderer: Dracula theme, per-language styled falling words,
-danger-zone band, solved/missed animations, article-coloured hints,
-boxed overlays. Merges the v2 language features with the v1 game UI.
-"""
+"""Curses renderer: clean minimal UI, time-animated background (stars, birds,
+weather), blinking English/Urdu text, article-coloured hints and effects."""
 import curses
+import math
+import random
 import time
 
 import audio
 import sfx
 import theme
+from config import CONFIG
 from textnorm import article_of
 from theme import color, display_width
 from word import WordState
 
 URDU_SHAPED = False   # toggled with the U key in the menu; see theme.urdu_text
-
-PAIR_DANGER = 20      # red on dark-red, the danger-zone band
 
 # classic German-learning convention: der=blue, die=red, das=green
 ARTICLE_COLORS = {"der": "cyan", "die": "red", "das": "green"}
@@ -22,15 +21,91 @@ ARTICLE_COLORS = {"der": "cyan", "die": "red", "das": "green"}
 SOLVED_FRAMES = ("✶", "✷", "❋", "·")
 MISSED_FRAMES = ("✗", "✗", "✗", "·")
 
+WEATHERS = ("clear", "cloudy", "rain", "snow")
+
+
+class Background:
+    """Procedural, purely time-based sky: twinkling stars, flying birds and a
+    slowly cycling weather (clear → cloudy → rain → snow). No game state."""
+    def __init__(self):
+        rng = random.Random(365303)
+        self.stars = [(rng.random(), rng.random(), rng.random()) for _ in range(70)]
+        self.birds = [(rng.random(), 0.05 + rng.random() * 0.12, 5.0 + rng.random() * 4.0,
+                       1 if rng.getrandbits(1) else -1) for _ in range(3)]
+        self.rain = [(rng.random(), rng.random()) for _ in range(16)]
+        self.flakes = [(rng.random(), rng.random()) for _ in range(14)]
+        self.clouds = [(rng.random(), 0.04 + rng.random() * 0.22, 0.8 + rng.random() * 0.7)
+                       for _ in range(4)]
+
+    def weather(self, t):
+        return WEATHERS[int(t / CONFIG["weather_cycle"]) % len(WEATHERS)]
+
+    def draw(self, stdscr, h, w, t):
+        put = safe_add
+        dim = color("comment") | curses.A_DIM
+        faint = color("fg") | curses.A_DIM
+        top, bottom = 2, h - 5
+        if top > bottom:
+            return
+        span = bottom - top + 1
+        weather = self.weather(t)
+
+        if weather == "clear":
+            for i, (nx, ny, tw) in enumerate(self.stars):
+                if ((t * 0.8 + tw) % 1.0) > 0.72:      # each star on ~72% of the time
+                    x = 1 + int(nx * (w - 3))
+                    y = top + int(ny * (span - 1))
+                    glyph = "·" if tw > 0.5 else "+"
+                    put(stdscr, y, x, glyph, faint)
+        elif weather == "cloudy":
+            for i, (nx, ny, tw) in enumerate(self.stars[:24]):
+                if ((t * 0.5 + tw) % 1.0) > 0.85:
+                    x = 1 + int(nx * (w - 3)); y = top + int(ny * (span - 1))
+                    put(stdscr, y, x, "·", faint)
+            self._clouds(stdscr, h, w, t, dim)
+        elif weather == "rain":
+            self._clouds(stdscr, h, w, t, dim, drops=True)
+            for i, (nx, off) in enumerate(self.rain):
+                x = 1 + int(nx * (w - 3))
+                y = top + int((off + t * 1.6) % 1.0 * (span - 1))
+                put(stdscr, y, x, "/", color("cyan") | curses.A_DIM)
+        elif weather == "snow":
+            for i, (nx, off) in enumerate(self.flakes):
+                x = 1 + int((nx + 0.03 * math.sin(t * 1.1 + i)) % 1.0 * (w - 3))
+                y = top + int((off + t * 0.35) % 1.0 * (span - 1))
+                put(stdscr, y, x, "*", faint)
+
+        for i, (ny, v, speed, direction) in enumerate(self.birds):
+            if weather in ("rain", "snow"):
+                continue
+            y = top + int(ny * span)
+            flap = int((t * 2.5 + i) / 0.4) % 4
+            glyph = ("^v^", "~v~", "~^~", "-v-")[flap]
+            travel = (t * speed * direction) % (w + 16)
+            x = int(travel) - 8 if direction > 0 else w - 1 - int(travel)
+            put(stdscr, y, x, glyph, dim)
+
+    def _clouds(self, stdscr, h, w, t, dim, drops=False):
+        shapes = ("  .--~~--.  ", " .~~~~~~~~. ", "  .-~~~-.   ")
+        for i, (nx, ny, speed) in enumerate(self.clouds):
+            y = 3 + int(ny * 4) + (2 if drops and i == 0 else 0)
+            travel = (t * speed + i * 30) % (w + 20)
+            x = int(travel) - 12
+            safe_add(stdscr, y, x, shapes[i % 3], dim)
+
+
+BACKGROUND = Background()
+
 
 def init_colors(stdscr=None):
     if stdscr is None:
         stdscr = curses.initscr()
+    import theme
     theme.init_theme(stdscr)
     if curses.has_colors() and theme.PAIRS:
         table = theme.DRACULA if curses.COLORS >= 256 else theme.FALLBACK
         try:
-            curses.init_pair(PAIR_DANGER, table["red"], table["bg"])
+            curses.init_pair(20, table["red"], table["bg"])
         except curses.error:
             pass
 
@@ -58,8 +133,16 @@ def hline(stdscr, y, w, attr):
     safe_add(stdscr, y, 0, "─" * (w - 1), attr)
 
 
+def _blink_on(word, now):
+    period = CONFIG["en_ur_blink"]
+    phase = ((now - word.spawn_time) / period) % 2
+    return phase < 1
+
+
 def draw_word(stdscr, word, y, is_target, urgent, height, width):
-    """[ German == English == Urdu ] - each language has its own colour and style."""
+    """[ German == English == Urdu ] — German holds steady while the English and
+    Urdu blink on/off like a switching light."""
+    import theme
     parts = list(word.parts) if word.parts else [word.prompt]
     cols = list(word.colors) if word.colors else ["yellow", "cyan", "pink"]
     styles = [theme.STYLE_DE, theme.STYLE_EN, theme.STYLE_UR]
@@ -74,18 +157,26 @@ def draw_word(stdscr, word, y, is_target, urgent, height, width):
         safe_add(stdscr, y, x, text, attr)
         x += display_width(text)
 
+    def shape(i, text):
+        if i == 2:
+            return theme.urdu_text(text, URDU_SHAPED)
+        return text.upper() if urgent else text
+
     put("[ ", frame)
     for i, text in enumerate(parts):
-        if i == 2:
-            text = theme.urdu_text(text, URDU_SHAPED)
-        elif urgent:
-            text = text.upper()
+        on = True
+        if i > 0:
+            on = _blink_on(word, time.monotonic())
+        shown = shape(i, text)
         attr = color(cols[i % 3]) | styles[i % 3]
         if i == 0 and urgent:
             attr = color("red") | curses.A_BOLD | curses.A_BLINK
         if is_target and i == 0:
             attr |= curses.A_UNDERLINE
-        put(text, attr)
+        if on:
+            put(shown, attr)
+        else:
+            put(" " * display_width(shown), color("fg"))
         if i < len(parts) - 1:
             put(" == ", sep)
     put(" ]", frame)
@@ -108,11 +199,6 @@ def draw_effect(stdscr, word, height, width):
         safe_add(stdscr, y, word.x, text, attr)
 
 
-def _danger_band(stdscr, h, w, danger_rows):
-    for row in range(max(2, h - 4 - danger_rows), h - 4):
-        safe_add(stdscr, row, 0, "·" * (w - 1), color("red") | curses.A_DIM)
-
-
 def _article_hint(target):
     if target.entry.get("pos") != "noun" or target.answer.count(" ") < 1:
         return None
@@ -122,7 +208,27 @@ def _article_hint(target):
     return None
 
 
+def _header(stdscr, state, w):
+    sep = color("comment")
+    lives = "∞" if state.infinite_lives else "♥" * max(state.lives, 0)
+    cells = [("WORTFALL", color("purple") | curses.A_BOLD),
+             (f"SCORE {state.score}", color("green") | curses.A_BOLD),
+             (lives, color("red") | curses.A_BOLD),
+             (f"LV {state.level}", color("cyan") | curses.A_BOLD)]
+    if state.streak >= 2:
+        cells.append((f"×{state.streak}", color("orange") | curses.A_BOLD))
+    if state.learn_mode:
+        cells.append(("LEARN", color("pink") | curses.A_BOLD))
+    x = 1
+    for i, (text, attr) in enumerate(cells):
+        if i:
+            safe_add(stdscr, 0, x, "·", sep); x += 2
+        safe_add(stdscr, 0, x, text, attr)
+        x += display_width(text) + 1
+
+
 def draw(stdscr, state, mode="playing", high_score=0, category_label="All"):
+    import theme
     stdscr.erase()
     h, w = stdscr.getmaxyx()
     title = color("purple") | curses.A_BOLD
@@ -133,32 +239,43 @@ def draw(stdscr, state, mode="playing", high_score=0, category_label="All"):
         return
     if mode == "menu":
         banner = [
-            "██     ██  ██████  ██████  ███████ ████████ ███████",
+            "██     ██  ██████  ██████  ███████ ████████ ██████",
             "██     ██ ██    ██ ██   ██ ██         ██    ██     ",
-            "██  █  ██ ██    ██ ██████  █████      ██    ███████",
+            "██  █  ██ ██    ██ ██████  ██████     ██    ███████",
             "██ ███ ██ ██    ██ ██   ██ ██         ██    ██     ",
             " ███ ███   ██████  ██   ██ ███████    ██    ███████",
         ]
+        now = time.monotonic()
         for i, line in enumerate(banner):
             centered(stdscr, 1 + i, line, title)
         centered(stdscr, 7, "German A1 falling-word typing game", color("cyan"))
-        centered(stdscr, 8, "[ Hallo == Hello == ہیلو ]", color("green") | curses.A_BOLD)
-        centered(stdscr, 10, f"High score: {high_score}", color("yellow"))
-        centered(stdscr, 12, "[ ENTER ]  START GAME", color("green") | curses.A_BOLD)
-        centered(stdscr, 14, f"[ C ] Category: {category_label}", color("fg"))
-        centered(stdscr, 15, f"[ A ] Articles: {state.articles_mode}    [ P ] Plurals: {'ON' if state.plural_mode else 'OFF'}", color("fg"))
-        centered(stdscr, 16, f"[ L ] Learn mode    [ U ] Urdu display: {'shaped' if URDU_SHAPED else 'raw'}", color("fg"))
-        centered(stdscr, 17, f"[ F2 ] {audio.get_speaker().label()}    [ F3 ] {sfx.get_sfx().label()}", color("orange"))
-        centered(stdscr, 18, "[ ESC ] [ ESC ] Exit", color("comment"))
-        centered(stdscr, 21, "Type the German word. Correct answers are accepted instantly and spoken aloud.", color("comment"))
+        sample = [("der Baum", color("yellow") | curses.A_BOLD, 10),
+                  ("tree", color("cyan") | theme.STYLE_EN, 4),
+                  ("درخت", color("pink"), 4)]
+        total = display_width("[ ") + sum(disp + 4 for _, _, disp in sample) - 4 + display_width(" ]")
+        sx = (w - total) // 2
+        blink_off = int(now / 0.5) % 2 == 1
+        safe_add(stdscr, 9, sx, "[ ", color("comment")); sx += 2
+        for i, (text, attr, disp) in enumerate(sample):
+            safe_add(stdscr, 9, sx, " " * disp if blink_off and i else text, attr)
+            sx += disp
+        safe_add(stdscr, 9, sx, " ]", color("comment"))
+        centered(stdscr, 10, "English/Urdu blink · type the German word", color("comment"))
+        centered(stdscr, 12, f"High score: {high_score}", color("yellow"))
+        centered(stdscr, 14, "[ ENTER ]  START GAME", color("green") | curses.A_BOLD)
+        centered(stdscr, 15, f"[ C ] Category: {category_label}    [ L ] Learn mode", color("fg"))
+        centered(stdscr, 16, f"[ A ] Articles: {state.articles_mode}    [ P ] Plurals: {'ON' if state.plural_mode else 'OFF'}", color("fg"))
+        centered(stdscr, 17, f"[ U ] Urdu: {'shaped' if URDU_SHAPED else 'raw'}    [ F2 ] {audio.get_speaker().label()}    [ F3 ] {sfx.get_sfx().label()}", color("orange"))
+        centered(stdscr, 18, "In game:  SPACE clears typing · +/- speed · TAB infinite lives", color("comment"))
+        centered(stdscr, 19, "German letters: ä=ae  ö=oe  ü=ue  ß=ss", color("comment"))
+        centered(stdscr, 21, "ESC ESC — exit", color("comment"))
     elif mode == "paused":
-        box_w = 46
+        box_w = 42
         top = max(2, h // 2 - 3)
         left = max(0, (w - box_w) // 2)
         safe_add(stdscr, top, left, "┌" + "─" * box_w + "┐", title)
         centered(stdscr, top + 1, "P A U S E D", title)
-        centered(stdscr, top + 2, "[ESC] Resume    [ESC][ESC] Save & exit", color("fg"))
-        centered(stdscr, top + 3, "[Q] Save and quit", color("fg"))
+        centered(stdscr, top + 3, "ESC resume  ·  ESC ESC save & exit  ·  Q quit", color("fg"))
         safe_add(stdscr, top + 5, left, "└" + "─" * box_w + "┘", title)
     elif mode == "summary":
         s = state.summary()
@@ -167,30 +284,20 @@ def draw(stdscr, state, mode="playing", high_score=0, category_label="All"):
                 f"Correct: {s['correct']}   Mistakes: {s['mistakes']}",
                 f"Accuracy: {s['accuracy']:.0f}%   Words seen: {s['words_seen']}"]
         for i, line in enumerate(rows):
-            safe_add(stdscr, 5 + i, 20, line, color("cyan"))
-        safe_add(stdscr, 11, 20, "Words to review:", color("pink") | curses.A_BOLD)
+            safe_add(stdscr, 5 + i, 24, line, color("cyan"))
+        safe_add(stdscr, 11, 24, "Words to review:", color("pink") | curses.A_BOLD)
         for i, (de, count) in enumerate(s["missed"][:7]):
             entry = next((v for v in state.all_vocab if v["de"] == de), {})
-            safe_add(stdscr, 12 + i, 22, f"{de} ({entry.get('en','?')}) x{count}", color("orange"))
-        safe_add(stdscr, 21, 20, "[Enter] Play again   [M] Menu   [Q] Quit", color("green"))
+            safe_add(stdscr, 12 + i, 26, f"{de} ({entry.get('en','?')}) x{count}", color("orange"))
+        safe_add(stdscr, 21, 24, "[Enter] Play again   [M] Menu   [Q] Quit", color("green"))
     else:
-        lives_text = "∞" if state.infinite_lives else "♥" * state.lives
+        _header(stdscr, state, w)
         sep = color("comment")
-        level_note = f" ({state.correct_count % 10}/10)"
-        streak_note = " ▲▲" if state.streak >= 5 else ""
-        header = [(" WORTFALL ", title), ("│ ", sep),
-                  (f"SCORE {state.score} ", color("green") | curses.A_BOLD), ("│ ", sep),
-                  (f"LIVES {lives_text} ", color("red") | curses.A_BOLD), ("│ ", sep),
-                  (f"LEVEL {state.level}{level_note} ", color("cyan") | curses.A_BOLD), ("│ ", sep),
-                  (f"STREAK {state.streak}{streak_note}", color("orange") | curses.A_BOLD)]
-        x = 0
-        for text, attr in header:
-            safe_add(stdscr, 0, x, text, attr)
-            x += display_width(text)
         hline(stdscr, 1, w, sep)
         hline(stdscr, h - 4, w, sep)
-        _danger_band(stdscr, h, w, 2)
-        active = sorted([x for x in state.words if x.state == WordState.FALLING], key=lambda x: x.y, reverse=True)
+        BACKGROUND.draw(stdscr, h, w, time.monotonic())
+        active = sorted([x for x in state.words if x.state == WordState.FALLING],
+                        key=lambda x: x.y, reverse=True)
         for word in state.words:
             if word.state == WordState.FALLING:
                 target = bool(active) and word is active[0]
@@ -201,27 +308,21 @@ def draw(stdscr, state, mode="playing", high_score=0, category_label="All"):
         hint = ""
         if active:
             target = active[0]
-            frac = target.elapsed_fraction()
-            if frac >= .75 and target.entry["pos"] == "noun":
-                art = _article_hint(target)
-                if art:
-                    hint = f"Hint: {art} ___"
+            if target.elapsed_fraction() >= .5:
+                if target.entry["pos"] == "noun":
+                    art = _article_hint(target)
+                    hint = f"hint: {art} ___" if art else f"hint: {target.answer.split()[0]} ___"
                 else:
-                    hint = f"Hint: {target.answer.split()[0]} ___"
-            elif frac >= .5:
-                hint = f"Hint: {target.answer[0]}..."
-        mode_text = "LEARN MODE" if state.learn_mode else f"LIVES {lives_text}"
-        sp = audio.get_speaker()
-        safe_add(stdscr, h - 3, 1,
-                 f" SPEED [ - ] {state.speed_scale:.2f}x [ + ]   [ TAB ] INFINITE LIVES: {'ON' if state.infinite_lives else 'OFF'}   [ F2 ] {sp.label()}   [ F3 ] {sfx.get_sfx().label()}",
-                 color("purple") | curses.A_BOLD)
+                    hint = f"hint: {target.answer[0]}…"
+        safe_add(stdscr, h - 3, 1, hint, color("yellow"))
+        right = f"F2 {audio.get_speaker().label()} · F3 {sfx.get_sfx().label()}"
+        safe_add(stdscr, h - 3, max(1, w - display_width(right) - 2), right, color("comment") | curses.A_DIM)
         if state.feedback and time.monotonic() < state.feedback_until:
             good = state.feedback.startswith(("+", "LEVEL"))
             safe_add(stdscr, h - 2, 1, state.feedback,
                      color("green" if good else "red") | curses.A_BOLD)
         else:
-            safe_add(stdscr, h - 2, 1, "[ ESC ] pause    Type German; auto-correct on final letter", color("comment"))
-        safe_add(stdscr, h - 1, 1, "TYPE: ", color("pink") | curses.A_BOLD)
-        safe_add(stdscr, h - 1, 7, f"{state.input_buffer}_", color("fg") | curses.A_BOLD)
-        safe_add(stdscr, h - 1, 9 + len(state.input_buffer), f" {hint}  [{mode_text}]", color("yellow"))
+            safe_add(stdscr, h - 2, 1, "type German · SPACE resets · ESC pauses", color("comment") | curses.A_DIM)
+        safe_add(stdscr, h - 1, 1, "▸ ", color("pink") | curses.A_BOLD)
+        safe_add(stdscr, h - 1, 3, f"{state.input_buffer}_", color("fg") | curses.A_BOLD)
     stdscr.refresh()
