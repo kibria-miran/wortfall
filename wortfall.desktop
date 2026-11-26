@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Wortfall
+Exec=python3 wortfall.py --urdu-script
+Path=/home/kibria/Downloads/wortfall/wortfall-11/wortfall
+Terminal=true
