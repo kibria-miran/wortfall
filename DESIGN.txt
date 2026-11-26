@@ -1,5 +1,12 @@
 WORTFALL — implementation notes
 
+Classic mini variant (v2.5.1): the repo now also ships the compact single-file cannon
+variant (`wortfall.py` + `words.py`, 72 core words as (article, german, english,
+urdu_script, urdu_roman) tuples). Character-by-character typing with per-letter
+colouring, a cannon + bullet kill animation, combo counter, 5 lives, TAB resets the
+word, ESC quits. Runs standalone alongside the main game and shares nothing with it;
+its umlaut shortcut is a/o/u + ss (looser than the main game's ae/oe/ue + ss).
+
 Review-fix update (v2.4) — learning + robustness changes driven by a full code/design
 review:
 - Recall mode (default OFF per user preference — the German is visible again; `R` in

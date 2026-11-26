@@ -10,6 +10,20 @@ Windows requires `pip install windows-curses` (untested — developed on Arch Li
 terminal at least 80 columns × 24 rows. Progress autosaves every 30 s and on every exit
 (including Ctrl+C) to `~/.wortfall/progress.json`.
 
+## Classic mini variant (cannon mode)
+A compact single-file take on the same idea lives alongside the main game. Words fall as
+`German = English = Urdu` and a cannon fires at each word you finish; typing is truly
+character-by-character (finished letters turn green), so no Enter and no auto-complete.
+
+```bash
+python3 wortfall.py                 # Roman Urdu glosses
+python3 wortfall.py --urdu-script   # Urdu script (needs a terminal font that supports it)
+```
+
+- 72 core words in `words.py` (`(article, german, english, urdu_script, urdu_roman)`).
+- Umlaut shortcut here differs from the main game: type `a/o/u` for `ä/ö/ü` and `ss` for `ß`.
+- `TAB` resets the current word, `ESC` quits, `R` restarts on the game-over screen.
+
 ## How it teaches
 - **Recall mode (default OFF):** words fall as `[ das Haus == house == گھر ]` so you can
   see the German. Press `R` in the menu to switch it ON for real practice —
