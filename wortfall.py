@@ -11,11 +11,16 @@ import sys
 import time
 
 from words import WORDS
+from sentences import SENTENCES
 import audio
+import config
 
 USE_URDU_SCRIPT = "--urdu-script" in sys.argv
 BULLET_SPEED = 90.0   # visual units per second (a row counts as 2 units)
 CANNON_SPEED = 60.0   # columns per second
+FALL_SPEED = 1.45     # rows per second at 1.0x (does not grow with level)
+MAX_WORDS = 7         # at most this many live words on screen at once
+NUM_WIDTH = 3         # width of the " 1 " sequence-number field
 MAP = {"ä": "a", "ö": "o", "ü": "u", "ß": "ss"}
 
 FRAMES = (
@@ -81,7 +86,7 @@ def load_pool():
             if (it[0], it[1]) not in seen:
                 seen.add((it[0], it[1]))
                 allw.append(it)
-    ordered = {"all": allw}
+    ordered = {"all": allw, "sentences": list(SENTENCES)}
     for c in [c for c in PREFERRED if c in cats] + sorted(c for c in cats if c not in PREFERRED):
         ordered[c] = cats[c]
     return ordered
@@ -95,14 +100,19 @@ class Word:
         self.x = x
         self.y = y
         self.dying = False
+        self.seq = 0
         ur = self.ur_script if USE_URDU_SCRIPT else self.ur_roman
         self.prefix = (self.art + " ") if self.art else ""
         self.suffix = f" = {self.en}" + (f" = {ur}" if ur else "")
-        self.width = len(self.prefix) + len(self.de) + len(self.suffix)
+        self.width = NUM_WIDTH + len(self.prefix) + len(self.de) + len(self.suffix)
+
+    def num_text(self):
+        """Fixed-width sequence number shown in front of the word."""
+        return f"{self.seq:>2d} " if self.seq else " " * NUM_WIDTH
 
     @property
     def cx(self):
-        return self.x + len(self.prefix) + len(self.de) // 2
+        return self.x + NUM_WIDTH + len(self.prefix) + len(self.de) // 2
 
     def typed_chars(self):
         used, n = 0, 0
@@ -132,7 +142,10 @@ def draw_word(win, wd, is_target):
     pair_done = curses.color_pair(1) | curses.A_BOLD
     pair_todo = curses.color_pair(3) | (curses.A_BOLD if is_target else 0)
     pair_meta = curses.color_pair(4)
+    pair_num = curses.color_pair(5) | curses.A_BOLD
     x = wd.x
+    safe_add(win, int(wd.y), x, wd.num_text(), pair_num)
+    x += NUM_WIDTH
     safe_add(win, int(wd.y), x, wd.prefix, pair_meta)
     x += len(wd.prefix)
     done = wd.typed_chars()
@@ -145,7 +158,7 @@ def draw_word(win, wd, is_target):
 def new_game(pool):
     return {
         "words": [], "bullets": [], "particles": [], "blasts": [],
-        "pool": pool,
+        "pool": pool, "category": None,
         "target": None, "score": 0, "killed": 0, "missed": 0,
         "combo": 0, "best_combo": 0, "last_spawn": 0.0, "speed": 1.0,
         "cannon_x": None, "aim_dx": 0.0, "flash": 0.0,
@@ -156,7 +169,139 @@ def level(g):
     return g["killed"] // 8 + 1
 
 
+# ---- saved game ----------------------------------------------------------
+SAVE_VERSION = 1
+
+
+def save_path():
+    return config.APP_DIR / "savegame.json"
+
+
+def read_save():
+    """The saved game dict, or None when there is nothing usable to resume."""
+    try:
+        with open(save_path(), encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return None
+    if not isinstance(data, dict) or data.get("version") != SAVE_VERSION:
+        return None
+    try:
+        float(data.get("saved_at", 0) or 0)
+        int(data.get("score", 0))
+        int(data.get("killed", 0))
+        if not isinstance(data.get("words", []), list):
+            return None
+        if not isinstance(data.get("bullets", []), list):
+            return None
+    except (TypeError, ValueError):
+        return None
+    return data
+
+
+def save_game(g):
+    """Persist the current game so it can be resumed from the menu."""
+    if g is None:
+        return False
+    words = list(g["words"])
+    index = {id(w): i for i, w in enumerate(words)}
+    data = {
+        "version": SAVE_VERSION,
+        "saved_at": time.time(),
+        "category": g.get("category"),
+        "urdu_script": USE_URDU_SCRIPT,
+        "speed": g["speed"], "score": g["score"], "killed": g["killed"],
+        "missed": g["missed"], "combo": g["combo"], "best_combo": g["best_combo"],
+        "cannon_x": g["cannon_x"],
+        "words": [{
+            "entry": [w.art, w.de, w.en, w.ur_script, w.ur_roman],
+            "x": w.x, "y": w.y, "typed": w.typed, "dying": w.dying, "seq": w.seq,
+        } for w in words],
+        "bullets": [{
+            "word_index": index.get(id(b["word"]), -1),
+            "x": b["x"], "y": b["y"], "dx": b["dx"], "dy": b["dy"],
+            "trail": [list(t) for t in b["trail"]],
+        } for b in g["bullets"]],
+    }
+    path = save_path()
+    try:
+        config.APP_DIR.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_name(path.name + ".tmp")
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False)
+        os.replace(tmp, path)
+    except OSError:
+        return False
+    return True
+
+
+def restore_game(data, cats):
+    """Rebuild a game from read_save(); returns (game, category) or (None, None)."""
+    global USE_URDU_SCRIPT
+    try:
+        cat = data.get("category")
+        if cat not in cats:
+            cat = "all" if "all" in cats else next(iter(cats))
+        USE_URDU_SCRIPT = bool(data.get("urdu_script", USE_URDU_SCRIPT))
+        g = new_game(cats[cat])
+        g["category"] = cat
+        g["speed"] = float(data.get("speed", 1.0))
+        for key in ("score", "killed", "missed", "combo", "best_combo"):
+            g[key] = int(data.get(key, 0))
+        cx = data.get("cannon_x")
+        g["cannon_x"] = float(cx) if cx is not None else None
+        words = []
+        for wd in data.get("words", []):
+            entry = wd.get("entry") or []
+            if len(entry) != 5:
+                continue
+            w = Word(tuple(str(p) for p in entry), int(wd.get("x", 0)),
+                     float(wd.get("y", 1.0)))
+            w.typed = int(wd.get("typed", 0))
+            w.dying = bool(wd.get("dying", False))
+            w.seq = int(wd.get("seq", 0))
+            words.append(w)
+        g["words"] = words
+        for b in data.get("bullets", []):
+            i = int(b.get("word_index", -1))
+            if 0 <= i < len(words):
+                g["bullets"].append({
+                    "x": b.get("x"), "y": b.get("y"),
+                    "dx": float(b.get("dx", 0.0)), "dy": float(b.get("dy", -1.0)),
+                    "word": words[i],
+                    "trail": [tuple(t) for t in b.get("trail", []) if len(t) == 2],
+                })
+        return g, cat
+    except (AttributeError, KeyError, TypeError, ValueError):
+        return None, None
+
+
+def save_summary(data):
+    """Short one-line description of a saved game for the menu."""
+    killed = int(data.get("killed", 0))
+    age = time.time() - float(data.get("saved_at", 0) or 0)
+    return (f"score {data.get('score', 0)}  level {killed // 8 + 1}  "
+            f"correct {killed}  saved {fmt_age(age)}")
+
+
+def fmt_age(seconds):
+    seconds = max(0, int(seconds))
+    if seconds < 60:
+        return "just now"
+    if seconds < 3600:
+        return f"{seconds // 60}m ago"
+    if seconds < 86400:
+        return f"{seconds // 3600}h ago"
+    return f"{seconds // 86400}d ago"
+
+
 def spawn(g, w):
+    sent = g.get("category") == "sentences"
+    live_words = [o for o in g["words"] if not o.dying]
+    if len(live_words) >= (3 if sent else MAX_WORDS):
+        return
+    if sent and any(o.y <= 3 for o in live_words):
+        return   # sentences are wide: keep them vertically apart instead
     live = [o.key for o in g["words"] if not o.dying]
     pool = [e for e in g["pool"] if not any(
         k.startswith(keyof(e[1])) or keyof(e[1]).startswith(k) for k in live)]
@@ -166,15 +311,31 @@ def spawn(g, w):
         return
     for _ in range(10):
         x = random.randint(0, w - probe.width - 1)
-        if all(abs(o.x - x) > 6 or o.y > 3 for o in g["words"]):
+        if sent or all(abs(o.x - x) > 6 or o.y > 3 for o in g["words"]):
             break
-    probe.x, probe.y = x, 0.0
+    probe.x, probe.y = x, 1.0
     g["words"].append(probe)
+
+
+def number_words(g):
+    """Number the live words 1..N so the lowest (most urgent) word is #1."""
+    live = [w for w in g["words"] if not w.dying]
+    live.sort(key=lambda w: (-w.y, w.x))
+    for i, w in enumerate(live, 1):
+        w.seq = i
+
+
+def sequence_word(g):
+    """The only word the player may type: the lowest live word (#1)."""
+    live = [w for w in g["words"] if not w.dying]
+    if not live:
+        return None
+    return min(live, key=lambda w: (-w.y, w.x))
 
 
 def add_blast(g, wd, hit):
     """Word destruction: flash, disintegrating text, center burst, flying sparks."""
-    text = wd.prefix + wd.de + wd.suffix
+    text = wd.num_text() + wd.prefix + wd.de + wd.suffix
     g["blasts"].append({"x": wd.x, "y": wd.y, "cx": wd.cx, "text": text, "hit": hit,
                         "t": 0.0, "gone": [random.random() for _ in text]})
     chars = "*+.'`%#" if hit else ".,'"
@@ -195,12 +356,11 @@ def handle_key(g, ch):
     if not c:
         return
     tgt = g["target"]
-    if tgt is None:
-        cands = [w for w in g["words"] if not w.dying and w.key.startswith(c)]
-        if not cands:
+    if tgt is None or tgt.dying:
+        tgt = sequence_word(g)
+        if tgt is None:
             g["combo"] = 0
             return
-        tgt = max(cands, key=lambda w: w.y)
         g["target"] = tgt
     if tgt.key[tgt.typed:].startswith(c):
         tgt.typed += len(c)
@@ -218,11 +378,13 @@ def handle_key(g, ch):
 def update(g, dt, now, h, w):
     if g["cannon_x"] is None:
         g["cannon_x"] = w / 2
-    interval = max(0.9, 2.6 - level(g) * 0.15)
+    sent = g.get("category") == "sentences"
+    interval = max(0.9, 2.6 - level(g) * 0.15) + (2.0 if sent else 0.0)
     if now - g["last_spawn"] > interval:
         spawn(g, w)
         g["last_spawn"] = now
-    speed = (1.2 + level(g) * 0.25) * g["speed"]
+    speed = FALL_SPEED * g["speed"] * (0.5 if sent else 1.0)
+    number_words(g)
     for wd in list(g["words"]):
         if wd.dying:
             continue
@@ -323,7 +485,7 @@ def draw(win, g, h, w):
     hud = (f" Score {g['score']}   Level {level(g)}   Correct {g['killed']}   "
            f"Missed {g['missed']}   Combo {g['combo']}   Speed {g['speed']:.2f}x   Sound {'ON' if audio.get_speaker().enabled else 'OFF'} ")
     safe_add(win, 0, 0, hud, curses.color_pair(5) | curses.A_BOLD)
-    hint = "ESC menu  TAB reset  F2 sound"
+    hint = "ESC menu (saves)  TAB reset  F2 sound"
     if w >= len(hud) + len(hint) + 2:
         safe_add(win, 0, w - len(hint) - 1, hint, curses.color_pair(4))
     for wd in g["words"]:
@@ -370,21 +532,73 @@ def center(win, y, s, attr=0):
     safe_add(win, y, max(0, (w - len(s)) // 2), s, attr)
 
 
-def draw_menu(win, h, w, urdu, speed, last, cat):
+def run_merkhilfe(win, mode):
+    """Run the standalone memory trainer, then hand the terminal back to curses."""
+    try:
+        import merkhilfe
+    except ImportError:
+        return
+    curses.def_prog_mode()
+    curses.endwin()
+    try:
+        (merkhilfe.quiz if mode == "quiz" else merkhilfe.learn)()
+    except (EOFError, KeyboardInterrupt):
+        pass
+    finally:
+        curses.reset_prog_mode()
+        try:
+            curses.curs_set(0)
+        except curses.error:
+            pass
+        win.clear()
+        win.refresh()
+
+
+def menu_items(urdu, speed, cat, saved, speaker, sent_count, merkhilfe):
+    """Menu rows as (id, label, value, adjustable), in display order."""
+    rows = []
+    if saved:
+        rows.append(("continue", "Continue", save_summary(saved), False))
+    rows.append(("new", "New game", "", False))
+    rows.append(("sentences", "Sentences", f"{sent_count} phrases", False))
+    rows.append(("merkhilfe", "Merkhilfe", merkhilfe, True))
+    rows.append(("category", "Category", cat, True))
+    rows.append(("urdu", "Urdu script", "script" if urdu else "roman", False))
+    rows.append(("speed", "Start speed", f"{speed:.2f}x", True))
+    sound = "ON" if speaker.enabled else "OFF"
+    if not speaker.available:
+        sound += "  (no audio tool)"
+    rows.append(("sound", "Sound", sound, False))
+    rows.append(("quit", "Quit", "", False))
+    return rows
+
+
+def draw_menu(win, h, w, rows, sel, last):
     win.erase()
-    y = max(1, h // 2 - 7)
     gold = curses.color_pair(5) | curses.A_BOLD
+    dim = curses.color_pair(4)
+    normal = curses.color_pair(3)
+    picked = curses.color_pair(1) | curses.A_REVERSE | curses.A_BOLD
+
+    shown = [(r[1], f"\u2039 {r[2]} \u203a" if r[3] else r[2]) for r in rows]
+    label_w = max(len(label) for label, _ in shown)
+    value_w = max(len(value) for _, value in shown)
+    block_w = label_w + value_w + 4          # marker + gap + padding
+    left = max(0, (w - block_w) // 2)
+    y = max(1, (h - (len(rows) + 9)) // 2)
+
     center(win, y, "W O R T F A L L", gold)
-    center(win, y + 1, "German = English = Urdu", curses.color_pair(4))
-    center(win, y + 3, f"C / \u2190\u2192  Category: {cat}", curses.color_pair(5) | curses.A_BOLD)
-    center(win, y + 4, "ENTER   Start game", curses.color_pair(1) | curses.A_BOLD)
-    center(win, y + 5, f"U       Urdu: {'script' if urdu else 'roman'}", curses.color_pair(3))
-    center(win, y + 6, f"+ / -   Start speed: {speed:.2f}x", curses.color_pair(3))
-    sp = audio.get_speaker()
-    center(win, y + 7, f"M / F2  Sound: {'ON' if sp.enabled else 'OFF'}" + ("" if sp.available else " (no audio tool)"), curses.color_pair(3))
-    center(win, y + 8, "Q / ESC Quit", curses.color_pair(3))
+    center(win, y + 1, "German = English = Urdu", dim)
+    for i, (label, value) in enumerate(shown):
+        text = ("> " if i == sel else "  ") + label
+        text += " " * (block_w - len(text) - len(value)) + value
+        safe_add(win, y + 3 + i, left, text, picked if i == sel else normal)
+    center(win, y + 4 + len(rows),
+           "\u2191\u2193 select   \u2190\u2192 change   ENTER choose   Q quit", dim)
+    center(win, y + 5 + len(rows),
+           "Type words in number order: 1, 2, 3 ...", dim)
     if last:
-        center(win, y + 10, last, curses.color_pair(6))
+        center(win, y + 7 + len(rows), last, curses.color_pair(6))
     win.refresh()
 
 
@@ -398,11 +612,17 @@ def main(stdscr):
     apply_theme(stdscr, 0)
 
     theme, start_speed, last_result = 0, 1.0, ""
+    sel = 0
+    merkhilfe_mode = "learn"
     cats = load_pool()
-    names = list(cats)
+    names = [n for n in cats if n != "sentences"]
+    sent_count = len(cats.get("sentences", []))
     cat_i = 0
     g = None  # None = menu
+    saved = read_save()
     last = time.time()
+    last_save = last
+    autosave = config.CONFIG["autosave_seconds"]
     while True:
         h, w = stdscr.getmaxyx()
         now = time.time()
@@ -412,31 +632,120 @@ def main(stdscr):
             while True:
                 ch = stdscr.get_wch()
                 if g is None:
-                    if ch in ("\n", "\r", curses.KEY_ENTER):
+                    rows = menu_items(
+                        USE_URDU_SCRIPT, start_speed,
+                        f"{cat_label(names[cat_i])} ({len(cats[names[cat_i]])})",
+                        saved, audio.get_speaker(), sent_count, merkhilfe_mode)
+                    sel %= len(rows)
+                    item = rows[sel][0]
+                    key = ch.lower() if isinstance(ch, str) else ch
+
+                    if key in (curses.KEY_UP, "k"):
+                        sel = (sel - 1) % len(rows)
+                    elif key in (curses.KEY_DOWN, "j"):
+                        sel = (sel + 1) % len(rows)
+                    elif key in (curses.KEY_LEFT, "h"):
+                        if item == "category":
+                            cat_i = (cat_i - 1) % len(names)
+                        elif item == "speed":
+                            start_speed = max(0.25, round(start_speed - 0.25, 2))
+                        elif item == "merkhilfe":
+                            merkhilfe_mode = "quiz" if merkhilfe_mode == "learn" else "learn"
+                        elif item == "urdu":
+                            USE_URDU_SCRIPT = not USE_URDU_SCRIPT
+                        elif item == "sound":
+                            audio.get_speaker().toggle()
+                    elif key in (curses.KEY_RIGHT, "l"):
+                        if item == "category":
+                            cat_i = (cat_i + 1) % len(names)
+                        elif item == "speed":
+                            start_speed = min(3.0, round(start_speed + 0.25, 2))
+                        elif item == "merkhilfe":
+                            merkhilfe_mode = "quiz" if merkhilfe_mode == "learn" else "learn"
+                        elif item == "urdu":
+                            USE_URDU_SCRIPT = not USE_URDU_SCRIPT
+                        elif item == "sound":
+                            audio.get_speaker().toggle()
+                    elif key in ("\n", "\r", curses.KEY_ENTER, " "):
+                        if item == "quit":
+                            return
+                        if item == "continue":
+                            game, cat = restore_game(saved, cats)
+                            if game is not None:
+                                g = game
+                                if cat in names:
+                                    cat_i = names.index(cat)
+                                start_speed = g["speed"]
+                            else:
+                                g = new_game(cats[names[cat_i]])
+                                g["category"] = names[cat_i]
+                                g["speed"] = start_speed
+                                save_game(g)
+                        elif item == "new":
+                            g = new_game(cats[names[cat_i]])
+                            g["category"] = names[cat_i]
+                            g["speed"] = start_speed
+                            save_game(g)
+                        elif item == "sentences":
+                            g = new_game(cats["sentences"])
+                            g["category"] = "sentences"
+                            g["speed"] = start_speed
+                            save_game(g)
+                        elif item == "merkhilfe":
+                            run_merkhilfe(stdscr, merkhilfe_mode)
+                        elif item == "category":
+                            cat_i = (cat_i + 1) % len(names)
+                        elif item == "speed":
+                            start_speed = min(3.0, round(start_speed + 0.25, 2))
+                        elif item == "urdu":
+                            USE_URDU_SCRIPT = not USE_URDU_SCRIPT
+                        elif item == "sound":
+                            audio.get_speaker().toggle()
+                        if g is not None:
+                            g["last_spawn"] = now
+                            theme = g["killed"] // BG_EVERY
+                            apply_theme(stdscr, theme)
+                            last_save = now
+                    elif key == "n":
                         g = new_game(cats[names[cat_i]])
+                        g["category"] = names[cat_i]
                         g["speed"] = start_speed
+                        g["last_spawn"] = now
                         theme = 0
                         apply_theme(stdscr, 0)
-                    elif ch == "\x1b" or (isinstance(ch, str) and ch.lower() == "q"):
+                        save_game(g)
+                        last_save = now
+                    elif key == "s":
+                        g = new_game(cats["sentences"])
+                        g["category"] = "sentences"
+                        g["speed"] = start_speed
+                        g["last_spawn"] = now
+                        theme = 0
+                        apply_theme(stdscr, 0)
+                        save_game(g)
+                        last_save = now
+                    elif key in ("q", "\x1b"):
                         return
-                    elif ch == curses.KEY_F0 + 2 or (isinstance(ch, str) and ch.lower() == "m"):
+                    elif ch == curses.KEY_F0 + 2 or key == "m":
                         audio.get_speaker().toggle()
-                    elif ch in (curses.KEY_RIGHT, curses.KEY_DOWN) or (isinstance(ch, str) and ch.lower() == "c"):
+                    elif key == "c":
                         cat_i = (cat_i + 1) % len(names)
-                    elif ch in (curses.KEY_LEFT, curses.KEY_UP):
-                        cat_i = (cat_i - 1) % len(names)
-                    elif isinstance(ch, str) and ch.lower() == "u":
+                    elif key == "u":
                         USE_URDU_SCRIPT = not USE_URDU_SCRIPT
-                    elif ch in ("+", "="):
+                    elif key in ("+", "="):
                         start_speed = min(3.0, round(start_speed + 0.25, 2))
-                    elif ch in ("-", "_"):
+                    elif key in ("-", "_"):
                         start_speed = max(0.25, round(start_speed - 0.25, 2))
                     continue
                 if ch == "\x1b":
                     last_result = (f"Last game: score {g['score']}  correct {g['killed']}"
-                                   f"  missed {g['missed']}  best combo {g['best_combo']}")
+                                   f"  missed {g['missed']}  best combo {g['best_combo']}"
+                                   f"  (saved)")
+                    save_game(g)
+                    saved = read_save()
                     start_speed = g["speed"]
                     g = None
+                    sel = 0
                     theme = 0
                     apply_theme(stdscr, 0)
                 elif ch in ("+", "="):
@@ -453,9 +762,16 @@ def main(stdscr):
                     handle_key(g, ch)
         except curses.error:
             pass
+        if g is not None and now - last_save >= autosave:
+            save_game(g)
+            last_save = now
         if g is None:
-            draw_menu(stdscr, h, w, USE_URDU_SCRIPT, start_speed, last_result,
-                      f"{cat_label(names[cat_i])} ({len(cats[names[cat_i]])})")
+            rows = menu_items(
+                USE_URDU_SCRIPT, start_speed,
+                f"{cat_label(names[cat_i])} ({len(cats[names[cat_i]])})",
+                saved, audio.get_speaker(), sent_count, merkhilfe_mode)
+            sel %= len(rows)
+            draw_menu(stdscr, h, w, rows, sel, last_result)
         else:
             if h > 8 and w > 30:
                 update(g, dt, now, h, w)
