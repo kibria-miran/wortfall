@@ -35,14 +35,18 @@ def head(i, n, s):
     clear(); print(f"{D}[{i}/{n}]{X}\n\n  {B}{s[0]}{X}\n  = {s[1]}\n  = {s[2]}\n")
 
 def learn():
-    for i, s in enumerate(SENTENCES, 1):
-        head(i, len(SENTENCES), s); speak(s[0])
-        if ask(f"{D}ENTER = sound-alikes, q = quit {X}").lower() == "q": return
+    i = 0
+    while 0 <= i < len(SENTENCES):
+        s = SENTENCES[i]
+        head(i + 1, len(SENTENCES), s); speak(s[0])
+        if ask(f"{D}ENTER = sound-alikes, b = back, q = quit {X}").lower() == "q": return
         for de, en, ur, sounds in s[3]:
             print(f"  {B}{de:<9}{X} = {en} = {ur}\n            {Y}~ {' / '.join(sounds)}{X}")
         if ask(f"\n{D}ENTER = story {X}").lower() == "q": return
         print("\n  " + hl(s[4]) + "\n")
-        if ask(f"{D}ENTER = next, q = quit {X}").lower() == "q": return
+        a = ask(f"{D}ENTER = next, b = back, q = quit {X}").lower()
+        if a == "q": return
+        i = max(0, i - 1) if a == "b" else i + 1
 
 def quiz():
     known = load()

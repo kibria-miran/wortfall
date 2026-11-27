@@ -12,6 +12,7 @@ import time
 
 from words import WORDS
 from sentences import SENTENCES
+import mnemonics
 import audio
 import config
 
@@ -53,6 +54,10 @@ def cat_label(name):
     return NICE.get(name, name.capitalize())
 
 
+# Memory hooks (Merkhilfe): German sentence -> its sound-alike breakdown + story.
+MNEMONICS = {keyof(s[0]): s for s in mnemonics.SENTENCES}
+
+
 def load_pool():
     """{category: [(article, german, english, urdu_script, urdu_roman), ...]} from words.json."""
     cats = {}
@@ -87,6 +92,11 @@ def load_pool():
                 seen.add((it[0], it[1]))
                 allw.append(it)
     ordered = {"all": allw, "sentences": list(SENTENCES)}
+    # the 20 Merkhilfe sentences join the sentence pool (skipping duplicates)
+    seen_sent = {keyof(e[1]) for e in ordered["sentences"]}
+    for s in mnemonics.SENTENCES:
+        if keyof(s[0]) not in seen_sent:
+            ordered["sentences"].append(("", s[0], s[1], "", s[2]))
     for c in [c for c in PREFERRED if c in cats] + sorted(c for c in cats if c not in PREFERRED):
         ordered[c] = cats[c]
     return ordered
@@ -162,6 +172,8 @@ def new_game(pool):
         "target": None, "score": 0, "killed": 0, "missed": 0,
         "combo": 0, "best_combo": 0, "last_spawn": 0.0, "speed": 1.0,
         "cannon_x": None, "aim_dx": 0.0, "flash": 0.0,
+        "banner": None,   # (text, until) — sound-alike reminder after a sentence
+        "help": False,    # Merkhilfe overlay open (game paused)
     }
 
 
@@ -371,6 +383,12 @@ def handle_key(g, ch):
             g["bullets"].append({"x": None, "y": None, "dx": 0.0, "dy": -1.0,
                                  "word": tgt, "trail": []})
             g["target"] = None
+            if g.get("category") == "sentences":
+                mn = MNEMONICS.get(keyof(tgt.de))
+                if mn:   # reinforce: remind the sound-alikes for a few seconds
+                    g["banner"] = (
+                        " \u00b7 ".join(f"{de} ~ {sounds[0]}" for de, en, ur, sounds in mn[3]),
+                        time.time() + 6.0)
     else:
         g["combo"] = 0
 
@@ -486,8 +504,15 @@ def draw(win, g, h, w):
            f"Missed {g['missed']}   Combo {g['combo']}   Speed {g['speed']:.2f}x   Sound {'ON' if audio.get_speaker().enabled else 'OFF'} ")
     safe_add(win, 0, 0, hud, curses.color_pair(5) | curses.A_BOLD)
     hint = "ESC menu (saves)  TAB reset  F2 sound"
+    if g.get("category") == "sentences":
+        hint += "  ? Merkhilfe"
     if w >= len(hud) + len(hint) + 2:
         safe_add(win, 0, w - len(hint) - 1, hint, curses.color_pair(4))
+    banner = g.get("banner")
+    if banner and time.time() < banner[1]:
+        text = banner[0][:max(0, w - 2)]
+        safe_add(win, 1, max(0, (w - len(text)) // 2), text,
+                 curses.color_pair(4) | curses.A_BOLD)
     for wd in g["words"]:
         if not wd.dying:
             draw_word(win, wd, wd is g["target"])
@@ -532,8 +557,65 @@ def center(win, y, s, attr=0):
     safe_add(win, y, max(0, (w - len(s)) // 2), s, attr)
 
 
+def put_marked(win, y, x, text, base, hi):
+    """Print text where *stars* are highlighted as the memory hooks."""
+    for k, part in enumerate(re.split(r"\*(.+?)\*", text)):
+        if not part:
+            continue
+        safe_add(win, y, x, part, hi if k % 2 else base)
+        x += len(part)
+
+
+def wrap_text(s, width):
+    lines, cur = [], ""
+    for word in s.split():
+        if cur and len(cur) + 1 + len(word) > width:
+            lines.append(cur)
+            cur = word
+        else:
+            cur = f"{cur} {word}" if cur else word
+    if cur:
+        lines.append(cur)
+    return lines
+
+
+def draw_help(win, g, h, w):
+    """Merkhilfe overlay for the sentence currently being typed (pauses the game).
+    Core sentences show sound-alikes + story; others show a basic card."""
+    tgt = sequence_word(g)
+    if tgt is None:
+        return
+    s = MNEMONICS.get(keyof(tgt.de))
+    yellow = curses.color_pair(5) | curses.A_BOLD
+    normal = curses.color_pair(3)
+    dim = curses.color_pair(4)
+    bw = min(w - 6, 96)
+    if s is not None:
+        lines = [(s[0], yellow), (f"= {s[1]}", normal), (f"= {s[2]}", normal), ("", normal)]
+        for de, en, ur, sounds in s[3]:
+            lines.append((f"  {de:<11} = {en} = {ur}", normal))
+            lines.append((f"  {'':11} ~ {' / '.join(sounds)}", yellow))
+        lines.append(("", normal))
+        lines += [(t, normal) for t in wrap_text(s[4], bw - 4)]
+    else:
+        ur = tgt.ur_script if USE_URDU_SCRIPT else tgt.ur_roman
+        lines = [(tgt.prefix + tgt.de, yellow), (f"= {tgt.en}", normal),
+                 (f"= {ur}" if ur else "", normal), ("", normal),
+                 ("No sound-alikes for this one yet — Merkhilfe covers the 20 core sentences.", dim)]
+    y0 = max(1, (h - len(lines) - 2) // 2)
+    x0 = max(0, (w - bw) // 2)
+    safe_add(win, y0 - 1, x0, "\u250c" + "\u2500" * (bw - 2) + "\u2510", dim)
+    for i, (text, attr) in enumerate(lines):
+        put_marked(win, y0 + i, x0 + 2, text, attr, yellow)
+    safe_add(win, y0 + len(lines), x0,
+             "\u2514" + "\u2500" * (bw - 2) + "\u2518", dim)
+    center(win, y0 + len(lines) + 1, "any key: back to the game", dim)
+
+
 def run_merkhilfe(win, mode):
-    """Run the standalone memory trainer, then hand the terminal back to curses."""
+    """Run the standalone memory trainer, then hand the terminal back to curses.
+    endwin() drops the window's nodelay/keypad state, so they are restored here —
+    otherwise get_wch() blocks and the menu never redraws."""
     try:
         import merkhilfe
     except ImportError:
@@ -546,6 +628,9 @@ def run_merkhilfe(win, mode):
         pass
     finally:
         curses.reset_prog_mode()
+        curses.flushinp()
+        win.nodelay(True)
+        win.keypad(True)
         try:
             curses.curs_set(0)
         except curses.error:
@@ -737,7 +822,12 @@ def main(stdscr):
                     elif key in ("-", "_"):
                         start_speed = max(0.25, round(start_speed - 0.25, 2))
                     continue
-                if ch == "\x1b":
+                if g.get("help"):
+                    g["help"] = False
+                elif ch == "?":
+                    if sequence_word(g) is not None:
+                        g["help"] = True
+                elif ch == "\x1b":
                     last_result = (f"Last game: score {g['score']}  correct {g['killed']}"
                                    f"  missed {g['missed']}  best combo {g['best_combo']}"
                                    f"  (saved)")
@@ -773,13 +863,16 @@ def main(stdscr):
             sel %= len(rows)
             draw_menu(stdscr, h, w, rows, sel, last_result)
         else:
-            if h > 8 and w > 30:
-                update(g, dt, now, h, w)
-            idx = g["killed"] // BG_EVERY
-            if idx != theme:
-                theme = idx
-                apply_theme(stdscr, theme)
-            draw(stdscr, g, h, w)
+            if g.get("help"):
+                draw_help(stdscr, g, h, w)   # paused: no update, no word movement
+            else:
+                if h > 8 and w > 30:
+                    update(g, dt, now, h, w)
+                idx = g["killed"] // BG_EVERY
+                if idx != theme:
+                    theme = idx
+                    apply_theme(stdscr, theme)
+                draw(stdscr, g, h, w)
         time.sleep(0.016)
 
 
